@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <style>
+        body {
+            padding: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="create-issue-form" onsubmit="handleFormSubmit(this)">
+        <div class="form-group">
+            <label for="epic">Select Epic (Optional)</label>
+            <div id="epic-loading" class="loading">Loading Epics...</div>
+            <select id="epic" name="epicKey" style="display:none;">
+                <option value="">-- No Epic --</option>
+                <!-- Options will be populated here -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="component">Select Component (Optional)</label>
+            <div id="component-loading" class="loading">Loading Components...</div>
+            <select id="component" name="componentId" style="display:none;">
+                <option value="">-- No Component --</option>
+                <!-- Options will be populated here -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="row">Row Number</label>
+            <input type="number" id="row" name="row" required min="1" placeholder="e.g. 2">
+        </div>
+
+        <div class="block">
+            <button class="action" type="submit" id="submit-btn" disabled>Create Issue</button>
+            <button type="button" onclick="google.script.host.close()">Cancel</button>
+        </div>
+
+        <div id="error-msg" class="error"></div>
+    </form>
+
+    <script>
+        // Load Epics and Components on startup
+        window.onload = function () {
+            google.script.run
+                .withSuccessHandler(populateEpics)
+                .withFailureHandler(showError)
+                .getOpenEpics();
+
+            google.script.run
+                .withSuccessHandler(populateComponents)
+                .withFailureHandler(showError)
+                .getProjectComponents();
+        };
+
+        function populateEpics(epics) {
+            var select = document.getElementById('epic');
+            var loading = document.getElementById('epic-loading');
+
+            // Sort epics by name
+            epics.sort(function (a, b) {
+                return a.summary.localeCompare(b.summary);
+            });
+
+            epics.forEach(function (epic) {
+                var option = document.createElement('option');
+                option.value = epic.key;
+                option.text = epic.key + ': ' + epic.summary;
+                select.appendChild(option);
+            });
+
+            loading.style.display = 'none';
+            select.style.display = 'block';
+            checkReady();
+        }
+
+        function populateComponents(components) {
+            var select = document.getElementById('component');
+            var loading = document.getElementById('component-loading');
+
+            // Sort by name
+            components.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+            });
+
+            components.forEach(function (comp) {
+                var option = document.createElement('option');
+                option.value = comp.id;
+                option.text = comp.name;
+                select.appendChild(option);
+            });
+
+            loading.style.display = 'none';
+            select.style.display = 'block';
+            checkReady();
+        }
+
+        // Enable button only when basic UI is ready (or just ensure button is eventually enabled)
+        // Actually we should enable button once critical data is loaded or if it fails safely.
+        // For now, let's just enable the button. 
+        function checkReady() {
+            document.getElementById('submit-btn').disabled = false;
+        }
+
+        function handleFormSubmit(formObject) {
+            event.preventDefault(); // Prevent default form submission
+
+            var btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Creating...';
+            document.getElementById('error-msg').style.display = 'none';
+
+            google.script.run
+                .withSuccessHandler(onSuccess)
+                .withFailureHandler(showError)
+                .processForm(formObject);
+        }
+
+        function onSuccess(result) {
+            google.script.host.close();
+        }
+
+        function showError(error) {
+            var div = document.getElementById('error-msg');
+            div.textContent = 'Error: ' + error.message;
+            div.style.display = 'block';
+
+            var btn = document.getElementById('submit-btn');
+            btn.disabled = false;
+            btn.textContent = 'Create Issue';
+        }
+    </script>
+</body>
+
+</html>
