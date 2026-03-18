@@ -1,4 +1,5 @@
 # Digital Marketing Growth Plan
+
 **Prepared by:** Digital Marketing Analysis  
 **Based on:** Landing page review — techaus.mx  
 **Date:** February 2026  
@@ -89,6 +90,7 @@ Claim and fully optimize the Google Business Profile listing. This is free and d
 ### 1.5 Social Proof Enhancements
 
 The "+800 Familias" counter is the strongest trust signal on the page and it is currently underutilized. Recommendations:
+
 - Move it into the hero section, next to the primary CTA
 - Make it animated (count-up effect)
 - Add one short testimonial quote (2–3 sentences) from a real client directly in the hero
@@ -103,6 +105,7 @@ Focus: Build organic traffic channels and email nurture infrastructure to reduce
 ### 2.1 Product-Specific Landing Pages
 
 Create dedicated SEO-optimized pages for each insurance product. Each page should:
+
 - Be at least 1,200 words of original content
 - Target 2–3 primary keywords + 5–8 long-tail variations
 - Include an FAQ section (targets voice search and featured snippets)
@@ -110,6 +113,7 @@ Create dedicated SEO-optimized pages for each insurance product. Each page shoul
 - Link to related blog content
 
 Recommended URLs:
+
 - `/seguro-gastos-medicos-familiar`
 - `/seguro-de-auto-mexico`
 - `/seguro-de-vida-mexico`
@@ -120,6 +124,7 @@ Recommended URLs:
 Insurance is a high-consideration purchase. Content marketing builds trust, generates organic traffic, and positions TECHAUS as an authority. Publish 8–12 articles/month targeting question-based keywords.
 
 High-priority article topics:
+
 - "¿Qué cubre el seguro de gastos médicos y qué no?"
 - "Seguros de auto: diferencia entre amplia, limitada y responsabilidad civil"
 - "¿El seguro de vida es deducible de impuestos en México?"
@@ -139,6 +144,7 @@ Build automated email sequences triggered by lead actions.
 | Email 3 | Day 7 | Client testimonial + urgency offer ("Tu cotización vence en 48h") |
 
 **Monthly newsletter:**
+
 - Insurance tips relevant to the season (e.g., auto theft spikes before holidays)
 - Tax deduction reminders (gastos médicos are deductible in Mexico — a huge selling point in Q1)
 - Product spotlights and new offerings
@@ -146,6 +152,7 @@ Build automated email sequences triggered by lead actions.
 ### 2.4 Partner Co-Marketing
 
 Leverage the AXA, GNP, Qualitas, and CHUBB relationships for content and SEO value:
+
 - Comparison guides: "Compara coberturas: AXA vs GNP para gastos médicos"
 - Case studies co-authored with carrier support teams
 - Guest content on carrier blogs to build backlinks to techaus.mx
@@ -153,6 +160,7 @@ Leverage the AXA, GNP, Qualitas, and CHUBB relationships for content and SEO val
 ### 2.5 Social Media Calendar
 
 Publish 3 posts per week across Instagram and Facebook. Content mix:
+
 - 40% educational (insurance tips, myth-busting, tax deductions)
 - 40% social proof (client testimonials, team behind-the-scenes, milestone celebrations)
 - 20% promotional (limited-time offers, new products)
@@ -172,6 +180,7 @@ Build an interactive multi-step quote wizard embedded on each product page. This
 Why it works: it provides immediate value (a real price range) without requiring the user to speak to anyone first. It pre-qualifies leads and builds intent before the sales call.
 
 Implementation approach:
+
 - Step 1: "¿Qué quieres asegurar?" (product selection)
 - Step 2: Personal details (name, age, state)
 - Step 3: Coverage preferences with slider options
@@ -184,6 +193,7 @@ Expected lift: 2–4× increase in lead volume compared to a static contact form
 Insurance has one of the highest lifetime values of any consumer product. A referral program that rewards existing clients is one of the most cost-effective acquisition channels.
 
 Proposed structure:
+
 - Every client receives a unique referral link via WhatsApp/email after policy purchase
 - Successful referral (new policy purchased) = reward for both referrer and new client
 - Rewards: $300–500 MXN Amazon gift card, or one month's premium discount
@@ -196,6 +206,7 @@ Target: 20–30% of new clients acquired via referral by month 12.
 Install the Meta Pixel and Google Ads tag on all product pages. Retarget visitors who did not convert within 72 hours with dynamic ads showing the exact product they viewed.
 
 Retargeting audiences to build:
+
 - Viewed product page but did not start form (highest intent)
 - Started quote form but did not complete (abandoned)
 - Completed form but did not purchase (longest sales cycle)
@@ -205,6 +216,7 @@ Retargeting typically achieves 3–5× higher conversion rates than cold traffic
 ### 3.4 Client Portal — "Mi Cuenta TECHAUS"
 
 Build a simple client-facing portal accessible via web and WhatsApp. Core features:
+
 - Policy overview and documents (digital card included)
 - Renewal reminders with one-click confirmation
 - Claim initiation
@@ -215,6 +227,7 @@ A client portal reduces churn, generates upsell opportunities, and dramatically 
 ### 3.5 Reputation Automation
 
 Automate review requests at high-satisfaction moments:
+
 - 48 hours after a successful claim resolution
 - 7 days after policy purchase
 - 30 days before renewal (when satisfaction is high)
