@@ -1,4 +1,5 @@
 # DataVigía by TECHAUS — Product & Strategy Brief
+
 **Prepared by:** Digital Marketing Analysis  
 **Parent brand:** TECHAUS  
 **Date:** February 2026  
