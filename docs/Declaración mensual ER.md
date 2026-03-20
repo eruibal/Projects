@@ -47,7 +47,19 @@ Retain only the relevant columns. Delete all others:
 - Flag or remove `Cancelado` invoices to avoid overstating expenses.
 
 [Tax preparation map](https://photos.google.com/share/AF1QipP0N1JYkW5i07xTuT3GWW9Y7HAsD0RFcHQpp0mLXSpvVmIHc3Pz6y0OdqIeN_tftg/photo/AF1QipN7or3_tJRaH1_Tu84AOy1cJyrqDY9-xSchB_Ou?key=N014d0lfZkZmb0dIaTF2dTBYSkpvSFNvMjRnenN3)
+
 ```mermaid
+%%{
+  init: {
+    'flowchart': {
+      'useMaxWidth': false,
+      'htmlLabels': true
+    },
+    'themeVariables': {
+      'fontSize': '10px'
+    }
+  }
+}%%
 flowchart LR
     %% Phase 1: Data Extraction
     direction LR
@@ -80,3 +92,47 @@ flowchart LR
     %% Styling
     style C0 fill:#fff4d,stroke:#d4a017
  ```
+
+## Phase 2 — Record ledger with expenses
+
+- Log into ADempiere and create GL Journal entry for the period expenses
+- Get 'IVA por Cobrar' Report
+
+```mermaid
+%%{
+  init: {
+    'flowchart': {
+      'useMaxWidth': false,
+      'htmlLabels': true
+    },
+    'themeVariables': {
+      'fontSize': '10px'
+    }
+  }
+}%%
+flowchart LR
+    A["Log into ADempiere"] --> B["Create GL Journal Entry<br/>(Period Expenses)"] --> C["Get 'IVA por Cobrar'<br/>Report"]
+```
+
+## Phase 3 — Update Expense and Revenue Records in Google Sheets
+
+- Open Google Sheets file
+- Update expense and revenue records
+
+```mermaid
+%%{
+  init: {
+    'flowchart': {
+      'useMaxWidth': false,
+      'htmlLabels': true
+    },
+    'themeVariables': {
+      'fontSize': '10px'
+    }
+  }
+}%%
+flowchart LR
+    A["Open Google Sheets file"] --> B["Update expense and revenue records"]
+```
+
+## Phase 4 — Prepare and send Tax Declaration

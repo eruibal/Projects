@@ -55,30 +55,25 @@ Two CTAs with equal visual weight lead to very different destinations, creating 
 ### Critical
 
 1. Quote form has no product pre-selection
-
 Flow 03 sends users to `techaus.mx/cotizar?tipo=X` from product cards, but the quote form still shows a generic "Datos del seguro" field with no context. Users must re-select the product they already chose, adding unnecessary friction right before the highest-intent moment in the funnel.
 
 2. Thank-you page is a dead end with no re-engagement
-
 After form submission at `/cotizar/gracias`, the only option shown is "Volver al inicio." There is no upsell to a second product, no WhatsApp CTA, no social proof, and no referral prompt. Users who just converted are the warmest audience on the site and are being shown the exit door.
 
 3. Hero CTA "Ver Soluciones" routes to catalog, not quote
-
 Clicking "Ver Soluciones" takes users to `/proteccion` (the catalog) rather than starting a quote. High-intent users who engage with the primary hero CTA should be able to begin quoting immediately, not browse a product listing first.
 
 ### Warnings
 
 1. Dual CTAs in the bottom banner have identical visual hierarchy
-
 Flow 04's bottom banner presents "Hablar con un asesor" and "Cotizar en línea" at the same visual weight, creating ambiguity. Users with high intent who want a price may accidentally route themselves to the contact page instead.
 
 2. No lead capture before the full quote form
-
 There is zero email or phone capture earlier in the funnel. If a user abandons the multi-field `/cotizar` form halfway through, the lead is lost entirely. A single-field micro-capture on product pages would allow recovery via email automation.
 
 ### Optimisations
 
-1. `/servicios` and `/nosotros` have no connection to the quote flow
+`/servicios` and `/nosotros` have no connection to the quote flow
 
 Both pages are reachable from the primary nav but neither includes a CTA pointing to `/cotizar`. These pages likely carry meaningful dwell time from users doing due diligence before buying — a persistent floating CTA would capture that in-session intent.
 

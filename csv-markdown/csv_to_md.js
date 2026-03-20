@@ -1,6 +1,14 @@
 const fs = require('fs');
+const path = require('path');
 
-const input = fs.readFileSync('Code changes Analysis.csv', 'utf-8');
+const csvPath = process.argv[2];
+if (!csvPath) {
+    console.error('Usage: node csv_to_md.js <input.csv>');
+    process.exit(1);
+}
+const mdPath = csvPath.replace(/\.csv$/i, '') + '.md';
+
+const input = fs.readFileSync(csvPath, 'utf-8');
 
 // Parse CSV manually
 const rows = [];
@@ -49,8 +57,20 @@ const title = rows[0][0];
 const summaryItem1 = rows[1][1];
 const summaryItem2 = rows[2][1];
 
-// 3. The rest is the table
-const tableRows = rows.slice(3);
+// 3. The rest is the table — merge continuation rows (both Category and Section empty)
+const rawTableRows = rows.slice(3);
+const tableRows = [];
+for (const row of rawTableRows) {
+    const category = (row[0] || '').trim();
+    const section = (row[1] || '').trim();
+    const description = (row[2] || '').trim();
+    if (category === '' && section === '' && tableRows.length > 0) {
+        const last = tableRows[tableRows.length - 1];
+        last[2] = last[2] ? last[2] + '<br>' + description : description;
+    } else {
+        tableRows.push([...row]);
+    }
+}
 
 let maxCols = 0;
 for (const row of tableRows) {
@@ -81,5 +101,5 @@ for (let i = 0; i < tableRows.length; i++) {
     md += '| ' + row.join(' | ') + ' |\n';
 }
 
-fs.writeFileSync('Code changes Analysis.md', md);
-console.log('Markdown successfully updated.');
+fs.writeFileSync(mdPath, md);
+console.log(`Markdown written to ${mdPath}`);
