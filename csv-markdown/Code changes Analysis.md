@@ -1,0 +1,30 @@
+# ZIP-1672: Add Identities Menu to Record Linking with Linked Records Detail View
+
+## Summary
+- Compile a summary of the code changes from PR #1072 and write it to the plan file for reference
+- Adds a new "Link Records" feature to allow users to browse datasets and view consolidated linked record data
+
+| Category | Section | Description |
+|---|---|---|
+| New Components: | ConsolidateDataComponent | • Modal displaying consolidated linked records with dynamic columns based on field mappings. Handles pagination and filtering |
+|  |  | • Handles pagination and filtering |
+|  | DatasetListComponent | • Main page showing datasets with processed records |
+|  |  | • Users click a row to open the consolidate data modal |
+|  |  | • LinkRecordsModule with routing, protected by authentication and permission guards<br>Key Features |
+| New Module: | LinkRecordsModule with routing | • Protected by authentication and permission guards<br>Key Features: |
+|  | Key Features: | • Interactive data table showing datasets |
+|  |  | • Modal detail view with consolidated record data |
+|  |  | • Dynamic column generation based on field mappings |
+|  |  | • Pagination and filtering via ABP's ListService |
+|  |  | • Backend Changes (ASP.NET Core) |
+| New API Methods | GetLinkRecordsConsolidatedDataAsync() | • Returns consolidated linked records with paging/filtering |
+|  | GetDatasetFieldMappingsWithStandardFieldAsync() | • Returns field mappings with standard field names |
+|  | Repository Enhancements: | • LinkRecordRepository queries for retrieving consolidated data |
+|  |  | • Flattens linked records to dictionary format with standard field names<br>Data Models |
+|  | LinkRecordConsolidatedDataInputDto | • Input DTO for consolidated data queries |
+|  | DatasetFieldMappingWithStandardFieldDto | • Maps dataset fields to standard names |
+| Architecture | The implementation follows the project patterns: | • Standalone Angular components with signal-based state |
+|  |  | • ABP services for pagination (ListService) and tracking (TrackByService) |
+|  |  | • Proper cleanup of RxJS subscriptions on component destroy |
+|  |  | • Localization support (English/Spanish for menu items and enum values) |
+|  |  | • Total changes: 41 files, ~2100+ lines added, maintaining clean separation between frontend UI and backend API logic |
