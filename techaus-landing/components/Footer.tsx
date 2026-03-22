@@ -12,7 +12,7 @@ export default function Footer() {
                 <Shield className="w-5 h-5" />
               </div>
               <span className="font-heading font-bold text-xl text-white tracking-tight">
-                TECH<span className="text-techaus-accent">AUS</span>
+                TEC<span className="text-techaus-accent">HAUS</span>
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">

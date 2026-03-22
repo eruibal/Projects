@@ -18,7 +18,7 @@ export default function Navigation() {
               <Umbrella className="w-6 h-6" />
             </div>
             <span className="font-heading font-bold text-2xl text-techaus-primary tracking-tight">
-              TECH<span className="text-techaus-accent">AUS</span>
+              TEC<span className="text-techaus-accent">HAUS</span>
             </span>
           </Link>
 
