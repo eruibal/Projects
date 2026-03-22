@@ -84,7 +84,7 @@ class _FormPageState extends State<FormPage> {
         decoration: BoxDecoration(
           gradient: RadialGradient(
             colors: [
-              const Color(0xFF4F46E5).withOpacity(0.15),
+              const Color(0xFF4F46E5).withValues(alpha: 0.15),
               Colors.transparent,
             ],
             center: const Alignment(-0.7, 0.0),
@@ -104,14 +104,14 @@ class _FormPageState extends State<FormPage> {
                     borderRadius: BorderRadius.circular(24.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         blurRadius: 50,
                         offset: const Offset(0, 25),
                         spreadRadius: -12,
                       ),
                     ],
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.05),
+                      color: Colors.white.withValues(alpha: 0.05),
                     ),
                   ),
                   child: Form(
@@ -164,7 +164,7 @@ class _FormPageState extends State<FormPage> {
                                 hintText: 'John Doe',
                                 hintStyle: const TextStyle(color: Color(0xFF475569)),
                                 filled: true,
-                                fillColor: const Color(0xFF0F172A).withOpacity(0.6),
+                                fillColor: const Color(0xFF0F172A).withValues(alpha: 0.6),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: const BorderSide(color: Color(0xFF334155), width: 2),
@@ -210,7 +210,7 @@ class _FormPageState extends State<FormPage> {
                                 hintText: '+1 (555) 000-0000',
                                 hintStyle: const TextStyle(color: Color(0xFF475569)),
                                 filled: true,
-                                fillColor: const Color(0xFF0F172A).withOpacity(0.6),
+                                fillColor: const Color(0xFF0F172A).withValues(alpha: 0.6),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: const BorderSide(color: Color(0xFF334155), width: 2),
@@ -279,9 +279,9 @@ class _FormPageState extends State<FormPage> {
                           Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF10B981).withOpacity(0.1),
+                              color: const Color(0xFF10B981).withValues(alpha: 0.1),
                               border: Border.all(
-                                color: const Color(0xFF10B981).withOpacity(0.2),
+                                color: const Color(0xFF10B981).withValues(alpha: 0.2),
                               ),
                               borderRadius: BorderRadius.circular(12),
                             ),
