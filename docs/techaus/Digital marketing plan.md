@@ -5,24 +5,18 @@
 **Date:** February 2026  
 **Version:** 1.0
 
----
-
 ## Executive Summary
 
-TECHAUS has a strong product portfolio (4 insurance lines), reputable carrier partnerships (AXA, GNP, Qualitas, CHUBB), and meaningful social proof (+800 familias). The landing page communicates trust and professionalism, but lacks the conversion mechanics, engagement tools, and traffic channels needed to scale lead generation consistently.
-
-This plan outlines a 12-month roadmap across three phases — from quick wins deployable in days to a self-sustaining growth engine by month 12.
-
-**North Star Target:** 200+ qualified leads/month at under $300 MXN CPL, with 20–30% of new business driven by referrals.
-
----
+- TECHAUS has a strong product portfolio (4 insurance lines), reputable distribution partnerships (AXA, GNP, Qualitas, CHUBB), and meaningful social proof (+800 familias). The landing page communicates trust and professionalism, but lacks the conversion mechanics, engagement tools, and traffic channels needed to scale lead generation consistently.
+- This plan outlines a 12-month roadmap across three phases — from quick wins deployable in days to a self-sustaining growth engine by month 12.
+- **North Star Target:** 200+ qualified leads/month at under $300 MXN CPL, with 20–30% of new business driven by referrals.
 
 ## Situation Analysis
 
 ### What's Working
 
 - Clear value proposition: "Protección integral con el respaldo de profesionales"
-- Carrier logos (AXA, GNP, Qualitas, CHUBB) provide instant credibility
+- Distribution logos (AXA, GNP, Qualitas, CHUBB) provide instant credibility
 - "+800 Familias" social proof — a strong differentiator
 - Clean 4-product layout (Gastos Médicos, Auto, Vida, Hogar/Empresa)
 - Human element: "Tecnología y calidez humana en un solo lugar" is compelling copy

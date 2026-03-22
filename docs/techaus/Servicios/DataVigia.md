@@ -5,8 +5,6 @@
 **Date:** February 2026  
 **Version:** 1.0
 
----
-
 ## Problem definition
 
 El mercado móvil total es de unas 158 millones de líneas activas (datos aproximados de 2025), y Telcel tiene la mayor participación (cerca del 70%). El postpago representa solo alrededor del 16-17% del total de líneas móviles en el país, lo que coincide con estas cifras.Estos datos provienen de reportes oficiales de América Móvil y análisis del sector.
