@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Montserrat, Open_Sans } from 'next/font/google'
 import './globals.css'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -26,8 +28,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${montserrat.variable} ${openSans.variable}`}>
-      <body className="font-sans text-slate-600 antialiased bg-slate-50">
-        {children}
+      <body className="font-sans text-slate-600 antialiased bg-slate-50 flex flex-col min-h-screen">
+        <Navigation />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
