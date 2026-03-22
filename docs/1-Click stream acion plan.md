@@ -22,31 +22,12 @@ The core problem is a **5-click minimum path to a lead** with zero partial captu
 
 ## Flow Overview
 
-### Flow 01 — Main Navigation
-
-`Homepage → Protección (dropdown) → [Gastos Médicos / Auto / Vida / Hogar] → Cuida Servicios → Nosotros → Cotizar Ahora`
-
-Navigation is logically structured but `/servicios` and `/nosotros` are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow.
-
-### Flow 02 — Hero Section CTAs
-
-`Homepage Hero → "Ver Soluciones" → Product Catalog → Quote Form`  
-`Homepage Hero → "Contáctanos" → Contact Page → Confirmation`
-
-The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires.
-
-### Flow 03 — Product Cards → Quote
-
-`"Protección para lo que más amas" section → Product card "Saber más" → Individual product page (Cotizar →) → Quote Form → Thank-you page`
-
-The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity.
-
-### Flow 04 — Bottom CTA Banner
-
-`"¿Listo para asegurar tu futuro?" → "Hablar con un asesor" → Contact page`  
-`"¿Listo para asegurar tu futuro?" → "Cotizar en línea" → Quote form`
-
-Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users.
+| Title | Description | Check |
+| --- | --- | --- |
+| **Flow 01 — Main Navigation** | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow. |  |
+| **Flow 02 — Hero Section CTAs** | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires. |  |
+| **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity. |  |
+| **Flow 04 — Bottom CTA Banner** | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users." |  |
 
 ---
 
