@@ -46,6 +46,10 @@ Retain only the relevant columns. Delete all others:
 - Verify `Estado del Comprobante` is **Vigente**.
 - Flag or remove `Cancelado` invoices to avoid overstating expenses.
 
+### 6. Record expenses in Journal template
+
+- Update Google Sheets template
+
 [Tax preparation map](https://photos.google.com/share/AF1QipP0N1JYkW5i07xTuT3GWW9Y7HAsD0RFcHQpp0mLXSpvVmIHc3Pz6y0OdqIeN_tftg/photo/AF1QipN7or3_tJRaH1_Tu84AOy1cJyrqDY9-xSchB_Ou?key=N014d0lfZkZmb0dIaTF2dTBYSkpvSFNvMjRnenN3)
 
 ```mermaid
@@ -81,6 +85,10 @@ flowchart LR
     %% Phase 4: Final Review
     direction LR
     F1["Verify Status = Vigente"] --> F2["Remove Cancelled"]
+
+    %% Phase 5: Record Expenses
+    direction LR
+    F2["Remove Cancelled"] --> G1["Record Expenses"]
 
     %% Inter-phase Connections
     A4 --> B1
