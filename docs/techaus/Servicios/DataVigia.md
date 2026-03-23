@@ -1,11 +1,11 @@
-# DataVigía by TECHAUS — Product & Strategy Brief
+# DataVigía by TECHAUS
 
 **Prepared by:** Digital Marketing Analysis  
 **Parent brand:** TECHAUS  
 **Date:** February 2026  
 **Version:** 1.0
 
-## Problem definition
+## Stragegic opportunity
 
 El mercado móvil total es de unas 158 millones de líneas activas (datos aproximados de 2025), y Telcel tiene la mayor participación (cerca del 70%). El postpago representa solo alrededor del 16-17% del total de líneas móviles en el país, lo que coincide con estas cifras.Estos datos provienen de reportes oficiales de América Móvil y análisis del sector.
 
@@ -25,22 +25,16 @@ El mercado móvil total es de unas 158 millones de líneas activas (datos aproxi
 | Promedio realista             | 1.45                            | \~11 millones                 | \~31 %                               |
 | Alto (más empresarial)        | 1.6                             | \~10 millones                 | \~37 %                               |
 
-### Motivation
-
 1. I have been  struggling with this  problem with post payment mobile phone subscriptions for my family plans.
 2. Our communications company Telcel actually does very little to protect excessive consumption of data packages, and I believe a strong motivation for them is to charge more on every phone bill.
 3. Their alert management app for excess data consumption is very limited and I can almost think they encourage you to unwillingly go pass beyond your data consumption limit every month as they turn the other way every time this happens
 4. My motivation is to create a very simple working process that would be so easy to set up and be able to provide valuable feedback on a frequent basis so that the responsible party has relevant information as to allow him not to go.
 
-## Executive Summary
+## Potential solution
 
 DataVigía is a WhatsApp-native data consumption monitoring service for postpaid mobile phone subscribers in Mexico. For a small monthly fee, subscribers receive automated alerts about their data usage, overage warnings, and usage summaries — directly in WhatsApp, the channel they already live in.
 
-Beyond its standalone value, DataVigía functions as a strategic trust-building engine for TECHAUS's core insurance business. It solves a real, recurring financial pain point, establishes daily brand presence, and converts a cold-audience problem (insurance skepticism) into a warm-audience opportunity by the time an insurance offer is introduced.
-
----
-
-## The Problem DataVigía Solves
+Beyond its standalone value, DataVigía functions as a strategic trust-building engine for TECHAUS's core financial protection business. It solves a real, recurring financial pain point, establishes daily brand presence, and converts a cold-audience problem (insurance skepticism) into a warm-audience opportunity by the time an insurance offer is introduced.
 
 Mobile data overages on postpaid plans are a consistent, recurring source of financial frustration for Mexican consumers. Carriers — Telcel, AT&T Mexico, Movistar, Izzi — do not proactively alert subscribers in time to avoid overage charges. The result is a predictable monthly surprise on the bill.
 
@@ -51,15 +45,6 @@ This pain point is:
 - **Financially tangible** — overage charges range from $100–500+ MXN per incident
 - **Emotionally charged** — people feel cheated, not just inconvenienced
 - **Underserved** — no dominant, trusted solution exists in Mexico today
-
----
-
-## Product Overview
-
-**Name:** DataVigía by TECHAUS  
-**Tagline:** *Tu datos, bajo control.*  
-**Delivery channel:** WhatsApp Business  
-**Pricing:** $49–99 MXN/month (tiered)
 
 ### How It Works
 
