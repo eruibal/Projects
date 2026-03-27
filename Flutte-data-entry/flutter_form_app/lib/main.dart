@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'po_mockup.dart';
 
 void main() {
   runApp(const CloudDataFormApp());
@@ -306,6 +307,20 @@ class _FormPageState extends State<FormPage> {
                             ),
                           ),
                         ],
+                        const SizedBox(height: 24),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PurchaseOrderScreen()),
+                            );
+                          },
+                          icon: const Icon(Icons.receipt_long, color: Color(0xFF94A3B8)),
+                          label: const Text(
+                            'View PO Mockup (Architecture Validation)',
+                            style: TextStyle(color: Color(0xFF94A3B8)),
+                          ),
+                        ),
                       ],
                     ),
                   ),
