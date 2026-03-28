@@ -1,4 +1,5 @@
-import { Building2, Umbrella, Car } from 'lucide-react'
+import { Umbrella, Car } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Partners() {
   return (
@@ -8,8 +9,8 @@ export default function Partners() {
           Con el respaldo de las mejores compañías
         </p>
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-          <div className="text-2xl font-bold text-slate-700 flex items-center gap-2">
-            <Building2 className="w-6 h-6 text-red-600" /> AXA
+          <div className="flex items-center">
+            <Image src="/images/axa-logo.svg" alt="AXA" width={80} height={27} />
           </div>
           <div className="text-2xl font-bold text-slate-700 flex items-center gap-2">
             <Umbrella className="w-6 h-6 text-orange-500" /> GNP
@@ -17,8 +18,8 @@ export default function Partners() {
           <div className="text-2xl font-bold text-slate-700 flex items-center gap-2">
             <Car className="w-6 h-6 text-purple-600" /> Quálitas
           </div>
-          <div className="text-xl font-bold text-slate-500 border border-slate-300 px-2 py-1 rounded">
-            CONDUSEF
+          <div className="flex items-center">
+            <Image src="/images/seguros-atlas.png" alt="Seguros Atlas" width={140} height={40} className="object-contain invert" />
           </div>
         </div>
       </div>
