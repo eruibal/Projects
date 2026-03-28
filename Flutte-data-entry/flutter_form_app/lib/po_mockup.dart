@@ -5,6 +5,7 @@ class PurchaseOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDesktop = MediaQuery.sizeOf(context).width > 768;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Purchase Order Mockup'),
@@ -24,28 +25,23 @@ class PurchaseOrderScreen extends StatelessWidget {
           ),
         ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1000), // Max width for wider screens
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildHeaderCard(),
-                  const SizedBox(height: 24),
-                  _buildDetailsCard(),
-                  const SizedBox(height: 24),
-                  _buildSummaryFooter(),
-                ],
-              ),
-            ),
+          padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHeaderCard(isDesktop),
+              SizedBox(height: isDesktop ? 24 : 16),
+              _buildDetailsCard(isDesktop),
+              SizedBox(height: isDesktop ? 24 : 16),
+              _buildSummaryFooter(isDesktop),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildHeaderCard() {
+  Widget _buildHeaderCard(bool isDesktop) {
     return Card(
       color: const Color(0xFF1E293B),
       shape: RoundedRectangleBorder(
@@ -55,19 +51,21 @@ class PurchaseOrderScreen extends StatelessWidget {
       elevation: 8,
       shadowColor: Colors.black.withValues(alpha: 0.5),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Purchase Order',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                Expanded(
+                  child: Text(
+                    'Purchase Order',
+                    style: TextStyle(
+                      fontSize: isDesktop ? 24 : 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Container(
@@ -88,38 +86,67 @@ class PurchaseOrderScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const Divider(height: 32, color: Color(0xFF334155)),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: _buildInfoColumn(
+            Divider(height: isDesktop ? 32 : 24, color: const Color(0xFF334155)),
+            if (isDesktop)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _buildInfoColumn(
+                      'Vendor Details',
+                      'Tech Supplies Corp.\n123 Innovation Drive\nSilicon Valley, CA 94025\ncontact@techsupplies.com',
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildInfoColumn(
+                      'Shipping Address',
+                      'Headquarters\n456 Main Street\nNew York, NY 10001\nAttn: Receiving Dept.',
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        _buildInfoRow('PO Number:', 'PO-2023-0892', isBold: true, isDesktop: isDesktop),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Date:', 'Oct 24, 2023', isDesktop: isDesktop),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Payment Terms:', 'Net 30', isDesktop: isDesktop),
+                        const SizedBox(height: 8),
+                        _buildInfoRow('Expected Delivery:', 'Nov 01, 2023', isDesktop: isDesktop),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildInfoColumn(
                     'Vendor Details',
                     'Tech Supplies Corp.\n123 Innovation Drive\nSilicon Valley, CA 94025\ncontact@techsupplies.com',
                   ),
-                ),
-                Expanded(
-                  child: _buildInfoColumn(
+                  const SizedBox(height: 20),
+                  _buildInfoColumn(
                     'Shipping Address',
                     'Headquarters\n456 Main Street\nNew York, NY 10001\nAttn: Receiving Dept.',
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildInfoRow('PO Number:', 'PO-2023-0892', isBold: true),
+                      _buildInfoRow('PO Number:', 'PO-2023-0892', isBold: true, isDesktop: isDesktop),
                       const SizedBox(height: 8),
-                      _buildInfoRow('Date:', 'Oct 24, 2023'),
+                      _buildInfoRow('Date:', 'Oct 24, 2023', isDesktop: isDesktop),
                       const SizedBox(height: 8),
-                      _buildInfoRow('Payment Terms:', 'Net 30'),
+                      _buildInfoRow('Payment Terms:', 'Net 30', isDesktop: isDesktop),
                       const SizedBox(height: 8),
-                      _buildInfoRow('Expected Delivery:', 'Nov 01, 2023'),
+                      _buildInfoRow('Expected Delivery:', 'Nov 01, 2023', isDesktop: isDesktop),
                     ],
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
           ],
         ),
       ),
@@ -151,10 +178,10 @@ class PurchaseOrderScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, {bool isBold = false}) {
+  Widget _buildInfoRow(String label, String value, {bool isBold = false, bool isDesktop = true}) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: isDesktop ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Text(
           label,
@@ -176,7 +203,13 @@ class PurchaseOrderScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailsCard() {
+  Widget _buildDetailsCard(bool isDesktop) {
+    final items = [
+      {'code': 'LAP-X1-PRO', 'desc': 'X1 Pro Developer Laptop\n16GB RAM, 512GB SSD', 'qty': '5', 'price': '\$1,299.00', 'total': '\$6,495.00'},
+      {'code': 'MON-4K-27', 'desc': '27" 4K IPS Monitor\nUSB-C PD', 'qty': '10', 'price': '\$349.00', 'total': '\$3,490.00'},
+      {'code': 'MOU-WL-MX', 'desc': 'Wireless Productivity Mouse', 'qty': '10', 'price': '\$89.00', 'total': '\$890.00'},
+    ];
+
     return Card(
       color: const Color(0xFF1E293B),
       shape: RoundedRectangleBorder(
@@ -190,7 +223,7 @@ class PurchaseOrderScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(isDesktop ? 20.0 : 16.0),
             child: const Text(
               'Line Items',
               style: TextStyle(
@@ -201,56 +234,129 @@ class PurchaseOrderScreen extends StatelessWidget {
             ),
           ),
           const Divider(height: 1, color: Color(0xFF334155)),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              headingRowColor: WidgetStateProperty.all(const Color(0xFF0F172A).withValues(alpha: 0.5)),
-              dataRowMaxHeight: 65,
-              dataRowMinHeight: 65,
-              dividerThickness: 1,
-              columns: const [
-                DataColumn(label: Text('Item Code', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                DataColumn(label: Text('Description', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                DataColumn(label: Text('Qty', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8))), numeric: true),
-                DataColumn(label: Text('Unit Price', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8))), numeric: true),
-                DataColumn(label: Text('Total', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8))), numeric: true),
+          if (isDesktop)
+            Column(
+              children: [
+                // Table Header
+                Container(
+                  color: const Color(0xFF0F172A).withValues(alpha: 0.5),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                  child: Row(
+                    children: const [
+                      Expanded(flex: 2, child: Text('Item Code', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                      Expanded(flex: 4, child: Text('Description', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                      Expanded(flex: 1, child: Text('Qty', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                      Expanded(flex: 2, child: Text('Unit Price', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                      Expanded(flex: 2, child: Text('Total', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                    ],
+                  ),
+                ),
+                const Divider(height: 1, color: Color(0xFF334155)),
+                // Table Rows
+                ...items.map((item) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 2, child: Text(item['code']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                            Expanded(flex: 4, child: Text(item['desc']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                            Expanded(flex: 1, child: Text(item['qty']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                            Expanded(flex: 2, child: Text(item['price']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                            Expanded(flex: 2, child: Text(item['total']!, textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
+                          ],
+                        ),
+                      ),
+                      const Divider(height: 1, color: Color(0xFF334155)),
+                    ],
+                  );
+                }),
               ],
-              rows: const [
-                DataRow(cells: [
-                  DataCell(Text('LAP-X1-PRO', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('X1 Pro Developer Laptop\n16GB RAM, 512GB SSD', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('5', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$1,299.00', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$6,495.00', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('MON-4K-27', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('27" 4K IPS Monitor\nUSB-C PD', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('10', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$349.00', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$3,490.00', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
-                ]),
-                DataRow(cells: [
-                  DataCell(Text('MOU-WL-MX', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('Wireless Productivity Mouse', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('10', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$89.00', style: TextStyle(color: Color(0xFFE2E8F0)))),
-                  DataCell(Text('\$890.00', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
-                ]),
-              ],
+            )
+          else
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              separatorBuilder: (context, index) => const Divider(height: 1, color: Color(0xFF334155)),
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              item['desc']!,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFE2E8F0),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            item['total']!,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF334155),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              item['code']!,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF94A3B8),
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '${item['qty']} x ${item['price']}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF94A3B8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryFooter() {
+  Widget _buildSummaryFooter(bool isDesktop) {
     return Align(
-      alignment: Alignment.centerRight,
+      alignment: isDesktop ? Alignment.centerRight : Alignment.center,
       child: Container(
-        width: 350,
-        padding: const EdgeInsets.all(24.0),
+        width: isDesktop ? 350 : double.infinity,
+        padding: EdgeInsets.all(isDesktop ? 24.0 : 16.0),
         decoration: BoxDecoration(
           color: const Color(0xFF1E293B),
           borderRadius: BorderRadius.circular(16),
