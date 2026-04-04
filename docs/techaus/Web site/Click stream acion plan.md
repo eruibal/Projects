@@ -24,7 +24,7 @@ The core problem is a **5-click minimum path to a lead** with zero partial captu
 
 | Title | Description | Check |
 | --- | --- | --- |
-| **Flow 01 — Main Navigation** | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow. |  |
+| **Flow 01 — Main Navigation** | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow. | Checked the navigation flow and it is working well, at this point I think clicking on the logo header on the upper left corner and take it back to the landing page should be enough |
 | **Flow 02 — Hero Section CTAs** | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires. |  |
 | **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity. |  |
 | **Flow 04 — Bottom CTA Banner** | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users." |  |
