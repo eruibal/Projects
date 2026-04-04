@@ -162,15 +162,12 @@ function createIssue(row, epicKey, componentId) {
   const dataRange = sheet.getRange(row, 1, 1, 4);
   const values = dataRange.getValues()[0];
   
-  // Updated Mapping:
-  // Col A (0): Summary
-  // Col B (1): Issue Type
-  // Col C (2): Priority
-  // Col D (3): Description
-  const summary = values[0];
-  const issueType = values[1] || 'Task'; // Changed from values[2]
-  const priority = values[2];            // Changed from values[3]
-  const description = values[3];         // Changed from values[1]
+  // Mapping:
+  // Col D (3): Summary
+  const summary = values[3];
+  const issueType = 'Story';
+  const priority = 'High';
+  const description = values[1];
 
   if (!summary) {
     throw new Error('Summary (Column A) is required.');
@@ -217,13 +214,23 @@ function createIssue(row, epicKey, componentId) {
   // API Call using v3
   const json = callJiraApi('/rest/api/3/issue', 'post', payload);
 
-  if (json.key) {  
+  if (json.key) {
+    const jiraUrl = PropertiesService.getScriptProperties().getProperty('JIRA_URL');
+    const issueUrl = `${jiraUrl}/browse/${json.key}`;
+
+    // Hyperlink the summary cell (Column D) to the created Jira issue
+    const richTextValue = SpreadsheetApp.newRichTextValue()
+      .setText(summary)
+      .setLinkUrl(issueUrl)
+      .build();
+    sheet.getRange(row, 4).setRichTextValue(richTextValue);
+
     // Attempt to transition the issue to "Selected for Development"
     try {
       transitionIssueToStatus(json.key, 'Selected for Development');
-      SpreadsheetApp.getUi().alert(`Success! Issue created: ${json.key} and moved to 'Selected for Development'.\n(Link: ${PropertiesService.getScriptProperties().getProperty('JIRA_URL')}/browse/${json.key})`);
+      SpreadsheetApp.getUi().alert(`Success! Issue created: ${json.key} and moved to 'Selected for Development'.\n(Link: ${issueUrl})`);
     } catch (e) {
-      SpreadsheetApp.getUi().alert(`Success! Issue created: ${json.key}, but failed to move status: ${e.message}\n(Link: ${PropertiesService.getScriptProperties().getProperty('JIRA_URL')}/browse/${json.key})`);
+      SpreadsheetApp.getUi().alert(`Success! Issue created: ${json.key}, but failed to move status: ${e.message}\n(Link: ${issueUrl})`);
     }
   }
 }
