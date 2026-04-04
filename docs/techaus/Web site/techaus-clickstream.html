@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHAUS — Clickstream & User Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --navy2: #0f2044;
+    --blue: #1a3a6b;
+    --cyan: #00c9e0;
+    --cyan2: #00a8c0;
+    --white: #f0f4ff;
+    --gray: #8a9bc0;
+    --gray2: #1e2d4a;
+    --success: #22d3a0;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --purple: #818cf8;
+
+    --screen-bg: #0f1e38;
+    --screen-border: #1e3358;
+    --arrow: #2a4a7a;
+    --label-bg: #0a1628cc;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: auto;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 36px;
+    background: rgba(10,22,40,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1a3358;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: var(--cyan);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: var(--navy);
+  }
+  .logo-text { font-weight: 700; font-size: 17px; letter-spacing: -0.3px; }
+  .logo-text span { color: var(--cyan); }
+  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray); }
+
+  .legend {
+    display: flex; gap: 20px; align-items: center;
+  }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray); }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ─── CANVAS ─── */
+  .canvas-wrap {
+    padding: 48px 40px 80px;
+    min-width: 1400px;
+  }
+
+  .flow-title {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--cyan);
+    margin-bottom: 6px;
+  }
+  .section-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  /* ─── FLOW ROW ─── */
+  .flow-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  /* ─── SCREEN NODE ─── */
+  .node {
+    flex-shrink: 0;
+    width: 180px;
+    background: var(--screen-bg);
+    border: 1.5px solid var(--screen-border);
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .node:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    box-shadow: 0 0 24px rgba(0,201,224,0.18);
+  }
+  .node.primary { border-color: var(--cyan); box-shadow: 0 0 18px rgba(0,201,224,0.12); }
+  .node.cta-node { border-color: var(--success); }
+  .node.cta-node:hover { border-color: var(--success); box-shadow: 0 0 24px rgba(34,211,160,0.2); }
+  .node.info-node { border-color: var(--purple); }
+  .node.info-node:hover { border-color: var(--purple); box-shadow: 0 0 24px rgba(129,140,248,0.2); }
+
+  .node-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+  }
+  .node.cta-node .node-bar { background: linear-gradient(90deg, var(--success), #0ea5a0); }
+  .node.info-node .node-bar { background: linear-gradient(90deg, var(--purple), #4f46e5); }
+
+  .node-browser {
+    background: #0b1a32;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 1px solid #142038;
+  }
+  .browser-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .bd-r { background: #ef4444; }
+  .bd-y { background: #f59e0b; }
+  .bd-g { background: #22c55e; }
+  .browser-url {
+    margin-left: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--gray);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .node-screen {
+    padding: 10px 12px 12px;
+    min-height: 100px;
+  }
+  .node-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--cyan);
+    margin-bottom: 5px;
+  }
+  .node.cta-node .node-tag { color: var(--success); }
+  .node.info-node .node-tag { color: var(--purple); }
+
+  .node-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .node-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .action-btn {
+    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .action-btn.primary { background: var(--cyan); color: var(--navy); border-color: var(--cyan); }
+  .action-btn.secondary { background: transparent; color: var(--cyan); border-color: #2a4a7a; }
+  .action-btn.success { background: var(--success); color: var(--navy); border-color: var(--success); }
+  .action-btn.outline { background: transparent; color: var(--gray); border-color: #2a4a7a; }
+  .action-btn.purple { background: var(--purple); color: var(--navy); border-color: var(--purple); }
+
+  .node-mini-screen {
+    background: linear-gradient(160deg, #0b1e3a 0%, #0a1628 100%);
+    border-radius: 5px;
+    padding: 6px 8px;
+    margin-top: 8px;
+    font-size: 8px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .mini-nav { display: flex; gap: 4px; margin-bottom: 4px; }
+  .mini-nav span {
+    background: #1a3358;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 7px;
+    color: var(--gray);
+  }
+  .mini-nav span.active { background: var(--cyan); color: var(--navy); }
+  .mini-hero {
+    background: linear-gradient(90deg, #0f2a4a, #1a3a6b);
+    border-radius: 3px;
+    padding: 5px 6px;
+    margin-top: 3px;
+  }
+  .mini-hero-line { height: 3px; border-radius: 2px; margin-bottom: 2px; }
+  .mini-btn-row { display: flex; gap: 3px; margin-top: 4px; }
+  .mini-btn { height: 7px; border-radius: 2px; }
+
+  /* ─── ARROW ─── */
+  .arrow-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 52px;
+    width: 52px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .arrow-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e3a5f, var(--cyan));
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left: 8px solid var(--cyan);
+  }
+  .arrow-label {
+    font-size: 8px;
+    font-family: 'DM Mono', monospace;
+    color: var(--gray);
+    margin-top: 5px;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .arrow-wrap.dashed .arrow-line {
+    background: none;
+    border-top: 2px dashed #2a4a7a;
+  }
+  .arrow-wrap.dashed .arrow-line::after { border-left-color: #2a4a7a; }
+
+  /* ─── BRANCH ─── */
+  .branch-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .branch-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* ─── FORK ─── */
+  .fork-line {
+    width: 52px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .fork-line .h-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #1e3a5f, var(--cyan));
+    position: relative;
+  }
+  .fork-line .h-line::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left: 8px solid var(--cyan);
+  }
+
+  .v-connector {
+    width: 2px;
+    flex-shrink: 0;
+    position: relative;
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+  .v-line { width: 2px; background: #1e3a5f; }
+
+  /* ─── SECTION DIVIDER ─── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 36px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: #1a3358; }
+  .section-divider-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray);
+    padding: 4px 14px;
+    border: 1px solid #1a3358;
+    border-radius: 20px;
+  }
+
+  /* ─── FLOW GRID ─── */
+  .flow-grid {
+    display: grid;
+    grid-template-columns: 180px 52px 180px 52px 180px 52px 180px 52px 180px;
+    align-items: start;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .grid-center { display: flex; align-items: center; height: 100%; }
+  .grid-arrow-cell { display: flex; align-items: flex-start; padding-top: 52px; }
+
+  /* ─── ANNOTATION ─── */
+  .annotation {
+    font-size: 10px;
+    color: var(--gray);
+    margin-top: 4px;
+    font-style: italic;
+    padding: 0 2px;
+    line-height: 1.5;
+  }
+
+  /* ─── SWIMLANE ─── */
+  .swimlane {
+    background: rgba(15,32,68,0.4);
+    border: 1px solid #1a3358;
+    border-radius: 16px;
+    padding: 28px 28px 24px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .swimlane-label {
+    position: absolute;
+    top: -11px;
+    left: 20px;
+    background: var(--navy);
+    padding: 0 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--cyan);
+  }
+
+  /* ─── STEP INDICATOR ─── */
+  .step-badge {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cyan);
+    color: var(--navy);
+    font-size: 9px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .node.cta-node .step-badge { background: var(--success); }
+
+  /* ─── NODE BADGE ─── */
+  .node-badge {
+    position: absolute;
+    top: 28px;
+    right: 10px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+  }
+  .badge-cyan { background: var(--cyan); color: var(--navy); }
+  .badge-success { background: var(--success); color: var(--navy); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 180px);
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .sub-flow {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding-left: 60px;
+    margin-top: 8px;
+  }
+
+  /* stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    padding: 20px 28px;
+    background: rgba(0,201,224,0.05);
+    border: 1px solid rgba(0,201,224,0.12);
+    border-radius: 12px;
+    margin-bottom: 40px;
+  }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-val { font-size: 22px; font-weight: 700; color: var(--white); letter-spacing: -1px; }
+  .stat-val span { color: var(--cyan); }
+  .stat-key { font-size: 10px; color: var(--gray); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-div { width: 1px; background: #1a3358; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">TA</div>
+    <div class="logo-text">TECH<span>AUS</span></div>
+  </div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--cyan)"></div> Page / Screen</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--success)"></div> Conversion CTA</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--purple)"></div> Info / Support</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--warning)"></div> Dropdown</div>
+  </div>
+  <div class="header-meta">Clickstream v1.0 — Feb 2026</div>
+</header>
+
+<div class="canvas-wrap">
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-val">4<span> flows</span></div><div class="stat-key">Primary Flows</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-val">12<span> nodes</span></div><div class="stat-key">Unique Screens</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-val">3<span> CTAs</span></div><div class="stat-key">Conversion Points</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-val">4<span> products</span></div><div class="stat-key">Insurance Lines</div></div>
+    <div class="stat-div"></div>
+    <div class="stat"><div class="stat-val">2<span> paths</span></div><div class="stat-key">Quote Entry Points</div></div>
+  </div>
+
+  <!-- ─── FLOW 1: Main Navigation ─── -->
+  <div class="flow-title">Flow 01</div>
+  <div class="section-label">Homepage → Navigation Paths</div>
+
+  <div class="swimlane">
+    <div class="swimlane-label">Primary Navigation Bar</div>
+    <div class="flow-row">
+
+      <!-- HOME -->
+      <div class="node primary" style="position:relative;">
+        <div class="step-badge">START</div>
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div>
+          <div class="browser-dot bd-y"></div>
+          <div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Homepage</div>
+          <div class="node-title">Landing Page</div>
+          <div class="node-mini-screen">
+            <div class="mini-nav">
+              <span class="active">Inicio</span>
+              <span>Protección</span>
+              <span>Servicios</span>
+              <span>Nosotros</span>
+            </div>
+            <div class="mini-hero">
+              <div class="mini-hero-line" style="width:80%;background:#2a4a7a;"></div>
+              <div class="mini-hero-line" style="width:60%;background:#2a4a7a;"></div>
+              <div class="mini-btn-row">
+                <div class="mini-btn" style="width:40px;background:var(--cyan);"></div>
+                <div class="mini-btn" style="width:40px;background:#1a3a6b;border:1px solid #2a5a8a;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- arrow → PROTECCIÓN -->
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Nav click</div>
+      </div>
+
+      <!-- PROTECCIÓN -->
+      <div class="node" style="position:relative;">
+        <div class="node-bar" style="background:linear-gradient(90deg,var(--warning),#d97706)"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/proteccion</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag" style="color:var(--warning)">Dropdown</div>
+          <div class="node-title">Protección Menu</div>
+          <div class="node-actions">
+            <div class="action-btn outline">Gastos Médicos</div>
+            <div class="action-btn outline">Seguro de Auto</div>
+            <div class="action-btn outline">Seguro de Vida</div>
+            <div class="action-btn outline">Hogar y Empresa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Select</div>
+      </div>
+
+      <!-- CUIDA SERVICIOS -->
+      <div class="node info-node" style="position:relative;">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/servicios</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Cuida Servicios</div>
+          <div class="node-title">Servicios & Beneficios</div>
+          <div class="node-actions">
+            <div class="action-btn purple">Ver servicios</div>
+            <div class="action-btn outline">Cotizar plan</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Nav click</div>
+      </div>
+
+      <!-- NOSOTROS -->
+      <div class="node info-node">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/nosotros</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Nosotros</div>
+          <div class="node-title">Equipo & Empresa</div>
+          <div class="node-actions">
+            <div class="action-btn purple">Conocer el equipo</div>
+            <div class="action-btn outline">Trabaja con nosotros</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Nav click</div>
+      </div>
+
+      <!-- COTIZAR AHORA -->
+      <div class="node cta-node" style="position:relative;">
+        <div class="step-badge" style="background:var(--success)">⭐ PRIMARY CTA</div>
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/cotizar</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Cotizar Ahora</div>
+          <div class="node-title">Iniciar Cotización</div>
+          <div class="node-actions">
+            <div class="action-btn success">Empezar cotización</div>
+          </div>
+          <div style="font-size:8px;color:var(--gray);margin-top:6px;">Selecciona tipo de seguro → Datos personales → Cotización</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── FLOW 2: Hero CTAs ─── -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Flow 02 — Hero Section CTAs</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="flow-title">Flow 02</div>
+  <div class="section-label">Hero Buttons → User Decisions</div>
+
+  <div class="swimlane">
+    <div class="swimlane-label">Hero Section — Above the Fold</div>
+    <div style="display:flex;gap:0;align-items:flex-start;">
+
+      <!-- HOME again -->
+      <div class="node primary">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Hero</div>
+          <div class="node-title">"Protección integral con el respaldo de profesionales"</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Ver Soluciones →</div>
+            <div class="action-btn secondary">Contáctanos</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:36px;padding:48px 0 0;">
+        <!-- upper fork -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div class="arrow-wrap" style="padding-top:0;">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">"Ver Soluciones"</div>
+          </div>
+          <div class="node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/proteccion</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Soluciones</div>
+              <div class="node-title">Catálogo de Seguros</div>
+              <div class="node-actions">
+                <div class="action-btn primary">Cotizar seguro</div>
+                <div class="action-btn outline">Más información</div>
+              </div>
+            </div>
+          </div>
+          <div class="arrow-wrap">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">Choose product</div>
+          </div>
+          <div class="node cta-node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/cotizar</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Cotización</div>
+              <div class="node-title">Formulario de Cotización</div>
+              <div class="node-actions">
+                <div class="action-btn success">Obtener precio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- lower fork -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div class="arrow-wrap dashed" style="padding-top:0;">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">"Contáctanos"</div>
+          </div>
+          <div class="node info-node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/contacto</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Contacto</div>
+              <div class="node-title">Hablar con Asesor</div>
+              <div class="node-actions">
+                <div class="action-btn purple">Enviar mensaje</div>
+                <div class="action-btn outline">WhatsApp</div>
+              </div>
+            </div>
+          </div>
+          <div class="arrow-wrap dashed">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">Callback / Chat</div>
+          </div>
+          <div class="node info-node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/confirmacion</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Confirmación</div>
+              <div class="node-title">¡Mensaje Enviado!</div>
+              <div style="font-size:9px;color:var(--success);margin-top:8px;">✓ Un asesor te contactará pronto</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── FLOW 3: Product Cards ─── -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Flow 03 — Product Cards</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="flow-title">Flow 03</div>
+  <div class="section-label">Protección → Product Detail → Quote</div>
+
+  <div class="swimlane">
+    <div class="swimlane-label">"Protección para lo que más amas" Section</div>
+    <div style="display:flex;align-items:flex-start;gap:0;margin-bottom:24px;">
+
+      <div class="node primary">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/#soluciones</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Section</div>
+          <div class="node-title">4 Tarjetas de Producto</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:6px;">
+            <div style="background:#0f2a4a;border-radius:3px;padding:5px;font-size:8px;color:var(--gray);">🏥 Gastos Médicos</div>
+            <div style="background:#0f2a4a;border-radius:3px;padding:5px;font-size:8px;color:var(--gray);">🚗 Seg. Auto</div>
+            <div style="background:#0f2a4a;border-radius:3px;padding:5px;font-size:8px;color:var(--gray);">❤️ Seg. Vida</div>
+            <div style="background:#0f2a4a;border-radius:3px;padding:5px;font-size:8px;color:var(--gray);">🏠 Hogar/Emp.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">"Saber más →"</div>
+      </div>
+
+    </div>
+
+    <div class="product-grid">
+      <!-- Gastos Médicos -->
+      <div class="node">
+        <div class="node-bar" style="background:linear-gradient(90deg,#ef4444,#dc2626)"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">/seguros/gastos-medicos</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag" style="color:#ef4444">🏥 Producto</div>
+          <div class="node-title">Gastos Médicos</div>
+          <div style="font-size:8px;color:var(--gray);line-height:1.4;margin-top:4px;">Cobertura médica completa para ti y tu familia</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Cotizar →</div>
+            <div class="action-btn outline">Ver cobertura</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seguro de Auto -->
+      <div class="node">
+        <div class="node-bar" style="background:linear-gradient(90deg,#3b82f6,#2563eb)"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">/seguros/auto</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag" style="color:#60a5fa">🚗 Producto</div>
+          <div class="node-title">Seguro de Auto</div>
+          <div style="font-size:8px;color:var(--gray);line-height:1.4;margin-top:4px;">Protección vehicular responsable y eficiente</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Cotizar →</div>
+            <div class="action-btn outline">Ver cobertura</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seguro de Vida -->
+      <div class="node">
+        <div class="node-bar" style="background:linear-gradient(90deg,#ec4899,#db2777)"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">/seguros/vida</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag" style="color:#f472b6">❤️ Producto</div>
+          <div class="node-title">Seguro de Vida</div>
+          <div style="font-size:8px;color:var(--gray);line-height:1.4;margin-top:4px;">Garantiza el futuro de quienes más amas</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Cotizar →</div>
+            <div class="action-btn outline">Ver cobertura</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hogar y Empresa -->
+      <div class="node">
+        <div class="node-bar" style="background:linear-gradient(90deg,#10b981,#059669)"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">/seguros/hogar-empresa</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag" style="color:#34d399">🏠 Producto</div>
+          <div class="node-title">Hogar y Empresa</div>
+          <div style="font-size:8px;color:var(--gray);line-height:1.4;margin-top:4px;">Protege tu patrimonio y negocio</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Cotizar →</div>
+            <div class="action-btn outline">Ver cobertura</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All lead to quote -->
+    <div style="display:flex;align-items:center;gap:0;margin-top:8px;padding-left:90px;">
+      <div class="arrow-wrap" style="padding-top:0;">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">All "Cotizar →" buttons</div>
+      </div>
+      <div class="node cta-node">
+        <div class="step-badge" style="background:var(--success)">CONVERSION</div>
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/cotizar?tipo=X</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Quote Flow</div>
+          <div class="node-title">Formulario de Cotización</div>
+          <div style="font-size:8px;color:var(--gray);line-height:1.4;margin-top:4px;">Nombre · Email · Teléfono · Datos del seguro</div>
+          <div class="node-actions">
+            <div class="action-btn success">Obtener cotización</div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow-wrap">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">Submit form</div>
+      </div>
+      <div class="node cta-node">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/cotizar/gracias</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">Gracias</div>
+          <div class="node-title">¡Cotización Enviada!</div>
+          <div style="font-size:9px;color:var(--success);margin-top:8px;line-height:1.5;">✓ Recibirás tu cotización en 24h<br>✓ Un asesor te contactará</div>
+          <div class="node-actions">
+            <div class="action-btn outline">Volver al inicio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FLOW 4: Bottom CTA Banner ─── -->
+  <div class="section-divider">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-label">Flow 04 — Bottom CTA Banner</div>
+    <div class="section-divider-line"></div>
+  </div>
+
+  <div class="flow-title">Flow 04</div>
+  <div class="section-label">"¿Listo para asegurar tu futuro?" — Final Conversion Layer</div>
+
+  <div class="swimlane">
+    <div class="swimlane-label">Bottom CTA Section (Blue Banner)</div>
+    <div style="display:flex;gap:0;align-items:flex-start;">
+
+      <div class="node primary">
+        <div class="node-bar"></div>
+        <div class="node-browser">
+          <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+          <div class="browser-url">techaus.mx/#cta</div>
+        </div>
+        <div class="node-screen">
+          <div class="node-tag">CTA Banner</div>
+          <div class="node-title">"¿Listo para asegurar tu futuro?"</div>
+          <div class="node-actions">
+            <div class="action-btn primary">Hablar con un asesor</div>
+            <div class="action-btn secondary">Cotizar en línea</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:36px;padding:48px 0 0;">
+        <!-- upper -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div class="arrow-wrap" style="padding-top:0;">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">"Hablar con asesor"</div>
+          </div>
+          <div class="node info-node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/contacto</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Contacto Directo</div>
+              <div class="node-title">Habla con un experto</div>
+              <div style="font-size:8px;color:var(--gray);margin-top:4px;line-height:1.4;">📞 Teléfono · 📧 Email · 💬 WhatsApp</div>
+              <div class="node-actions">
+                <div class="action-btn purple">Agendar llamada</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- lower -->
+        <div style="display:flex;align-items:center;gap:0;">
+          <div class="arrow-wrap" style="padding-top:0;">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">"Cotizar en línea"</div>
+          </div>
+          <div class="node cta-node">
+            <div class="node-bar"></div>
+            <div class="node-browser">
+              <div class="browser-dot bd-r"></div><div class="browser-dot bd-y"></div><div class="browser-dot bd-g"></div>
+              <div class="browser-url">techaus.mx/cotizar</div>
+            </div>
+            <div class="node-screen">
+              <div class="node-tag">Quote Online</div>
+              <div class="node-title">Cotización Digital</div>
+              <div style="font-size:8px;color:var(--gray);margin-top:4px;line-height:1.4;">Rápido · Sin compromiso · 100% online</div>
+              <div class="node-actions">
+                <div class="action-btn success">Cotizar ahora</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer note -->
+  <div style="text-align:center;margin-top:48px;padding:24px;border-top:1px solid #1a3358;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:1px;">
+      TECHAUS CLICKSTREAM — Designed for Figma import as reference · All flows based on live landing page analysis
+    </div>
+    <div style="font-size:12px;color:#2a4a7a;margin-top:6px;">techaus.mx</div>
+  </div>
+
+</div>
+</body>
+</html>
