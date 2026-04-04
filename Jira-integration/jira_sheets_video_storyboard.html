@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Sheets × Jira Integration — Video Storyboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a18; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 860px; margin: 0 auto; }
+  .header { margin-bottom: 2rem; }
+  .header h1 { font-size: 22px; font-weight: 500; color: #1a1a18; }
+  .header p { font-size: 13px; color: #6b6b65; margin-top: 4px; }
+  .total-bar { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .stat { background: #f1efe8; border-radius: 8px; padding: 10px 16px; display: flex; flex-direction: column; gap: 2px; }
+  .stat-label { font-size: 11px; color: #6b6b65; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 20px; font-weight: 500; color: #1a1a18; }
+  .scene { border: 0.5px solid #d3d1c7; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; }
+  .scene-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #fff; user-select: none; }
+  .scene-header:hover { background: #f9f9f7; }
+  .scene-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .s1 .scene-num { background: #EEEDFE; color: #3C3489; }
+  .s2 .scene-num { background: #E1F5EE; color: #0F6E56; }
+  .s3 .scene-num { background: #E6F1FB; color: #185FA5; }
+  .s4 .scene-num { background: #FAEEDA; color: #854F0B; }
+  .s5 .scene-num { background: #EAF3DE; color: #3B6D11; }
+  .s6 .scene-num { background: #FAECE7; color: #993C1D; }
+  .s7 .scene-num { background: #FBEAF0; color: #993556; }
+  .scene-title-wrap { flex: 1; }
+  .scene-title { font-size: 14px; font-weight: 500; color: #1a1a18; }
+  .scene-meta { font-size: 12px; color: #6b6b65; margin-top: 2px; }
+  .duration-badge { font-size: 11px; background: #f1efe8; border: 0.5px solid #d3d1c7; border-radius: 20px; padding: 3px 10px; color: #6b6b65; flex-shrink: 0; }
+  .chevron { font-size: 16px; color: #b4b2a9; transition: transform 0.2s; flex-shrink: 0; }
+  .chevron.open { transform: rotate(90deg); }
+  .scene-body { display: none; border-top: 0.5px solid #d3d1c7; padding: 16px; background: #f9f9f7; }
+  .scene-body.open { display: block; }
+  .body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .body-grid { grid-template-columns: 1fr; } }
+  .body-col h3 { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #6b6b65; margin-bottom: 8px; }
+  .body-col p { font-size: 13px; color: #1a1a18; line-height: 1.6; }
+  .visual-box { background: #fff; border: 0.5px solid #d3d1c7; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+  .visual-box p { font-size: 13px; color: #1a1a18; line-height: 1.6; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 500; }
+  .tag-ai { background: #EEEDFE; color: #3C3489; }
+  .tag-screen { background: #E1F5EE; color: #0F6E56; }
+  .tag-text { background: #FAEEDA; color: #854F0B; }
+  .tag-music { background: #FBEAF0; color: #993556; }
+  .onscreen { background: #fff; border-left: 3px solid #378ADD; border-radius: 0 8px 8px 0; padding: 8px 12px; margin-top: 10px; }
+  .onscreen p { font-size: 12px; color: #6b6b65; font-style: italic; }
+  .onscreen strong { color: #1a1a18; font-style: normal; font-weight: 500; }
+  .print-note { font-size: 12px; color: #b4b2a9; text-align: center; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Google Sheets × Jira Integration — Video Storyboard</h1>
+    <p>5–6 min · Casual &amp; energetic · Audience: clients &amp; stakeholders</p>
+  </div>
+
+  <div class="total-bar">
+    <div class="stat"><span class="stat-label">Total scenes</span><span class="stat-value">7</span></div>
+    <div class="stat"><span class="stat-label">Est. duration</span><span class="stat-value">5:30</span></div>
+    <div class="stat"><span class="stat-label">Narration words</span><span class="stat-value">~825</span></div>
+  </div>
+
+  <!-- Scene 1 -->
+  <div class="scene s1">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">01</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">Hook — the chaos of switching tools</div>
+        <div class="scene-meta">Opening · Sets up the problem</div>
+      </div>
+      <div class="duration-badge">0:00–0:35</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>Split-screen animation: on the left, a Google Sheet filled with project tasks. On the right, a busy Jira board with cards. An animated cursor frantically jumps back and forth between the two screens, copying text manually. Red X marks appear. The energy is chaotic and slightly comedic.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-ai">AI-generated visuals</span>
+            <span class="tag tag-music">Upbeat intro music</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"If your team lives in Google Sheets but your engineering workflow lives in Jira — you know the pain. Copy the task title, switch tabs, create the story, link it back, update the sheet… and do it again. For every. Single. Row. Well, not anymore."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> "Your tasks. Your Jira. Finally together."</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 2 -->
+  <div class="scene s2">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">02</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">Meet the spreadsheet — your starting point</div>
+        <div class="scene-meta">Context · Show the existing workflow</div>
+      </div>
+      <div class="duration-badge">0:35–1:10</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>Smooth zoom into a clean Google Sheet. Rows of tasks are visible — each with columns for task name, category, and assignee. The camera slowly pans across the rows as if reading them. Highlight a few rows with a soft glowing overlay to draw attention. Professional, organised, calm.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-screen">Screen recording</span>
+            <span class="tag tag-text">Callout labels</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"Here's where the team starts — a Google Sheet with all the project tasks. Each row has a task description, a category, and an assignee. This is the source of truth. Clean, simple, everyone knows how to use it. The problem was always: how do you get from here to Jira without losing your mind?"</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> Callout arrows pointing to "Task · Category · Assignee" columns</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 3 -->
+  <div class="scene s3">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">03</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">The magic menu — one click to create</div>
+        <div class="scene-meta">Core demo · The "wow" moment starts here</div>
+      </div>
+      <div class="duration-badge">1:10–2:00</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>Close-up on the Google Sheets toolbar. A custom menu item labelled "Jira Integration" is visible. An animated cursor glides to it and clicks. A dropdown appears with "Create Jira Story" highlighted. Cursor clicks it. Satisfying click sound effect. Zoom burst effect on the click to add energy.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-screen">Screen recording</span>
+            <span class="tag tag-ai">Zoom burst effect</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"We added a custom menu right inside Google Sheets. No extensions to install, no new tools to learn. Just a new option in the toolbar — 'Create Jira Story.' One click and the magic begins. Your team never has to leave the spreadsheet."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> "Built directly into your existing workflow"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 4 -->
+  <div class="scene s4">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">04</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">The modal — quick config, zero friction</div>
+        <div class="scene-meta">Core demo · Walking through the form</div>
+      </div>
+      <div class="duration-badge">2:00–3:00</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>A small, clean modal dialog appears over the spreadsheet. Three input fields are visible: Epic, Component, and Row number. Animated cursor fills in each field one by one with a short typing animation. Each completed field briefly highlights in green. The modal feels fast and lightweight — not overwhelming.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-screen">Screen recording</span>
+            <span class="tag tag-text">Field callout labels</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"A small popup appears asking for just three things: the Epic you're working under, the Component this belongs to, and the row number in the sheet that matches this task. That's it. Three fields. The script takes care of everything else — it reads the task description, the assignee, all of it — directly from your spreadsheet."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> Labels on each field — "Epic · Component · Row #"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 5 -->
+  <div class="scene s5">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">05</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">The result — Jira story created instantly</div>
+        <div class="scene-meta">Payoff moment · The big reveal</div>
+      </div>
+      <div class="duration-badge">3:00–3:50</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>A loading spinner for 1–2 seconds, then a success popup appears with a green checkmark and a Jira story number (e.g. "Story PROJ-142 created!"). Confetti or a subtle particle burst effect. Cut to the Jira board where the new card is visible in the correct epic. Camera zooms in on the card to confirm the details match.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-screen">Screen recording</span>
+            <span class="tag tag-ai">Confetti effect</span>
+            <span class="tag tag-music">Music peak moment</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"And just like that — your Jira story is live. The script confirms it with the story number right there in a popup. Switch over to your Jira board and it's already there, sitting in the right epic, with the task description, the assignee, everything populated. No copy-pasting. No switching back and forth."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> "Story created in under 5 seconds"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 6 -->
+  <div class="scene s6">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">06</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">The link — sheets and Jira stay connected</div>
+        <div class="scene-meta">Bonus wow · Traceability feature</div>
+      </div>
+      <div class="duration-badge">3:50–4:30</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>Return to the Google Sheet. The task description in the relevant row is now a blue hyperlink. Cursor hovers over it — a tooltip showing the Jira URL appears. Click — the Jira story opens in a new tab. A split screen shows the Sheet on the left and the Jira card on the right, connected by a glowing line animation.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-screen">Screen recording</span>
+            <span class="tag tag-ai">Connection line animation</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"Here's the part that really ties it together. Back in Google Sheets, the task description has automatically become a hyperlink — click it and you go straight to the Jira story. Your spreadsheet and your board are now permanently connected. Anyone on the team can jump from the sheet to the ticket in one click. Full traceability, zero extra work."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> "Click the task → jump to Jira. Always in sync."</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scene 7 -->
+  <div class="scene s7">
+    <div class="scene-header" onclick="toggle(this)">
+      <div class="scene-num">07</div>
+      <div class="scene-title-wrap">
+        <div class="scene-title">Built with vibecoding — the bigger story</div>
+        <div class="scene-meta">Closing · Vibecoding angle + call to action</div>
+      </div>
+      <div class="duration-badge">4:30–5:30</div>
+      <div class="chevron">›</div>
+    </div>
+    <div class="scene-body">
+      <div class="body-grid">
+        <div class="body-col">
+          <h3>Scene description (for Google Vids AI)</h3>
+          <div class="visual-box">
+            <p>Upbeat montage: code appearing on screen with an AI assistant suggesting lines in real time. Quick cuts: the modal being designed, the script running, the Jira API connecting. A final wide shot of the finished integration in action. Text animations summarise the key wins. Energy builds to a confident close.</p>
+          </div>
+          <div class="tag-row">
+            <span class="tag tag-ai">AI-generated montage</span>
+            <span class="tag tag-text">Key stats on screen</span>
+            <span class="tag tag-music">Music outro</span>
+          </div>
+        </div>
+        <div class="body-col">
+          <h3>Narration script</h3>
+          <p>"What makes this even more exciting? This entire integration was built using [YOUR VIBECODING TOOL] — an AI-powered development approach that lets you build real, production-ready tools in a fraction of the time. No months of development. No big engineering lift. Just a clear idea, the right tools, and a weekend. This is what's possible when you combine your team's workflow knowledge with the power of AI-assisted building. The question isn't whether your tools can work together — it's what you'll build next."</p>
+          <div class="onscreen"><p><strong>On screen text:</strong> "Built with AI. Ready for your team. What's next?"</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="print-note">Generated with Claude · Google Sheets × Jira Integration Video Storyboard</p>
+
+</div>
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.chevron');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+</script>
+</body>
+</html>
