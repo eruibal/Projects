@@ -1,0 +1,293 @@
+
+<h2 class="sr-only">Calculadora de Valor Presente Neto de enfermedades catastróficas en México para personas mayores de 65 años</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.section{margin-bottom:1.5rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.metric{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.metric .lbl{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.metric .val{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.metric .sub{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.slider-row label{font-size:13px;color:var(--color-text-secondary);min-width:130px}
+.slider-row input[type=range]{flex:1}
+.slider-row .val-out{font-size:13px;font-weight:500;color:var(--color-text-primary);min-width:44px;text-align:right}
+.seg{display:flex;border:0.5px solid var(--color-border-secondary);border-radius:8px;overflow:hidden;margin-bottom:1rem}
+.seg button{flex:1;padding:7px 4px;font-size:12px;background:transparent;border:none;border-right:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);cursor:pointer}
+.seg button:last-child{border-right:none}
+.seg button.active{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+td{padding:5px 8px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+td.dim{color:var(--color-text-tertiary)}
+tr.total td{font-weight:500;border-top:1px solid var(--color-border-secondary);border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+.phase-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;font-weight:500}
+.ph1{background:#E6F1FB;color:#185FA5}
+.ph2{background:#EAF3DE;color:#3B6D11}
+.ph3{background:#FAEEDA;color:#854F0B}
+.ph4{background:#FCEBEB;color:#A32D2D}
+.note-box{background:var(--color-background-secondary);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-top:10px}
+.dis-label{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.highlight-row td{background:var(--color-background-info)!important;color:var(--color-text-info)!important;font-weight:500}
+</style>
+
+<div style="padding:0.75rem 0">
+
+<div class="section">
+  <div class="seg" id="diseaseSeg">
+    <button class="active" onclick="setDisease(0,this)">Infarto al miocardio</button>
+    <button onclick="setDisease(1,this)">Cancer (promedio)</button>
+    <button onclick="setDisease(2,this)">Diabetes tipo 2</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="card">
+    <div class="dis-label">Supuestos del modelo</div>
+    <div class="slider-row">
+      <label>Tasa de descuento</label>
+      <input type="range" id="rateSlider" min="6" max="15" step="1" value="10">
+      <span class="val-out" id="rateOut">10%</span>
+    </div>
+    <div class="slider-row">
+      <label>Inflación médica anual</label>
+      <input type="range" id="inflSlider" min="8" max="20" step="1" value="14">
+      <span class="val-out" id="inflOut">14%</span>
+    </div>
+    <div class="slider-row">
+      <label>Horizonte (años)</label>
+      <input type="range" id="horizSlider" min="3" max="20" step="1" value="10">
+      <span class="val-out" id="horizOut">10 años</span>
+    </div>
+    <div class="slider-row" style="margin-bottom:0">
+      <label>Sector de atención</label>
+      <div class="seg" id="sectorSeg" style="margin:0;flex:1">
+        <button class="active" onclick="setSector(1.0,this)">Privado</button>
+        <button onclick="setSector(0.55,this)">Mixto</button>
+        <button onclick="setSector(0.20,this)">Solo IMSS</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="grid3" id="summaryCards"></div>
+</div>
+
+<div class="section card">
+  <div class="dis-label" id="tableTitle">Desglose anual de costos — Infarto al miocardio</div>
+  <div class="table-wrap">
+    <table id="costTable">
+      <thead>
+        <tr>
+          <th>Año</th>
+          <th>Fase</th>
+          <th>Concepto principal</th>
+          <th style="text-align:right">Costo nominal</th>
+          <th style="text-align:right">Costo con inflación</th>
+          <th style="text-align:right">Valor presente</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <div class="note-box" id="noteBox"></div>
+</div>
+
+<div style="position:relative;width:100%;height:260px;margin-bottom:1rem">
+  <canvas id="vpnChart" role="img" aria-label="Gráfica de valor presente acumulado por año para la enfermedad seleccionada">Costo presente acumulado por año de tratamiento.</canvas>
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const fmt = v => '$' + Math.round(v).toLocaleString('es-MX');
+
+const DISEASES = [
+  {
+    name:'Infarto al miocardio',
+    defaultHorizon: 10,
+    note:'Mortalidad hospitalaria a 30 días del 22.6% en México (OCDE 2025). Los sobrevivientes tienen esperanza de vida de 10-12 años. El 40% sufre re-infarto o insuficiencia cardíaca dentro de 5 años. Costos crecen con complicaciones cardiovasculares progresivas.',
+    years:[
+      {phase:'ph1',label:'Evento agudo',concept:'Hospitalización UCI + cateterismo/angioplastia + procedimiento',base:220000,cuidador:0},
+      {phase:'ph1',label:'Rehab aguda',concept:'Rehabilitación cardíaca + medicamentos + 4 consultas/año',base:85000,cuidador:0},
+      {phase:'ph2',label:'Manejo estable',concept:'Medicamentos (anticoagulantes, estatinas, betabloqueadores) + 3 consultas',base:55000,cuidador:0},
+      {phase:'ph2',label:'Manejo estable',concept:'Medicamentos + monitoreo ecocardiograma + laboratorios',base:58000,cuidador:0},
+      {phase:'ph3',label:'Complicación',concept:'Re-hospitalización esperada (prob. 40%) + medicamentos escalados',base:165000,cuidador:0},
+      {phase:'ph3',label:'Complicaciones',concept:'Manejo insuficiencia cardíaca incipiente + consultas especializadas',base:90000,cuidador:0},
+      {phase:'ph3',label:'Complicaciones',concept:'Cardiopatía progresiva + dispositivos (marcapasos, stents adicionales)',base:110000,cuidador:0},
+      {phase:'ph4',label:'Dependencia',concept:'Insuficiencia cardíaca avanzada + cuidador parcial + hospitalización',base:140000,cuidador:60000},
+      {phase:'ph4',label:'Dependencia',concept:'Gestión integral cardíaca + cuidador + medicamentos avanzados',base:160000,cuidador:72000},
+      {phase:'ph4',label:'Etapa final',concept:'Cuidados paliativos + hospitalización frecuente + cuidador tiempo completo',base:190000,cuidador:96000},
+    ]
+  },
+  {
+    name:'Cáncer (promedio tipos frecuentes)',
+    defaultHorizon: 6,
+    note:'Promedio entre cánceres frecuentes en mayores de 65: colon, mama, próstata, pulmón, gástrico. Supervivencia a 5 años en México: 60-78% para tipos controlables, 10-30% para agresivos. Se modelan 6 años de horizonte como promedio ponderado. Costos más altos de cualquier enfermedad catastrófica.',
+    years:[
+      {phase:'ph1',label:'Diagnóstico + tx inicial',concept:'Biopsias + cirugía + quimioterapia / radioterapia inicial (ciclos 1-3)',base:550000,cuidador:0},
+      {phase:'ph1',label:'Tratamiento activo',concept:'Quimioterapia / inmunoterapia continua + soporte oncológico',base:400000,cuidador:0},
+      {phase:'ph2',label:'Tratamiento activo',concept:'Ciclos finales + radioterapia de consolidación + seguimiento imagen',base:300000,cuidador:40000},
+      {phase:'ph2',label:'Mantenimiento',concept:'Hormonoterapia / terapia dirigida + vigilancia oncológica + labs',base:200000,cuidador:60000},
+      {phase:'ph3',label:'Recurrencia',concept:'Recurrencia esperada (~60% casos) + 2a línea tratamiento + soporte',base:380000,cuidador:80000},
+      {phase:'ph4',label:'Cuidados paliativos',concept:'Manejo paliativo + hospitalización + cuidador tiempo completo',base:200000,cuidador:120000},
+    ]
+  },
+  {
+    name:'Diabetes tipo 2 + complicaciones',
+    defaultHorizon: 13,
+    note:'La diabetes es una enfermedad crónica progresiva. A los 65 años, la mayoría ya tiene complicaciones incipientes. El 68% de hospitalizaciones por DM2 en México es por complicaciones (renales 23%, circulatorias 23%). Costo total vitalicio es el más alto por su duración (13-15 años).',
+    years:[
+      {phase:'ph1',label:'Control inicial',concept:'Insulina/medicamentos orales + consultas endocrinólogo + automonitoreo',base:42000,cuidador:0},
+      {phase:'ph1',label:'Control',concept:'Medicamentos + nutriólogo + laboratorios + fondo de ojo anual',base:44000,cuidador:0},
+      {phase:'ph2',label:'Complicaciones leves',concept:'Neuropatía + retinopatía láser + ajuste medicamentos',base:80000,cuidador:0},
+      {phase:'ph2',label:'Primera crisis',concept:'Hospitalización por complicación aguda + estudios + medicamentos ajustados',base:175000,cuidador:0},
+      {phase:'ph2',label:'Complicaciones moderadas',concept:'Insuficiencia renal incipiente + cardiología + podología (neuropatía)',base:90000,cuidador:0},
+      {phase:'ph3',label:'Insuf. renal',concept:'Nefropatía avanzada + preparación para diálisis + hospitalización',base:180000,cuidador:0},
+      {phase:'ph3',label:'Diálisis inicio',concept:'Inicio de diálisis peritoneal o hemodiálisis (3x/sem) + medicamentos',base:280000,cuidador:60000},
+      {phase:'ph3',label:'Diálisis continua',concept:'Diálisis + manejo cardiovascular + cuidador parcial',base:260000,cuidador:72000},
+      {phase:'ph3',label:'Diálisis + compl.',concept:'Diálisis + amputación esperada (prob. 30%) + hospitalización',base:320000,cuidador:84000},
+      {phase:'ph4',label:'Dependencia',concept:'Diálisis + cuidador tiempo completo + complicaciones múltiples',base:290000,cuidador:96000},
+      {phase:'ph4',label:'Dependencia avanzada',concept:'Cuidados integrales + hospitalización frecuente + soporte familiar',base:300000,cuidador:108000},
+      {phase:'ph4',label:'Etapa terminal',concept:'Cuidados paliativos + diálisis + hospitalización + cuidador intensivo',base:280000,cuidador:120000},
+      {phase:'ph4',label:'Etapa final',concept:'Cuidados paliativos totales + soporte vital',base:240000,cuidador:144000},
+    ]
+  }
+];
+
+let currentDisease = 0;
+let discountRate = 0.10;
+let inflRate = 0.14;
+let horizon = 10;
+let sectorMult = 1.0;
+let vpnChart = null;
+
+function setDisease(i, btn) {
+  currentDisease = i;
+  document.querySelectorAll('#diseaseSeg button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  horizon = Math.min(DISEASES[i].defaultHorizon, DISEASES[i].years.length);
+  document.getElementById('horizSlider').value = horizon;
+  document.getElementById('horizOut').textContent = horizon + ' años';
+  render();
+}
+
+function setSector(mult, btn) {
+  sectorMult = mult;
+  document.querySelectorAll('#sectorSeg button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function computeNPV(disease, rate, infl, horiz, mult) {
+  const years = disease.years.slice(0, horiz);
+  let npv = 0, rows = [];
+  let cumPV = 0;
+  years.forEach((y, t) => {
+    const nominal = (y.base + y.cuidador) * mult;
+    const inflated = nominal * Math.pow(1 + infl, t);
+    const pv = inflated / Math.pow(1 + rate, t);
+    npv += pv;
+    cumPV += pv;
+    rows.push({t, phase:y.phase, label:y.label, concept:y.concept, nominal, inflated, pv, cumPV});
+  });
+  return {npv, rows};
+}
+
+function computeAllNPV() {
+  return DISEASES.map((d, i) => {
+    const h = Math.min(d.defaultHorizon, d.years.length);
+    return computeNPV(d, discountRate, inflRate, h, sectorMult);
+  });
+}
+
+function render() {
+  const disease = DISEASES[currentDisease];
+  const {npv, rows} = computeNPV(disease, discountRate, inflRate, horizon, sectorMult);
+  const allNPV = computeAllNPV();
+
+  document.getElementById('tableTitle').textContent = 'Desglose anual de costos — ' + disease.name;
+  document.getElementById('noteBox').textContent = disease.note;
+
+  const cards = document.getElementById('summaryCards');
+  const labels = ['Infarto', 'Cáncer', 'Diabetes'];
+  const colors = ['#185FA5','#A32D2D','#854F0B'];
+  cards.innerHTML = allNPV.map((r, i) => `
+    <div class="metric" style="border-left:3px solid ${colors[i]}">
+      <div class="lbl">${labels[i]}</div>
+      <div class="val" style="font-size:16px;color:${colors[i]}">${fmt(r.npv)}</div>
+      <div class="sub">VPN total · ${Math.min(DISEASES[i].defaultHorizon, DISEASES[i].years.length)} años · sector ${sectorMult===1?'privado':sectorMult===0.55?'mixto':'IMSS'}</div>
+    </div>`).join('');
+
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = rows.map(r => `
+    <tr class="${r.t===rows.length-1?'total':''}">
+      <td class="dim">${r.t===0?'0 (evento)':'Año '+r.t}</td>
+      <td><span class="phase-badge ${r.phase}">${r.label}</span></td>
+      <td style="font-size:11px;max-width:180px">${r.concept}</td>
+      <td class="num">${fmt(r.nominal)}</td>
+      <td class="num">${fmt(r.inflated)}</td>
+      <td class="num" style="font-weight:500">${fmt(r.pv)}</td>
+    </tr>`).join('') + `
+    <tr class="total">
+      <td colspan="3" style="font-size:13px;font-weight:500">VPN Total (${horizon} años)</td>
+      <td class="num dim">${fmt(rows.reduce((s,r)=>s+r.nominal,0))}</td>
+      <td class="num dim">${fmt(rows.reduce((s,r)=>s+r.inflated,0))}</td>
+      <td class="num" style="font-size:15px;color:#A32D2D">${fmt(npv)}</td>
+    </tr>`;
+
+  const labels2 = rows.map(r => r.t===0?'Año 0':'Año '+r.t);
+  const pvData = rows.map(r => Math.round(r.pv));
+  const cumData = rows.map(r => Math.round(r.cumPV));
+  const barColors = rows.map(r => r.phase==='ph1'?'#378ADD':r.phase==='ph2'?'#639922':r.phase==='ph3'?'#BA7517':'#E24B4A');
+
+  if (vpnChart) vpnChart.destroy();
+  vpnChart = new Chart(document.getElementById('vpnChart'), {
+    type:'bar',
+    data:{
+      labels:labels2,
+      datasets:[
+        {type:'bar',label:'VP del año',data:pvData,backgroundColor:barColors,borderRadius:3},
+        {type:'line',label:'VP acumulado',data:cumData,borderColor:'#533AB7',borderWidth:2,pointRadius:3,pointBackgroundColor:'#533AB7',tension:0.3,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{ticks:{font:{size:11}},grid:{display:false}},
+        y:{ticks:{callback:v=>'$'+Math.round(v/1000)+'k',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}},
+        y2:{position:'right',ticks:{callback:v=>'$'+Math.round(v/1000000*10)/10+'M',font:{size:11}},grid:{display:false}}
+      }
+    }
+  });
+}
+
+document.getElementById('rateSlider').addEventListener('input', function() {
+  discountRate = this.value/100;
+  document.getElementById('rateOut').textContent = this.value + '%';
+  render();
+});
+document.getElementById('inflSlider').addEventListener('input', function() {
+  inflRate = this.value/100;
+  document.getElementById('inflOut').textContent = this.value + '%';
+  render();
+});
+document.getElementById('horizSlider').addEventListener('input', function() {
+  const max = DISEASES[currentDisease].years.length;
+  horizon = Math.min(parseInt(this.value), max);
+  this.value = horizon;
+  document.getElementById('horizOut').textContent = horizon + ' años';
+  render();
+});
+
+render();
+</script>

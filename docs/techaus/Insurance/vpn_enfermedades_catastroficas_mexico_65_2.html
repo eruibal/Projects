@@ -1,0 +1,229 @@
+
+<h2 class="sr-only">Calculadora de Valor Presente Neto de enfermedades catastróficas en México a partir de los 65 años</h2>
+<style>
+.sec-lbl{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}
+.sc-row{display:flex;gap:6px;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center}
+.sc-btn{padding:5px 14px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:20px;cursor:pointer;background:transparent;color:var(--color-text-secondary)}
+.sc-btn.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.sliders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.4rem}
+.sl-block{background:var(--color-background-secondary);border-radius:8px;padding:10px 12px}
+.sl-title{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.sl-val{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
+.npv-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.4rem}
+.npv-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.9rem}
+.npv-dot{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:middle}
+.npv-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.npv-main{font-size:21px;font-weight:500;margin:7px 0 2px}
+.npv-range{font-size:10px;color:var(--color-text-tertiary)}
+.phase-list{border-top:0.5px solid var(--color-border-tertiary);margin-top:8px;padding-top:8px}
+.ph-row{display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-secondary);padding:2px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.ph-row:last-child{border-bottom:none}
+.ph-row span:last-child{font-weight:500;color:var(--color-text-primary)}
+.legend-row{display:flex;gap:16px;margin-bottom:8px;font-size:12px;color:var(--color-text-secondary)}
+.leg-item{display:flex;align-items:center;gap:5px}
+.leg-sq{width:10px;height:10px;border-radius:2px}
+.chart-wrap{position:relative;width:100%;height:270px;margin-bottom:1rem}
+.alert-box{background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);border-radius:4px;padding:10px 12px;font-size:11px;color:var(--color-text-secondary);margin-top:.8rem}
+.alert-box strong{color:var(--color-text-primary);font-weight:500}
+</style>
+
+<div style="padding:.5rem 0">
+
+<p class="sec-lbl">Escenario clínico</p>
+<div class="sc-row">
+  <button class="sc-btn" onclick="setSc('optimista',this)">Optimista — IMSS / detección temprana</button>
+  <button class="sc-btn active" onclick="setSc('base',this)">Base — mezcla público-privada</button>
+  <button class="sc-btn" onclick="setSc('pesimista',this)">Pesimista — privado + complicaciones</button>
+</div>
+
+<div class="sliders">
+  <div class="sl-block">
+    <div class="sl-title">Tasa de descuento (nominal)</div>
+    <div class="sl-val" id="rVal">8%</div>
+    <input type="range" min="3" max="15" value="8" step="1" id="rSlider" oninput="upd()" style="width:100%">
+  </div>
+  <div class="sl-block">
+    <div class="sl-title">Inflación médica anual</div>
+    <div class="sl-val" id="iVal">10%</div>
+    <input type="range" min="5" max="20" value="10" step="1" id="iSlider" oninput="upd()" style="width:100%">
+  </div>
+  <div class="sl-block">
+    <div class="sl-title">Horizonte desde diagnóstico</div>
+    <div class="sl-val" id="yVal">20 años</div>
+    <input type="range" min="5" max="20" value="20" step="1" id="ySlider" oninput="upd()" style="width:100%">
+  </div>
+</div>
+
+<div class="npv-grid">
+  <div class="npv-card">
+    <div class="npv-title"><span class="npv-dot" style="background:#E24B4A"></span>Infarto al miocardio</div>
+    <div class="npv-main" id="v-inf" style="color:#E24B4A">—</div>
+    <div class="npv-range" id="r-inf">—</div>
+    <div class="phase-list" id="p-inf"></div>
+  </div>
+  <div class="npv-card">
+    <div class="npv-title"><span class="npv-dot" style="background:#D85A30"></span>Cáncer (promedio tipos)</div>
+    <div class="npv-main" id="v-can" style="color:#D85A30">—</div>
+    <div class="npv-range" id="r-can">—</div>
+    <div class="phase-list" id="p-can"></div>
+  </div>
+  <div class="npv-card">
+    <div class="npv-title"><span class="npv-dot" style="background:#BA7517"></span>Diabetes mellitus T2</div>
+    <div class="npv-main" id="v-dia" style="color:#BA7517">—</div>
+    <div class="npv-range" id="r-dia">—</div>
+    <div class="phase-list" id="p-dia"></div>
+  </div>
+</div>
+
+<p class="sec-lbl">Costo acumulado a valor presente neto (MXN 2025)</p>
+<div class="legend-row">
+  <span class="leg-item"><span class="leg-sq" style="background:#E24B4A"></span>Infarto</span>
+  <span class="leg-item"><span class="leg-sq" style="background:#D85A30"></span>Cáncer</span>
+  <span class="leg-item"><span class="leg-sq" style="background:#BA7517"></span>Diabetes T2</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="ch" role="img" aria-label="Líneas de costo acumulado a valor presente para infarto, cáncer y diabetes durante el horizonte seleccionado">Costos acumulados a VPN para las tres enfermedades.</canvas>
+</div>
+
+<div class="alert-box" id="alert-box"></div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let sc = 'base', ch = null;
+
+const C = {
+  infarto: {
+    optimista:[160000,40000,40000,40000,35000,35000,35000,35000,35000,35000,35000,60000,60000,60000,60000,60000,60000,60000,60000,60000],
+    base:[230000,80000,80000,55000,55000,55000,55000,55000,55000,85000,85000,85000,85000,85000,85000,140000,140000,140000,140000,140000],
+    pesimista:[500000,150000,100000,100000,100000,450000,150000,150000,150000,150000,150000,150000,150000,280000,280000,280000,280000,280000,280000,280000]
+  },
+  cancer: {
+    optimista:[300000,250000,100000,100000,100000,100000,80000,80000,80000,80000,80000,80000,80000,80000,80000,80000,80000,80000,80000,80000],
+    base:[600000,480000,280000,150000,150000,150000,150000,120000,120000,120000,120000,120000,120000,120000,200000,200000,200000,200000,200000,200000],
+    pesimista:[900000,750000,600000,300000,300000,300000,500000,250000,250000,250000,250000,250000,250000,400000,400000,400000,400000,400000,400000,400000]
+  },
+  diabetes: {
+    optimista:[30000,30000,30000,30000,30000,30000,30000,30000,30000,50000,50000,50000,50000,50000,50000,50000,80000,80000,80000,80000],
+    base:[50000,40000,40000,40000,40000,40000,90000,90000,90000,90000,90000,200000,200000,200000,200000,200000,350000,350000,350000,350000],
+    pesimista:[131000,80000,80000,80000,200000,200000,200000,200000,400000,400000,400000,400000,400000,500000,500000,500000,500000,500000,500000,500000]
+  }
+};
+
+const PHASES = {
+  infarto:{names:['Evento agudo (año 0)','Rehabilitación (1-2)','Crónico estable (3-8)','Complicaciones (9-14)','Etapa tardía (15-19)'],ranges:[[0,0],[1,2],[3,8],[9,14],[15,19]]},
+  cancer:{names:['Diagnóstico y tx inicial (0-1)','Tx activo (2-3)','Control oncológico (4-13)','Tardío/recurrencia (14-19)'],ranges:[[0,1],[2,3],[4,13],[14,19]]},
+  diabetes:{names:['Diagnóstico (0)','Control básico (1-5)','Complicaciones iniciales (6-10)','Complicaciones avanzadas (11-15)','Etapa terminal (16-19)'],ranges:[[0,0],[1,5],[6,10],[11,15],[16,19]]}
+};
+
+function npv(arr, r, inf, yrs) {
+  let s = 0;
+  for (let t = 0; t < Math.min(yrs, arr.length); t++) {
+    s += arr[t] * Math.pow(1+inf, t) / Math.pow(1+r, t);
+  }
+  return s;
+}
+
+function cumNPV(arr, r, inf, yrs) {
+  const out = []; let s = 0;
+  for (let t = 0; t < Math.min(yrs, arr.length); t++) {
+    s += arr[t] * Math.pow(1+inf, t) / Math.pow(1+r, t);
+    out.push(Math.round(s));
+  }
+  return out;
+}
+
+function phaseNPV(arr, r, inf, ranges) {
+  return ranges.map(([a,b]) => {
+    let s = 0;
+    for (let t = a; t <= b && t < arr.length; t++) {
+      s += arr[t] * Math.pow(1+inf, t) / Math.pow(1+r, t);
+    }
+    return Math.round(s);
+  });
+}
+
+function fmt(n) {
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  return '$' + Math.round(n/1000) + 'k';
+}
+
+function setSc(s, el) {
+  sc = s;
+  document.querySelectorAll('.sc-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  upd();
+}
+
+function upd() {
+  const r = parseInt(document.getElementById('rSlider').value)/100;
+  const inf = parseInt(document.getElementById('iSlider').value)/100;
+  const yrs = parseInt(document.getElementById('ySlider').value);
+
+  document.getElementById('rVal').textContent = Math.round(r*100)+'%';
+  document.getElementById('iVal').textContent = Math.round(inf*100)+'%';
+  document.getElementById('yVal').textContent = yrs+' años';
+
+  const keys = ['infarto','cancer','diabetes'];
+  const ids = {infarto:['v-inf','r-inf','p-inf'],cancer:['v-can','r-can','p-can'],diabetes:['v-dia','r-dia','p-dia']};
+
+  keys.forEach(k => {
+    const arr = C[k][sc];
+    const val = npv(arr, r, inf, yrs);
+    const vOpt = npv(C[k].optimista, r, inf, yrs);
+    const vPes = npv(C[k].pesimista, r, inf, yrs);
+    const ph = phaseNPV(arr, r, inf, PHASES[k].ranges);
+    const names = PHASES[k].names;
+
+    document.getElementById(ids[k][0]).textContent = fmt(val);
+    document.getElementById(ids[k][1]).textContent = 'Rango: '+fmt(vOpt)+' – '+fmt(vPes);
+
+    let html = '';
+    names.forEach((n,i) => {
+      if (i < ph.length && ph[i] > 0) {
+        const pct = Math.round(ph[i]/val*100);
+        html += '<div class="ph-row"><span>'+n+'</span><span>'+fmt(ph[i])+' ('+pct+'%)</span></div>';
+      }
+    });
+    document.getElementById(ids[k][2]).innerHTML = html;
+  });
+
+  const labels = Array.from({length:yrs},(_,i) => 'Año '+i);
+  const ds = [
+    {label:'Infarto',data:cumNPV(C.infarto[sc],r,inf,yrs),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.07)',fill:true,tension:.35,borderWidth:2,pointRadius:0,pointHoverRadius:4},
+    {label:'Cáncer',data:cumNPV(C.cancer[sc],r,inf,yrs),borderColor:'#D85A30',backgroundColor:'rgba(216,90,48,.07)',fill:true,tension:.35,borderWidth:2,pointRadius:0,pointHoverRadius:4},
+    {label:'Diabetes T2',data:cumNPV(C.diabetes[sc],r,inf,yrs),borderColor:'#BA7517',backgroundColor:'rgba(186,117,23,.07)',fill:true,tension:.35,borderWidth:2,pointRadius:0,pointHoverRadius:4}
+  ];
+
+  const effRate = ((1+r)/(1+inf)-1)*100;
+  const dir = effRate < 0 ? 'AUMENTA' : 'disminuye';
+  const alertHtml = '<strong>Tasa efectiva real = '+(effRate).toFixed(1)+'%.</strong> Con inflación médica ('+Math.round(inf*100)+'%) '+(effRate<0?'mayor':'menor')+' que la tasa de descuento ('+Math.round(r*100)+'%), el valor de los costos futuros '+dir+' en términos reales — los años de complicaciones pesan '+(effRate<0?'más':'menos')+' de lo que parece. | Supuestos: costos en pesos 2025, gastos directos médicos únicamente. No incluye cuidadores, pérdida de ingresos ni gastos funerarios.';
+  document.getElementById('alert-box').innerHTML = alertHtml;
+
+  if (ch) {
+    ch.data.labels = labels;
+    ch.data.datasets = ds;
+    ch.update();
+  } else {
+    ch = new Chart(document.getElementById('ch'), {
+      type: 'line',
+      data: {labels, datasets: ds},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: {mode:'index', intersect:false},
+        plugins: {
+          legend: {display:false},
+          tooltip: {callbacks:{label: ctx => ctx.dataset.label+': $'+Math.round(ctx.raw).toLocaleString('es-MX')}}
+        },
+        scales: {
+          x: {ticks:{autoSkip:true, maxTicksLimit:11, font:{size:11}}, grid:{color:'rgba(128,128,128,.1)'}},
+          y: {ticks:{font:{size:11}, callback: v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':'$'+(v/1000).toFixed(0)+'k'}, grid:{color:'rgba(128,128,128,.1)'}}
+        }
+      }
+    });
+  }
+}
+
+upd();
+</script>
