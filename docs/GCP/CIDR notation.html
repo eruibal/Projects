@@ -1,45 +1,84 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIDR Notation Explorer</title>
 <style>
-* { box-sizing: border-box; }
-.container { padding: 1.5rem 0; font-family: var(--font-sans); }
-.input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.ip-input { font-family: var(--font-mono); font-size: 15px; width: 160px; }
-.prefix-wrap { display: flex; align-items: center; gap: 8px; }
-.prefix-label { font-size: 16px; font-weight: 500; color: var(--color-text-secondary); }
-.prefix-val { font-family: var(--font-mono); font-size: 15px; width: 60px; }
-.err { font-size: 12px; color: var(--color-text-danger); min-height: 16px; }
-.section-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
-.bits-row { display: flex; gap: 2px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-.bit { width: 16px; height: 28px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 10px; border-radius: 3px; color: var(--color-text-primary); border: 0.5px solid var(--color-border-tertiary); transition: background 0.2s; }
-.bit.net { background: #D4E4F7; border-color: #A8C8EF; }
-.bit.host { background: #E1F5EE; border-color: #9FE1CB; }
-.bit.divider { width: 6px; background: none; border: none; }
-.bit-legend { display: flex; gap: 16px; margin-bottom: 1.25rem; font-size: 12px; }
-.legend-item { display: flex; align-items: center; gap: 5px; }
-.legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
-.swatch-net { background: #D4E4F7; border: 0.5px solid #A8C8EF; }
-.swatch-host { background: #E1F5EE; border: 0.5px solid #9FE1CB; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
-.card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
-.card-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 3px; }
-.card-val { font-size: 14px; font-weight: 500; font-family: var(--font-mono); color: var(--color-text-primary); }
-.card-val.big { font-size: 18px; }
-.range-block { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 16px; margin-bottom: 1rem; }
-.range-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
-.range-row:last-child { border-bottom: none; }
-.range-key { color: var(--color-text-secondary); }
-.range-mono { font-family: var(--font-mono); color: var(--color-text-primary); }
-.octet-row { display: flex; gap: 3px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-.octet-group { display: flex; flex-direction: column; align-items: center; }
-.octet-bits { display: flex; gap: 2px; }
-.octet-dec { font-family: var(--font-mono); font-size: 11px; margin-top: 4px; color: var(--color-text-secondary); }
-.octet-dot { display: flex; align-items: center; padding: 0 2px; font-size: 16px; color: var(--color-text-secondary); padding-bottom: 16px; }
-.presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
-.preset-btn { font-size: 11px; padding: 4px 8px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: 4px; cursor: pointer; font-family: var(--font-mono); color: var(--color-text-primary); }
-.preset-btn:hover { background: var(--color-background-tertiary); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f9f9f7;
+    color: #1a1a18;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 1.5rem; }
+  .card {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .preset-btn {
+    font-size: 11px; padding: 4px 10px;
+    background: #f1efe8; border: 0.5px solid #d3d1c7;
+    border-radius: 4px; cursor: pointer;
+    font-family: 'Courier New', monospace; color: #2c2c2a;
+  }
+  .preset-btn:hover { background: #e4e2da; }
+  .input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; flex-wrap: wrap; }
+  input[type="text"], input[type="number"] {
+    padding: 7px 10px; border: 0.5px solid #c0bdb5; border-radius: 6px;
+    font-size: 14px; font-family: 'Courier New', monospace;
+    background: #fff; color: #1a1a18;
+    outline: none;
+  }
+  input[type="text"]:focus, input[type="number"]:focus { border-color: #378add; box-shadow: 0 0 0 2px rgba(55,138,221,0.15); }
+  input[type="text"] { width: 180px; }
+  input[type="number"] { width: 70px; }
+  .prefix-label { font-size: 18px; font-weight: 500; color: #888780; }
+  .err { font-size: 12px; color: #a32d2d; min-height: 18px; margin-bottom: 0.5rem; }
+  .section-label { font-size: 12px; color: #888780; margin-bottom: 6px; }
+  .octet-row { display: flex; gap: 3px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: flex-end; }
+  .octet-group { display: flex; flex-direction: column; align-items: center; }
+  .octet-bits { display: flex; gap: 2px; }
+  .bit {
+    width: 18px; height: 30px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Courier New', monospace; font-size: 11px;
+    border-radius: 3px; border: 0.5px solid #d3d1c7;
+    color: #1a1a18; transition: background 0.2s;
+  }
+  .bit.net { background: #D4E4F7; border-color: #A8C8EF; }
+  .bit.host { background: #E1F5EE; border-color: #9FE1CB; }
+  .octet-dec { font-family: 'Courier New', monospace; font-size: 11px; margin-top: 4px; color: #888780; text-align: center; }
+  .octet-dot { display: flex; align-items: center; padding: 0 2px; font-size: 18px; color: #888780; padding-bottom: 18px; }
+  .bit-legend { display: flex; gap: 16px; margin-bottom: 1.25rem; font-size: 12px; color: #5f5e5a; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-swatch { width: 12px; height: 12px; border-radius: 2px; }
+  .swatch-net { background: #D4E4F7; border: 0.5px solid #A8C8EF; }
+  .swatch-host { background: #E1F5EE; border: 0.5px solid #9FE1CB; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+  .metric-card { background: #f1efe8; border-radius: 8px; padding: 10px 12px; }
+  .metric-label { font-size: 11px; color: #888780; margin-bottom: 3px; }
+  .metric-val { font-size: 15px; font-weight: 500; font-family: 'Courier New', monospace; color: #1a1a18; }
+  .metric-val.big { font-size: 20px; }
+  .range-block { background: #f1efe8; border-radius: 8px; padding: 12px 14px; }
+  .range-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 0.5px solid #d3d1c7; align-items: center; }
+  .range-row:last-child { border-bottom: none; }
+  .range-key { color: #888780; }
+  .range-mono { font-family: 'Courier New', monospace; color: #1a1a18; }
 </style>
-<div class="container">
-  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px;">Try a preset or enter your own:</div>
+</head>
+<body>
+<div class="card">
+  <h1>CIDR Notation Explorer</h1>
+  <p class="subtitle">Enter any IPv4 address and prefix length to see the binary breakdown and address range.</p>
+
   <div class="presets">
     <button class="preset-btn" onclick="loadPreset('192.168.1.0','24')">192.168.1.0/24</button>
     <button class="preset-btn" onclick="loadPreset('10.0.0.0','8')">10.0.0.0/8</button>
@@ -50,11 +89,9 @@
   </div>
 
   <div class="input-row">
-    <input class="ip-input" id="ip-in" type="text" value="192.168.1.0" placeholder="e.g. 192.168.1.0" oninput="update()">
-    <div class="prefix-wrap">
-      <span class="prefix-label">/</span>
-      <input class="prefix-val" id="pfx-in" type="number" min="0" max="32" value="24" oninput="update()">
-    </div>
+    <input type="text" id="ip-in" value="192.168.1.0" placeholder="e.g. 192.168.1.0" oninput="update()">
+    <span class="prefix-label">/</span>
+    <input type="number" id="pfx-in" min="0" max="32" value="24" oninput="update()">
   </div>
   <div class="err" id="err-msg"></div>
 
@@ -89,25 +126,20 @@ function formatLarge(n) {
   if (n >= 1e3) return (n/1e3).toFixed(1).replace(/\.0$/,'') + 'K';
   return n.toLocaleString();
 }
-
 function loadPreset(ip, pfx) {
   document.getElementById('ip-in').value = ip;
   document.getElementById('pfx-in').value = pfx;
   update();
 }
-
 function update() {
   const ipStr = document.getElementById('ip-in').value.trim();
   const prefix = parseInt(document.getElementById('pfx-in').value);
   const err = document.getElementById('err-msg');
-
   const parts = ipStr.split('.');
   const valid = parts.length === 4 && parts.every(p => /^\d+$/.test(p) && +p>=0 && +p<=255)
     && !isNaN(prefix) && prefix >= 0 && prefix <= 32;
-
   if (!valid) { err.textContent = 'Enter a valid IPv4 address and prefix (0–32)'; clearUI(); return; }
   err.textContent = '';
-
   const ip = ipToNum(ipStr);
   const mask = subnetMask(prefix);
   const network = (ip & mask) >>> 0;
@@ -115,8 +147,6 @@ function update() {
   const hostBits = 32 - prefix;
   const totalAddrs = Math.pow(2, hostBits);
   const usable = hostBits >= 2 ? totalAddrs - 2 : (hostBits === 1 ? 0 : 1);
-
-  // Octet breakdown
   const octets = [(ip>>>24)&255,(ip>>>16)&255,(ip>>>8)&255,ip&255];
   const orEl = document.getElementById('octet-row');
   orEl.innerHTML = '';
@@ -147,18 +177,14 @@ function update() {
       orEl.appendChild(dot);
     }
   });
-
-  // Cards
   const cards = document.getElementById('cards');
   cards.innerHTML = `
-    <div class="card"><div class="card-label">Subnet mask</div><div class="card-val">${numToIp(mask)}</div></div>
-    <div class="card"><div class="card-label">Network bits</div><div class="card-val big">${prefix}</div></div>
-    <div class="card"><div class="card-label">Host bits</div><div class="card-val big">${hostBits}</div></div>
-    <div class="card"><div class="card-label">Total addresses</div><div class="card-val big">${formatLarge(totalAddrs)}</div></div>
-    <div class="card"><div class="card-label">Usable hosts</div><div class="card-val big">${usable > 0 ? formatLarge(usable) : '0'}</div></div>
+    <div class="metric-card"><div class="metric-label">Subnet mask</div><div class="metric-val">${numToIp(mask)}</div></div>
+    <div class="metric-card"><div class="metric-label">Network bits</div><div class="metric-val big">${prefix}</div></div>
+    <div class="metric-card"><div class="metric-label">Host bits</div><div class="metric-val big">${hostBits}</div></div>
+    <div class="metric-card"><div class="metric-label">Total addresses</div><div class="metric-val big">${formatLarge(totalAddrs)}</div></div>
+    <div class="metric-card"><div class="metric-label">Usable hosts</div><div class="metric-val big">${usable > 0 ? formatLarge(usable) : '0'}</div></div>
   `;
-
-  // Range
   const rb = document.getElementById('range-block');
   const firstHost = hostBits >= 1 ? numToIp(network + 1) : numToIp(network);
   const lastHost  = hostBits >= 1 ? numToIp(broadcast - 1) : numToIp(broadcast);
@@ -170,10 +196,10 @@ function update() {
     <div class="range-row"><span class="range-key">Broadcast address</span><span class="range-mono">${numToIp(broadcast)}</span></div>
   `;
 }
-
 function clearUI() {
   ['octet-row','cards','range-block'].forEach(id => document.getElementById(id).innerHTML = '');
 }
-
 update();
 </script>
+</body>
+</html>
