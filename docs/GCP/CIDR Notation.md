@@ -4,7 +4,9 @@ Here's how CIDR notation works, broken down with an interactive explorer:
 
 For example, `192.168.1.0/24` means:
 - First **24 bits** → locked in as the network address
-- Last **8 bits** → free to assign to hosts (that's 2⁸ = 256 addresses, minus 2 reserved = **254 usable hosts**)### Key rules to remember
+- Last **8 bits** → free to assign to hosts (that's 2⁸ = 256 addresses, minus 2 reserved = **254 usable hosts**)
+
+### Key rules to remember
 
 **Two reserved addresses per subnet** — every block loses its first address (the network address) and last address (the broadcast). That's why a `/24` gives you 254 hosts, not 256.
 
