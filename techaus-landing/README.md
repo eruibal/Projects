@@ -14,7 +14,7 @@ A modern, responsive landing page for Techaus insurance company built with **Nex
 
 ## Project Structure
 
-```
+```text
 techaus-landing/
 ├── app/
 │   ├── layout.tsx          # Root layout with fonts
