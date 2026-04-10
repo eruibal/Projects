@@ -44,11 +44,13 @@ techaus-landing/
 ### Installation
 
 1. Navigate to the project directory:
+
 ```bash
 cd techaus-landing
 ```
 
-2. Install dependencies (already done):
+1. Install dependencies (already done):
+
 ```bash
 npm install
 ```
@@ -56,6 +58,7 @@ npm install
 ### Running the Project
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -110,6 +113,7 @@ colors: {
 ### Fonts
 
 Fonts are imported in `app/layout.tsx` and set as CSS variables:
+
 - **Heading Font**: Montserrat
 - **Body Font**: Open Sans
 
