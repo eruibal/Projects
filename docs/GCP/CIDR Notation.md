@@ -1,3 +1,5 @@
+[CIDR notation](http://127.0.0.1:5500/GCP/CIDR%20notation.html)
+
 Here's how CIDR notation works, broken down with an interactive explorer:
 
 **The core idea** is simple: an IP address is 32 bits. The `/prefix` number tells you how many of those bits belong to the *network*, and the rest belong to *hosts*. The larger the prefix, the smaller the network.
