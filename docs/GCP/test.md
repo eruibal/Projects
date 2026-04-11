@@ -1,0 +1,5 @@
+| Aspect | Details |
+| :--- | :--- |
+| **Core Architecture** | Parts of the application run in Google Cloud while other parts are deployed across different external cloud platforms. |
+| **Primary Use Cases** | • **Disaster Recovery:** Operating a primary site in Google Cloud while maintaining a passive backup replica in another cloud platform.<br>• **Cloud Enhancement:** Utilizing Google Cloud's advanced capabilities—such as AI, machine learning, BigQuery analytics, and archive storage—to enhance applications running on other clouds. |
+| **Design & Cost Considerations** | • **Cost:** Typically more expensive due to redundant data storage, higher data transfer fees, and potentially underutilized resources.<br>• **Connectivity:** Requires secure, high-bandwidth cross-cloud networking, such as Google Cloud Cross-Cloud Interconnect.<br>• **Complexity:** Demands significant operational effort to manage differing security standards and resource provisioning across multiple platforms. |
