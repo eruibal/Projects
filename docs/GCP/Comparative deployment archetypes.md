@@ -1,4 +1,4 @@
-| Deployment Archetype | Infrastructure Availability | Outage Robustness (Zone / Region) | Cost | Operational Complexity |
+| Deployment Archetype | Availability | Outage Robustness (Zone / Region) | Cost | Operational Complexity |
 | :--- | :--- | :--- | :--- | :--- |
 | **Zonal** | 99.9% | Hours or days RTO for both | Low | Simplest to set up and operate. |
 | **Regional** | 99.99% | Near-zero RTO for zone / Hours or days RTO for region | Medium | More complex than zonal due to multiple zones. |
