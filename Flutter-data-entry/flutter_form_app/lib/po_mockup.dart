@@ -234,131 +234,57 @@ class PurchaseOrderScreen extends StatelessWidget {
             ),
           ),
           const Divider(height: 1, color: Color(0xFF334155)),
-          if (isDesktop)
-            Column(
-              children: [
-                // Table Header
-                Container(
-                  color: const Color(0xFF0F172A).withValues(alpha: 0.5),
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                  child: Row(
-                    children: const [
-                      Expanded(flex: 1, child: Text('Qty', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                      Expanded(flex: 2, child: Text('Item Code', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                      Expanded(flex: 4, child: Text('Description', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                      Expanded(flex: 2, child: Text('Unit Price', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                      Expanded(flex: 2, child: Text('Total', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                    ],
-                  ),
-                ),
-                const Divider(height: 1, color: Color(0xFF334155)),
-                // Table Rows
-                ...items.map((item) {
-                  return Column(
+          LayoutBuilder(
+            builder: (context, constraints) {
+              const minTableWidth = 640.0;
+              final maxW = constraints.maxWidth;
+              final tableWidth = maxW.isFinite && maxW >= minTableWidth ? maxW : minTableWidth;
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  width: tableWidth,
+                  child: Column(
                     children: [
-                      Padding(
+                      Container(
+                        color: const Color(0xFF0F172A).withValues(alpha: 0.5),
                         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(flex: 1, child: Text(item['qty']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
-                            Expanded(flex: 2, child: Text(item['code']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
-                            Expanded(flex: 4, child: Text(item['desc']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
-                            Expanded(flex: 2, child: Text(item['price']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
-                            Expanded(flex: 2, child: Text(item['total']!, textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
+                          children: const [
+                            Expanded(flex: 1, child: Text('Qty', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                            Expanded(flex: 2, child: Text('Item Code', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                            Expanded(flex: 4, child: Text('Description', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                            Expanded(flex: 2, child: Text('Unit Price', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
+                            Expanded(flex: 2, child: Text('Total', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                           ],
                         ),
                       ),
                       const Divider(height: 1, color: Color(0xFF334155)),
-                    ],
-                  );
-                }),
-              ],
-            )
-          else
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: items.length,
-              separatorBuilder: (context, index) => const Divider(height: 1, color: Color(0xFF334155)),
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              item['desc']!,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFE2E8F0),
-                                fontWeight: FontWeight.w500,
+                      ...items.map((item) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(flex: 1, child: Text(item['qty']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                                  Expanded(flex: 2, child: Text(item['code']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                                  Expanded(flex: 4, child: Text(item['desc']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                                  Expanded(flex: 2, child: Text(item['price']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
+                                  Expanded(flex: 2, child: Text(item['total']!, textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
+                                ],
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 16),
-                          Text(
-                            item['total']!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                item['qty']!,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF94A3B8),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF334155),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  item['code']!,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xFF94A3B8),
-                                    fontFamily: 'monospace',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            item['price']!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF94A3B8),
-                            ),
-                          ),
-                        ],
-                      ),
+                            const Divider(height: 1, color: Color(0xFF334155)),
+                          ],
+                        );
+                      }),
                     ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
