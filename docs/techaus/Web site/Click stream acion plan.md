@@ -9,7 +9,7 @@
 ## Executive Summary
 
 | Metric | Current state |
-|--------|---------------|
+| --- | --- |
 | Minimum clicks to lead | 5+ |
 | Conversion entry points | 2 (nav CTA + bottom banner) |
 | Lead capture before quote form | None |
@@ -25,9 +25,9 @@ The core problem is a **5-click minimum path to a lead** with zero partial captu
 | Title | Description | Check |
 | --- | --- | --- |
 | **Flow 01 — Main Navigation** | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow. | Checked the navigation flow and it is working well, at this point I think clicking on the logo header on the upper left corner and take it back to the landing page should be enough |
-| **Flow 02 — Hero Section CTAs** | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires. |  |
-| **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity. |  |
-| **Flow 04 — Bottom CTA Banner** | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users." |  |
+| **Flow 02 — Hero Section CTAs** | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires. | |
+| **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity. | |
+| **Flow 04 — Bottom CTA Banner** | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users." | |
 
 ---
 
@@ -64,7 +64,7 @@ Both pages are reachable from the primary nav but neither includes a CTA pointin
 
 **Current — best case:**
 
-```
+```text
 Homepage → Protección catalog → Product page → Quote form → Lead ✓
 ```
 
@@ -72,7 +72,7 @@ Homepage → Protección catalog → Product page → Quote form → Lead ✓
 
 **Target after fixes:**
 
-```
+```text
 Homepage → Product selector (hero) → Pre-filled quote form → Lead ✓
 ```
 
@@ -84,19 +84,19 @@ Homepage → Product selector (hero) → Pre-filled quote form → Lead ✓
 
 ### Step 1 — Add product pre-selection to the quote form URL
 
-**Impact: High · Effort: Dev · ~1 day · Affects: Flow 03**
+#### Impact: High · Effort: Dev · ~1 day · Affects: Flow 03
 
 Read the `?tipo=gastos-medicos` (or `auto` / `vida` / `hogar`) query param on `/cotizar` and auto-select the matching product in the form dropdown on page load. Add a hidden field to pass it through on submission so the CRM knows which product triggered the lead.
 
 ### Step 2 — Redesign the hero to include an inline product selector
 
-**Impact: High · Effort: Design + Dev · 2–3 days · Affects: Flows 01 & 02**
+#### Impact: High · Effort: Design + Dev · 2–3 days · Affects: Flows 01 & 02
 
 Replace the generic "Ver Soluciones →" CTA with a pill-group (Gastos Médicos / Auto / Vida / Hogar) above a single "Cotizar ahora" button. Selecting a pill sets the `?tipo=` param. This cuts hero-to-lead from 4 clicks to 2 and eliminates the catalog detour entirely.
 
 ### Step 3 — Rebuild the thank-you page as a conversion asset
 
-**Impact: High · Effort: Design + Copy · 1–2 days · Affects: Flow 03**
+#### Impact: High · Effort: Design + Copy · 1–2 days · Affects: Flow 03
 
 Add the following to `/cotizar/gracias`:
 
@@ -107,25 +107,25 @@ Add the following to `/cotizar/gracias`:
 
 ### Step 4 — Add a sticky quote CTA to `/servicios` and `/nosotros`
 
-**Impact: Medium · Effort: Dev · ~0.5 days · Affects: Flow 01**
+#### Impact: Medium · Effort: Dev · ~0.5 days · Affects: Flow 01
 
 Place a fixed bottom bar ("¿Listo para cotizar? → Empezar") on both pages using a contrasting background colour (brand cyan) so it doesn't blend with page content. This converts currently dead navigation endpoints into soft funnel entry points.
 
 ### Step 5 — Visually separate the two CTAs in the bottom banner
 
-**Impact: Medium · Effort: Design + Copy · ~0.5 days · Affects: Flow 04**
+#### Impact: Medium · Effort: Design + Copy · ~0.5 days · Affects: Flow 04
 
 "Cotizar en línea" should be the primary CTA (filled, green). "Hablar con un asesor" should be secondary (outline or ghost). Add a micro-label under each — "Obtén precio en 2 min" vs "Respuesta en 24h" — to help users self-select by intent and reduce wrong-path clicks from high-intent visitors.
 
 ### Step 6 — Add email micro-capture on product pages
 
-**Impact: Medium · Effort: Dev + Email automation · ~2 days · Affects: Flow 03**
+#### Impact: Medium · Effort: Dev + Email automation · ~2 days · Affects: Flow 03
 
 Add a single-field email input below the "Ver cobertura" secondary CTA on each product page, triggered on exit-intent or after 30 seconds of dwell time. Suggested copy: "¿Quieres que te enviemos los detalles?" — low commitment, high value. Route captured emails into an automated drip sequence with the product's coverage details and a quote CTA.
 
 ### Step 7 — Instrument the quote funnel with step-level tracking
 
-**Impact: Foundational · Effort: Analytics · ~1 day · Affects: All flows**
+#### Impact: Foundational · Effort: Analytics · ~1 day · Affects: All flows
 
 Add event tracking (GA4 or equivalent) at each step of the `/cotizar` form: step viewed, field completed, step completed, and form abandoned. This gives you the data to identify the exact field or step with the highest drop-off rate, enabling data-driven optimisation of steps 1–6 above. This should run in parallel with everything else.
 
@@ -134,7 +134,7 @@ Add event tracking (GA4 or equivalent) at each step of the `/cotizar` form: step
 ## Prioritised Summary
 
 | # | Action | Impact | Effort | Flow |
-|---|--------|--------|--------|------|
+| --- | --- | --- | --- | --- |
 | 1 | Auto-fill product on quote form from URL param | High | 1 day | 03 |
 | 2 | Inline product selector on hero CTA | High | 2–3 days | 01, 02 |
 | 3 | Redesign thank-you page with re-engagement CTAs | High | 1–2 days | 03 |
@@ -145,4 +145,4 @@ Add event tracking (GA4 or equivalent) at each step of the `/cotizar` form: step
 
 ---
 
-*Techaus Clickstream Audit — based on live landing page analysis · techaus.mx*
+Techaus Clickstream Audit — based on live landing page analysis · techaus.mx
