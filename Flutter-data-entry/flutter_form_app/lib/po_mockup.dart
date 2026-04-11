@@ -243,9 +243,9 @@ class PurchaseOrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                   child: Row(
                     children: const [
+                      Expanded(flex: 1, child: Text('Qty', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                       Expanded(flex: 2, child: Text('Item Code', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                       Expanded(flex: 4, child: Text('Description', style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
-                      Expanded(flex: 1, child: Text('Qty', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                       Expanded(flex: 2, child: Text('Unit Price', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                       Expanded(flex: 2, child: Text('Total', textAlign: TextAlign.right, style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF94A3B8)))),
                     ],
@@ -261,9 +261,9 @@ class PurchaseOrderScreen extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Expanded(flex: 1, child: Text(item['qty']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
                             Expanded(flex: 2, child: Text(item['code']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
                             Expanded(flex: 4, child: Text(item['desc']!, style: const TextStyle(color: Color(0xFFE2E8F0)))),
-                            Expanded(flex: 1, child: Text(item['qty']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
                             Expanded(flex: 2, child: Text(item['price']!, textAlign: TextAlign.right, style: const TextStyle(color: Color(0xFFE2E8F0)))),
                             Expanded(flex: 2, child: Text(item['total']!, textAlign: TextAlign.right, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.white))),
                           ],
@@ -317,23 +317,36 @@ class PurchaseOrderScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF334155),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              item['code']!,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF94A3B8),
-                                fontFamily: 'monospace',
+                          Row(
+                            children: [
+                              Text(
+                                item['qty']!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF94A3B8),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 10),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF334155),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  item['code']!,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF94A3B8),
+                                    fontFamily: 'monospace',
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Text(
-                            '${item['qty']} x ${item['price']}',
+                            item['price']!,
                             style: const TextStyle(
                               fontSize: 14,
                               color: Color(0xFF94A3B8),
