@@ -1,48 +1,63 @@
-
-<h2 class="sr-only">Calculadora de Valor Presente Neto de enfermedades catastróficas en México para personas mayores de 65 años</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN Enfermedades Catastróficas México — +65 años</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans)}
-.section{margin-bottom:1.5rem}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.metric{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
-.metric .lbl{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
-.metric .val{font-size:20px;font-weight:500;color:var(--color-text-primary)}
-.metric .sub{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:14px 16px;margin-bottom:12px}
-.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.slider-row label{font-size:13px;color:var(--color-text-secondary);min-width:130px}
-.slider-row input[type=range]{flex:1}
-.slider-row .val-out{font-size:13px;font-weight:500;color:var(--color-text-primary);min-width:44px;text-align:right}
-.seg{display:flex;border:0.5px solid var(--color-border-secondary);border-radius:8px;overflow:hidden;margin-bottom:1rem}
-.seg button{flex:1;padding:7px 4px;font-size:12px;background:transparent;border:none;border-right:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);cursor:pointer}
-.seg button:last-child{border-right:none}
-.seg button.active{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary)}
-td{padding:5px 8px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
-td.num{text-align:right;font-variant-numeric:tabular-nums}
-td.dim{color:var(--color-text-tertiary)}
-tr.total td{font-weight:500;border-top:1px solid var(--color-border-secondary);border-bottom:none}
-tr:hover td{background:var(--color-background-secondary)}
-.phase-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;font-weight:500}
-.ph1{background:#E6F1FB;color:#185FA5}
-.ph2{background:#EAF3DE;color:#3B6D11}
-.ph3{background:#FAEEDA;color:#854F0B}
-.ph4{background:#FCEBEB;color:#A32D2D}
-.note-box{background:var(--color-background-secondary);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-top:10px}
-.dis-label{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
-.highlight-row td{background:var(--color-background-info)!important;color:var(--color-text-info)!important;font-weight:500}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #f9f8f5; color: #1a1a18; padding: 1.5rem; max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #5f5e5a; margin-bottom: 1.5rem; }
+  .section { margin-bottom: 1.5rem; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .metric { background: #f1efe8; border-radius: 8px; padding: 12px 14px; }
+  .metric .lbl { font-size: 12px; color: #5f5e5a; margin-bottom: 4px; }
+  .metric .val { font-size: 16px; font-weight: 500; }
+  .metric .sub { font-size: 11px; color: #888780; margin-top: 2px; }
+  .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .slider-row label { font-size: 13px; color: #5f5e5a; min-width: 140px; }
+  .slider-row input[type=range] { flex: 1; accent-color: #534AB7; }
+  .slider-row .val-out { font-size: 13px; font-weight: 500; min-width: 50px; text-align: right; }
+  .seg { display: flex; border: 0.5px solid rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+  .seg button { flex: 1; padding: 7px 4px; font-size: 12px; background: transparent; border: none; border-right: 0.5px solid rgba(0,0,0,0.12); color: #5f5e5a; cursor: pointer; }
+  .seg button:last-child { border-right: none; }
+  .seg button.active { background: #f1efe8; color: #1a1a18; font-weight: 500; }
+  .seg button:hover:not(.active) { background: #f9f8f5; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { font-size: 11px; font-weight: 500; color: #5f5e5a; text-align: left; padding: 6px 8px; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+  td { padding: 5px 8px; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.dim { color: #888780; }
+  tr.total td { font-weight: 500; border-top: 1px solid rgba(0,0,0,0.15); border-bottom: none; }
+  tr:hover td { background: #f9f8f5; }
+  .phase-badge { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 4px; font-weight: 500; }
+  .ph1 { background: #E6F1FB; color: #185FA5; }
+  .ph2 { background: #EAF3DE; color: #3B6D11; }
+  .ph3 { background: #FAEEDA; color: #854F0B; }
+  .ph4 { background: #FCEBEB; color: #A32D2D; }
+  .note-box { background: #f1efe8; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #5f5e5a; line-height: 1.6; margin-top: 10px; }
+  .dis-label { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; font-size: 12px; color: #5f5e5a; }
+  .legend span { display: flex; align-items: center; gap: 4px; }
+  .legend .dot { width: 10px; height: 10px; border-radius: 2px; }
+  .sector-seg { margin: 0; flex: 1; }
+  .flex-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .flex-row label { font-size: 13px; color: #5f5e5a; min-width: 140px; }
+  footer { font-size: 11px; color: #888780; margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid rgba(0,0,0,0.1); line-height: 1.6; }
 </style>
+</head>
+<body>
 
-<div style="padding:0.75rem 0">
+<h1>VPN de enfermedades catastróficas en México — personas mayores de 65 años</h1>
+<p class="subtitle">Calculadora interactiva de Valor Presente Neto. Ajusta los supuestos financieros y el sector de atención para estimar el costo total de cada enfermedad a precios de hoy.</p>
 
 <div class="section">
   <div class="seg" id="diseaseSeg">
     <button class="active" onclick="setDisease(0,this)">Infarto al miocardio</button>
-    <button onclick="setDisease(1,this)">Cancer (promedio)</button>
+    <button onclick="setDisease(1,this)">Cáncer (promedio)</button>
     <button onclick="setDisease(2,this)">Diabetes tipo 2</button>
   </div>
 </div>
@@ -65,9 +80,9 @@ tr:hover td{background:var(--color-background-secondary)}
       <input type="range" id="horizSlider" min="3" max="20" step="1" value="10">
       <span class="val-out" id="horizOut">10 años</span>
     </div>
-    <div class="slider-row" style="margin-bottom:0">
+    <div class="flex-row">
       <label>Sector de atención</label>
-      <div class="seg" id="sectorSeg" style="margin:0;flex:1">
+      <div class="seg sector-seg" id="sectorSeg">
         <button class="active" onclick="setSector(1.0,this)">Privado</button>
         <button onclick="setSector(0.55,this)">Mixto</button>
         <button onclick="setSector(0.20,this)">Solo IMSS</button>
@@ -82,6 +97,16 @@ tr:hover td{background:var(--color-background-secondary)}
 
 <div class="section card">
   <div class="dis-label" id="tableTitle">Desglose anual de costos — Infarto al miocardio</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#378ADD"></span>Fase 1 — Evento/tx inicial</span>
+    <span><span class="dot" style="background:#639922"></span>Fase 2 — Manejo estable</span>
+    <span><span class="dot" style="background:#BA7517"></span>Fase 3 — Complicaciones</span>
+    <span><span class="dot" style="background:#E24B4A"></span>Fase 4 — Dependencia/paliativo</span>
+    <span><span class="dot" style="background:#534AB7;border-radius:50%"></span>VP acumulado (línea)</span>
+  </div>
+  <div style="position:relative;width:100%;height:240px;margin-bottom:1rem">
+    <canvas id="vpnChart" role="img" aria-label="Gráfica de valor presente por año y acumulado para la enfermedad seleccionada">Costo presente acumulado por año de tratamiento.</canvas>
+  </div>
   <div class="table-wrap">
     <table id="costTable">
       <thead>
@@ -90,7 +115,7 @@ tr:hover td{background:var(--color-background-secondary)}
           <th>Fase</th>
           <th>Concepto principal</th>
           <th style="text-align:right">Costo nominal</th>
-          <th style="text-align:right">Costo con inflación</th>
+          <th style="text-align:right">Con inflación</th>
           <th style="text-align:right">Valor presente</th>
         </tr>
       </thead>
@@ -100,11 +125,10 @@ tr:hover td{background:var(--color-background-secondary)}
   <div class="note-box" id="noteBox"></div>
 </div>
 
-<div style="position:relative;width:100%;height:260px;margin-bottom:1rem">
-  <canvas id="vpnChart" role="img" aria-label="Gráfica de valor presente acumulado por año para la enfermedad seleccionada">Costo presente acumulado por año de tratamiento.</canvas>
-</div>
-
-</div>
+<footer>
+  Fuentes: AMIS 2025 · MetLife México · México Evalúa ENIGH 2024 · OCDE Panorama de Salud 2025 · IMSS costos unitarios 2024 · Kalmy Seguros 2025 · Crónica de Xalapa / AMIS abril 2025.<br>
+  Estimaciones con fines informativos. Los costos reales varían según institución, tipo de seguro, gravedad y región. Inflación médica de referencia: 14-15% anual (CNSF/AMIS 2024-2025).
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
@@ -112,10 +136,10 @@ const fmt = v => '$' + Math.round(v).toLocaleString('es-MX');
 
 const DISEASES = [
   {
-    name:'Infarto al miocardio',
+    name: 'Infarto al miocardio',
     defaultHorizon: 10,
-    note:'Mortalidad hospitalaria a 30 días del 22.6% en México (OCDE 2025). Los sobrevivientes tienen esperanza de vida de 10-12 años. El 40% sufre re-infarto o insuficiencia cardíaca dentro de 5 años. Costos crecen con complicaciones cardiovasculares progresivas.',
-    years:[
+    note: 'Mortalidad hospitalaria a 30 días del 22.6% en México (OCDE 2025). Los sobrevivientes tienen esperanza de vida de 10-12 años. El 40% sufre re-infarto o insuficiencia cardíaca dentro de 5 años. Costos crecen con complicaciones cardiovasculares progresivas.',
+    years: [
       {phase:'ph1',label:'Evento agudo',concept:'Hospitalización UCI + cateterismo/angioplastia + procedimiento',base:220000,cuidador:0},
       {phase:'ph1',label:'Rehab aguda',concept:'Rehabilitación cardíaca + medicamentos + 4 consultas/año',base:85000,cuidador:0},
       {phase:'ph2',label:'Manejo estable',concept:'Medicamentos (anticoagulantes, estatinas, betabloqueadores) + 3 consultas',base:55000,cuidador:0},
@@ -129,10 +153,10 @@ const DISEASES = [
     ]
   },
   {
-    name:'Cáncer (promedio tipos frecuentes)',
+    name: 'Cáncer (promedio tipos frecuentes)',
     defaultHorizon: 6,
-    note:'Promedio entre cánceres frecuentes en mayores de 65: colon, mama, próstata, pulmón, gástrico. Supervivencia a 5 años en México: 60-78% para tipos controlables, 10-30% para agresivos. Se modelan 6 años de horizonte como promedio ponderado. Costos más altos de cualquier enfermedad catastrófica.',
-    years:[
+    note: 'Promedio entre cánceres frecuentes en mayores de 65: colon, mama, próstata, pulmón, gástrico. Supervivencia a 5 años en México: 60-78% para tipos controlables, 10-30% para agresivos. Se modelan 6 años de horizonte como promedio ponderado. Costos más altos de cualquier enfermedad catastrófica.',
+    years: [
       {phase:'ph1',label:'Diagnóstico + tx inicial',concept:'Biopsias + cirugía + quimioterapia / radioterapia inicial (ciclos 1-3)',base:550000,cuidador:0},
       {phase:'ph1',label:'Tratamiento activo',concept:'Quimioterapia / inmunoterapia continua + soporte oncológico',base:400000,cuidador:0},
       {phase:'ph2',label:'Tratamiento activo',concept:'Ciclos finales + radioterapia de consolidación + seguimiento imagen',base:300000,cuidador:40000},
@@ -142,10 +166,10 @@ const DISEASES = [
     ]
   },
   {
-    name:'Diabetes tipo 2 + complicaciones',
+    name: 'Diabetes tipo 2 + complicaciones',
     defaultHorizon: 13,
-    note:'La diabetes es una enfermedad crónica progresiva. A los 65 años, la mayoría ya tiene complicaciones incipientes. El 68% de hospitalizaciones por DM2 en México es por complicaciones (renales 23%, circulatorias 23%). Costo total vitalicio es el más alto por su duración (13-15 años).',
-    years:[
+    note: 'La diabetes es una enfermedad crónica progresiva. A los 65 años, la mayoría ya tiene complicaciones incipientes. El 68% de hospitalizaciones por DM2 en México es por complicaciones (renales 23%, circulatorias 23%). Costo total vitalicio es el más alto por su duración (13-15 años).',
+    years: [
       {phase:'ph1',label:'Control inicial',concept:'Insulina/medicamentos orales + consultas endocrinólogo + automonitoreo',base:42000,cuidador:0},
       {phase:'ph1',label:'Control',concept:'Medicamentos + nutriólogo + laboratorios + fondo de ojo anual',base:44000,cuidador:0},
       {phase:'ph2',label:'Complicaciones leves',concept:'Neuropatía + retinopatía láser + ajuste medicamentos',base:80000,cuidador:0},
@@ -203,7 +227,7 @@ function computeNPV(disease, rate, infl, horiz, mult) {
 }
 
 function computeAllNPV() {
-  return DISEASES.map((d, i) => {
+  return DISEASES.map((d) => {
     const h = Math.min(d.defaultHorizon, d.years.length);
     return computeNPV(d, discountRate, inflRate, h, sectorMult);
   });
@@ -220,25 +244,26 @@ function render() {
   const cards = document.getElementById('summaryCards');
   const labels = ['Infarto', 'Cáncer', 'Diabetes'];
   const colors = ['#185FA5','#A32D2D','#854F0B'];
+  const horizons = DISEASES.map(d => Math.min(d.defaultHorizon, d.years.length));
   cards.innerHTML = allNPV.map((r, i) => `
     <div class="metric" style="border-left:3px solid ${colors[i]}">
       <div class="lbl">${labels[i]}</div>
-      <div class="val" style="font-size:16px;color:${colors[i]}">${fmt(r.npv)}</div>
-      <div class="sub">VPN total · ${Math.min(DISEASES[i].defaultHorizon, DISEASES[i].years.length)} años · sector ${sectorMult===1?'privado':sectorMult===0.55?'mixto':'IMSS'}</div>
+      <div class="val" style="color:${colors[i]}">${fmt(r.npv)}</div>
+      <div class="sub">VPN · ${horizons[i]} años · ${sectorMult===1?'privado':sectorMult===0.55?'mixto':'IMSS'}</div>
     </div>`).join('');
 
   const tbody = document.getElementById('tableBody');
   tbody.innerHTML = rows.map(r => `
-    <tr class="${r.t===rows.length-1?'total':''}">
+    <tr>
       <td class="dim">${r.t===0?'0 (evento)':'Año '+r.t}</td>
       <td><span class="phase-badge ${r.phase}">${r.label}</span></td>
-      <td style="font-size:11px;max-width:180px">${r.concept}</td>
+      <td style="font-size:11px;max-width:200px">${r.concept}</td>
       <td class="num">${fmt(r.nominal)}</td>
       <td class="num">${fmt(r.inflated)}</td>
       <td class="num" style="font-weight:500">${fmt(r.pv)}</td>
     </tr>`).join('') + `
     <tr class="total">
-      <td colspan="3" style="font-size:13px;font-weight:500">VPN Total (${horizon} años)</td>
+      <td colspan="3" style="font-size:13px">VPN Total (${horizon} años)</td>
       <td class="num dim">${fmt(rows.reduce((s,r)=>s+r.nominal,0))}</td>
       <td class="num dim">${fmt(rows.reduce((s,r)=>s+r.inflated,0))}</td>
       <td class="num" style="font-size:15px;color:#A32D2D">${fmt(npv)}</td>
@@ -251,33 +276,33 @@ function render() {
 
   if (vpnChart) vpnChart.destroy();
   vpnChart = new Chart(document.getElementById('vpnChart'), {
-    type:'bar',
-    data:{
-      labels:labels2,
-      datasets:[
-        {type:'bar',label:'VP del año',data:pvData,backgroundColor:barColors,borderRadius:3},
-        {type:'line',label:'VP acumulado',data:cumData,borderColor:'#533AB7',borderWidth:2,pointRadius:3,pointBackgroundColor:'#533AB7',tension:0.3,yAxisID:'y2'}
+    type: 'bar',
+    data: {
+      labels: labels2,
+      datasets: [
+        {type:'bar', label:'VP del año', data:pvData, backgroundColor:barColors, borderRadius:3},
+        {type:'line', label:'VP acumulado', data:cumData, borderColor:'#534AB7', borderWidth:2, pointRadius:3, pointBackgroundColor:'#534AB7', tension:0.3, yAxisID:'y2'}
       ]
     },
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{ticks:{font:{size:11}},grid:{display:false}},
-        y:{ticks:{callback:v=>'$'+Math.round(v/1000)+'k',font:{size:11}},grid:{color:'rgba(128,128,128,0.1)'}},
-        y2:{position:'right',ticks:{callback:v=>'$'+Math.round(v/1000000*10)/10+'M',font:{size:11}},grid:{display:false}}
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { callback: v => '$' + Math.round(v/1000) + 'k', font: { size: 11 } }, grid: { color: 'rgba(128,128,128,0.1)' } },
+        y2: { position: 'right', ticks: { callback: v => '$' + (Math.round(v/100000)/10).toFixed(1) + 'M', font: { size: 11 } }, grid: { display: false } }
       }
     }
   });
 }
 
 document.getElementById('rateSlider').addEventListener('input', function() {
-  discountRate = this.value/100;
+  discountRate = this.value / 100;
   document.getElementById('rateOut').textContent = this.value + '%';
   render();
 });
 document.getElementById('inflSlider').addEventListener('input', function() {
-  inflRate = this.value/100;
+  inflRate = this.value / 100;
   document.getElementById('inflOut').textContent = this.value + '%';
   render();
 });
@@ -291,3 +316,5 @@ document.getElementById('horizSlider').addEventListener('input', function() {
 
 render();
 </script>
+</body>
+</html>
