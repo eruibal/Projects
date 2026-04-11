@@ -59,7 +59,7 @@ This pain point is:
 ### Service Tiers
 
 | Tier | Price | Features |
-|------|-------|----------|
+| ------ | ------- | ---------- |
 | Básico | $49 MXN/month | Weekly summary + overage alert |
 | Plus | $79 MXN/month | Daily summary + threshold alerts (75%, 90%) |
 | Premium | $99 MXN/month | All alerts + priority WhatsApp support + monthly report |
@@ -136,7 +136,7 @@ DataVigía subscribers voluntarily disclose their carrier and plan tier. A subsc
 ### DataVigía Standalone
 
 | Subscribers | Avg. Revenue/User | Monthly Revenue | API Cost (est.) | Net MRR |
-|-------------|-------------------|-----------------|-----------------|---------|
+| ------------- | ------------------- | ----------------- | ----------------- | --------- |
 | 100 | $69 MXN | $6,900 MXN | ~$800 MXN | ~$6,100 MXN |
 | 500 | $69 MXN | $34,500 MXN | ~$3,500 MXN | ~$31,000 MXN |
 | 2,000 | $69 MXN | $138,000 MXN | ~$12,000 MXN | ~$126,000 MXN |
@@ -148,7 +148,7 @@ DataVigía subscribers voluntarily disclose their carrier and plan tier. A subsc
 Assuming 5% of active DataVigía subscribers convert to an insurance policy within 12 months, and an average first-year commission of $1,800 MXN per policy:
 
 | Subscribers | 5% Conversion | Policies | Commission Revenue |
-|-------------|---------------|----------|--------------------|
+| ------------- | --------------- | ---------- | -------------------- |
 | 500 | 25 policies | 25 | $45,000 MXN |
 | 2,000 | 100 policies | 100 | $180,000 MXN |
 | 5,000 | 250 policies | 250 | $450,000 MXN |
@@ -160,17 +160,21 @@ At scale, the insurance conversion revenue significantly exceeds the DataVigía 
 ## Brand & Landing Page Recommendations
 
 ### Naming
+
 **DataVigía by TECHAUS** — "Vigía" means lookout or watchman in Spanish. It retains the familiar "Data" prefix for tech clarity while adding a Spanish word with genuine character. The name works in spoken conversation, WhatsApp context, and digital advertising.
 
 ### Brand voice for DataVigía
+
 - Warm, practical, and straightforward — not technical
 - Speaks like a financially savvy friend, not a corporate service
 - Example alert tone: *"¡Ojo! Ya usaste el 80% de tu plan. Si sigues así, Telcel te cobrará extra. Aquí tienes algunas opciones..."*
 
 ### Landing page structure
+
 A separate landing page (`techaus.mx/datavigía` or `datavigía.mx`) should be distinct from the main insurance landing page but visually connected to the TECHAUS brand.
 
 Recommended sections:
+
 1. Hero — pain statement + WhatsApp CTA ("Activa DataVigía ahora")
 2. How it works — 3-step visual (Regístrate → Reenvía tu SMS → Recibe alertas)
 3. Pricing tiers — Básico / Plus / Premium
@@ -182,7 +186,7 @@ Recommended sections:
 ## Key Risks and Mitigations
 
 | Risk | Mitigation |
-|------|------------|
+| ------ | ------------ |
 | Carrier API access is unavailable | Use SMS-forwarding MVP — no carrier agreement needed |
 | WhatsApp API costs erode margins | Model per-message cost before launch; batch non-urgent alerts; set pricing accordingly |
 | User churn if onboarding is confusing | Invest in a frictionless 3-message onboarding flow; include a short video walkthrough |
