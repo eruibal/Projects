@@ -1,5 +1,10 @@
-| Aspect | Details |
-| :--- | :--- |
-| **Core Architecture** | Parts of the application run in Google Cloud while other parts are deployed across different external cloud platforms. |
-| **Primary Use Cases** | • **Disaster Recovery:** Operating a primary site in Google Cloud while maintaining a passive backup replica in another cloud platform.<br>• **Cloud Enhancement:** Utilizing Google Cloud's advanced capabilities—such as AI, machine learning, BigQuery analytics, and archive storage—to enhance applications running on other clouds. |
-| **Design & Cost Considerations** | • **Cost:** Typically more expensive due to redundant data storage, higher data transfer fees, and potentially underutilized resources.<br>• **Connectivity:** Requires secure, high-bandwidth cross-cloud networking, such as Google Cloud Cross-Cloud Interconnect.<br>• **Complexity:** Demands significant operational effort to manage differing security standards and resource provisioning across multiple platforms. |
+| Topic | Key Concepts | Details |
+| :--- | :--- | :--- |
+| **Cloud Computing Traits** | 5 Key Characteristics | Resources are on-demand, accessible from anywhere, pooled, elastic, and billed based on usage or reservation. |
+| **Evolution of Cloud** | 3 Waves | The industry transitioned from physical colocation (renting space), to virtualized data centers, and now to automated container-based and serverless architectures. |
+| **Service Offerings** | IaaS, PaaS, SaaS | **IaaS:** Provides raw compute, storage, and network resources (pay for what is allocated). **PaaS:** Binds code to libraries so developers can focus on application logic (pay for usage). **SaaS:** Delivers an entire cloud-based application to end users. |
+| **Global Network** | Regions & Zones | The network is divided into independent geographic locations called Regions, which contain multiple Zones. Spreading resources across Zones and Regions ensures redundancy, fault tolerance, and low latency for users. |
+| **Sustainability** | Environmental Impact | Google's data centers are highly efficient. Google achieved 100% renewable energy in its second decade and aims to operate entirely carbon-free by 2030. |
+| **Security** | Multi-Layered | Security is built into every level: custom hardware chips, encrypted inter-service communication, strict user identity checks (U2F), storage encryption at rest, Denial of Service (DoS) protection, and limited insider access. |
+| **Open Source** | Avoiding Vendor Lock-in | Google supports open-source tools like TensorFlow and Kubernetes (GKE) to give customers interoperability and prevent them from being locked into a single vendor. |
+| **Pricing & Billing** | Cost Controls | Google offers per-second billing, sustained-use discounts, and custom virtual machines. Users can manage costs using budgets, spend alerts, reports, and API limits called quotas. |
