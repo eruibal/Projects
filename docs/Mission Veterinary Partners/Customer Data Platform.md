@@ -1,4 +1,6 @@
-BlueConic is a "marketer-first" Customer Data Platform (CDP) designed to unify customer data from various sources into a single, persistent "golden record" for every individual. Founded in 2010 and headquartered in Boston, it is primarily used by mid-market and enterprise B2C brands—such as Heineken, Mattel, and L’Oréal—to drive real-time personalization and customer growth without needing heavy IT or data engineering support. [1, 2, 3] 
+# BlueConic is a "marketer-first" Customer Data Platform (CDP)
+
+Designed to unify customer data from various sources into a single, persistent "golden record" for every individual. Founded in 2010 and headquartered in Boston, it is primarily used by mid-market and enterprise B2C brands—such as Heineken, Mattel, and L’Oréal—to drive real-time personalization and customer growth without needing heavy IT or data engineering support. [1, 2, 3] 
 ## Core Capabilities
 BlueConic differentiates itself by combining data unification with native engagement tools: [1, 4] 
 
