@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Checklist RFP — Planeación Estratégica · Frituras Jesús</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f2;color:#1a1a18;padding:2rem 1rem;min-height:100vh}
+.page{max-width:780px;margin:0 auto}
+.top-bar{background:#085041;color:#fff;border-radius:12px;padding:16px 20px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.top-bar h1{font-size:15px;font-weight:500;opacity:.95}
+.top-bar p{font-size:12px;opacity:.7;margin-top:2px}
+.top-bar-right{text-align:right}
+.top-bar-right span{font-size:12px;opacity:.7}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
+.header h2{font-size:17px;font-weight:600;color:#1a1a18}
+.header p{font-size:13px;color:#5f5e5a;margin-top:2px}
+.progress-bar-wrap{display:flex;align-items:center;gap:10px}
+.progress-bar{width:160px;height:7px;background:#d3d1c7;border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;background:#1D9E75;border-radius:6px;transition:width .3s}
+.progress-label{font-size:13px;color:#5f5e5a;min-width:36px;text-align:right;font-weight:500}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:1.25rem}
+.stat{background:#fff;border:0.5px solid #d3d1c7;border-radius:10px;padding:10px 12px;text-align:center}
+.stat-num{font-size:22px;font-weight:600;color:#1a1a18}
+.stat-num.green{color:#0F6E56}
+.stat-num.amber{color:#BA7517}
+.stat-label{font-size:11px;color:#888780;margin-top:2px}
+.legend{display:flex;gap:16px;margin-bottom:1.25rem;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#888780}
+.legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.section{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;gap:10px;user-select:none}
+.section-header:hover{background:#f5f5f2}
+.section-title{display:flex;align-items:center;gap:10px}
+.section-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.section-text h3{font-size:14px;font-weight:600;color:#1a1a18}
+.section-text p{font-size:12px;color:#888780;margin-top:2px}
+.section-meta{display:flex;align-items:center;gap:8px}
+.badge{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600;white-space:nowrap}
+.badge-green{background:#E1F5EE;color:#0F6E56}
+.badge-gray{background:#f1efe8;color:#888780}
+.chevron{font-size:11px;color:#888780;transition:transform .2s;display:inline-block}
+.chevron.open{transform:rotate(180deg)}
+.section-body{border-top:0.5px solid #d3d1c7;display:none}
+.section-body.open{display:block}
+.item{display:flex;align-items:flex-start;gap:10px;padding:11px 16px;border-bottom:0.5px solid #f1efe8;cursor:pointer;transition:background .15s}
+.item:last-child{border-bottom:none}
+.item:hover{background:#f5f5f2}
+.item-check{width:18px;height:18px;border-radius:4px;border:1.5px solid #b4b2a9;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .15s}
+.item-check.checked{background:#1D9E75;border-color:#1D9E75}
+.item-check.prefilled{background:#085041;border-color:#085041}
+.checkmark{display:none;font-size:11px;color:#fff;font-weight:700;line-height:1}
+.item-check.checked .checkmark,.item-check.prefilled .checkmark{display:block}
+.item-content{flex:1}
+.item-label{font-size:13px;color:#1a1a18;line-height:1.45}
+.item-label.checked-label{color:#b4b2a9;text-decoration:line-through}
+.item-note{font-size:11.5px;color:#888780;margin-top:3px;line-height:1.45}
+.item-note.prefill{color:#0F6E56;font-style:italic}
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:5px;font-weight:600;vertical-align:middle}
+.tag-prefill{background:#E1F5EE;color:#085041}
+.tag-required{background:#FAECE7;color:#993C1D}
+@media print{
+  body{background:#fff;padding:.5rem}
+  .section-body{display:block!important}
+  .chevron{display:none}
+  .section-header{cursor:default}
+  .item:hover{background:transparent}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top-bar">
+  <div>
+    <h1>RFP · Implementación ERP — Frituras Jesús</h1>
+    <p>Consultoría de procesos de negocio · Documento de trabajo</p>
+  </div>
+  <div class="top-bar-right">
+    <span>Fase 1 de 1 · Planeación estratégica</span>
+  </div>
+</div>
+
+<div class="header">
+  <div>
+    <h2>Checklist — Planeación estratégica y antecedentes</h2>
+    <p>Reunión gerencial · Frituras Jesús · Hermosillo, Sonora</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <span class="progress-label" id="prog-label">0 %</span>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="stat"><div class="stat-num" id="s-total">37</div><div class="stat-label">Total ítems</div></div>
+  <div class="stat"><div class="stat-num green" id="s-pre">0</div><div class="stat-label">Pre-cargados</div></div>
+  <div class="stat"><div class="stat-num green" id="s-done">0</div><div class="stat-label">Confirmados</div></div>
+  <div class="stat"><div class="stat-num amber" id="s-pend">37</div><div class="stat-label">Pendientes</div></div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#085041"></div>Dato pre-cargado (sitio web)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1D9E75"></div>Confirmado en reunión</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b4b2a9"></div>Pendiente de levantar</div>
+</div>
+
+<div id="sections"></div>
+
+</div>
+
+<script>
+const sections=[
+  {id:"s1",icon:"📋",color:"#E1F5EE",title:"Historia y antecedentes",subtitle:"¿De dónde venimos?",items:[
+    {id:"i1",label:"Fecha y lugar de fundación de la empresa",prefill:true,note:"Fundada en marzo de 1997 como Tortillería Jesús, Col. Los Olivos, Hermosillo, Sonora."},
+    {id:"i2",label:"Nombre(s) de fundadores y socios actuales",prefill:false,note:"¿Quién o quiénes fundaron la empresa? ¿Cambios en la estructura de socios?"},
+    {id:"i3",label:"Hitos de evolución del negocio",prefill:true,note:"1997 tortillería → 1999 totopos y tostadas → 2007 equipamiento industrial → 2014 reestructura logística → 2021 traslado a Parque Industrial."},
+    {id:"i4",label:"Modelo de crecimiento histórico (orgánico / adquisiciones)",prefill:true,note:"Crecimiento orgánico: expansión gradual de rutas, equipos y zonas (Bahía de Kino, Pob. Miguel Alemán, San Pedro Saucito)."},
+    {id:"i5",label:"Número de empleados actuales y evolución de plantilla",prefill:false,note:"¿Cuántos colaboradores tiene hoy? ¿Cómo ha crecido la plantilla en los últimos 5 años?"},
+    {id:"i6",label:"Estructura legal y fiscal de la empresa (razones sociales, RFC)",prefill:false,note:"¿Operan bajo una sola razón social o existe un grupo de empresas?"},
+    {id:"i7",label:"Principales cambios organizacionales o de propiedad",prefill:false,note:"Fusiones, cambios de accionistas, restructuras societarias."},
+  ]},
+  {id:"s2",icon:"🏭",color:"#E6F1FB",title:"Misión y situación actual",subtitle:"¿En dónde estamos?",items:[
+    {id:"i8",label:"Misión corporativa formal y vigente",prefill:true,note:"«Ofrecer tostadas y totopos de maíz con calidad sobresaliente y servicio constante a comercios tradicionales.» (sitio web)"},
+    {id:"i9",label:"Valores institucionales declarados",prefill:true,note:"Trabajo en equipo, empatía, respeto, responsabilidad, honestidad, compromiso."},
+    {id:"i10",label:"Capacidad de producción actual (ton/día o unidades/turno)",prefill:false,note:"¿Cuál es la capacidad instalada vs. capacidad utilizada hoy?"},
+    {id:"i11",label:"Número de rutas de distribución activas",prefill:false,note:"¿Cuántas rutas, vehículos y choferes operan actualmente?"},
+    {id:"i12",label:"Principales sistemas o herramientas tecnológicas en uso",prefill:false,note:"ERP, software de facturación, sistema de rutas, Excel, etc."},
+    {id:"i13",label:"Principales dolores o cuellos de botella operativos",prefill:false,note:"¿Qué problemas diarios motivan la búsqueda de un ERP?",required:true},
+    {id:"i14",label:"Volumen de ventas mensual aproximado (unidades y $MXN)",prefill:false,note:"Dato confidencial — necesario para dimensionar el ERP."},
+    {id:"i15",label:"Número de clientes activos en cartera",prefill:false,note:"¿Cuántos clientes B2B tienen registrados hoy?"},
+  ]},
+  {id:"s3",icon:"🌽",color:"#FAEEDA",title:"Mercado y productos",subtitle:"Líneas de negocio y segmentos",items:[
+    {id:"i16",label:"Catálogo completo de SKUs y líneas de producto",prefill:true,note:"Totopos, tostada ondulada, tostada plana, tostada cevichera, tostada casera, churritos naturales, churritos con chile, nachos, tiritas de maíz."},
+    {id:"i17",label:"Segmento de mercado principal (canal y perfil de cliente)",prefill:true,note:"Comercios tradicionales: abarrotes, pescaderías, restaurantes, carretas de mariscos, fruterías, supermercados locales."},
+    {id:"i18",label:"Cobertura geográfica actual y zonas objetivo de expansión",prefill:true,note:"Hermosillo, Bahía de Kino, Pob. Miguel Alemán, San Pedro Saucito. ¿Planes de expansión estatal?"},
+    {id:"i19",label:"Principales competidores locales y nacionales",prefill:false,note:"¿Contra quién compiten directamente en Sonora y a nivel nacional?"},
+    {id:"i20",label:"Canales de venta (distribución directa, mayoristas, e-commerce)",prefill:true,note:"Distribución directa por ruta. Tienda en línea (catálogo web). ¿Hay ventas por marketplace?"},
+    {id:"i21",label:"Política de precios y márgenes por línea de producto",prefill:false,note:"¿Existen listas de precios diferenciadas por canal o volumen?"},
+    {id:"i22",label:"Entidades legales que conforman el grupo empresarial",prefill:false,note:"¿La Tortillería Jesús (Col. Los Olivos) opera como entidad independiente?",required:true},
+    {id:"i23",label:"Certificaciones o normas de calidad en proceso o vigentes",prefill:true,note:"Visión 2029 contempla calidad certificada. ¿Están en proceso de certificación (FSSC, BRC, HACCP, ISO)?"},
+  ]},
+  {id:"s4",icon:"⚖️",color:"#FAECE7",title:"Análisis FODA",subtitle:"Fortalezas, oportunidades, debilidades y amenazas",items:[
+    {id:"i24",label:"Fortalezas identificadas por la dirección",prefill:true,note:"Sugeridas: trayectoria de 27 años, conocimiento del canal tradicional, producto artesanal diferenciado."},
+    {id:"i25",label:"Oportunidades de mercado detectadas",prefill:true,note:"Sugeridas: expansión estatal (visión Sonora 2029), crecimiento del canal online, certificación para acceder a retail formal."},
+    {id:"i26",label:"Debilidades operativas y organizacionales",prefill:false,note:"¿Qué áreas internas presentan mayor ineficiencia hoy? (logística, finanzas, producción, RRHH)",required:true},
+    {id:"i27",label:"Amenazas externas del entorno",prefill:false,note:"Competidores, inflación en insumos (maíz, aceite), regulación sanitaria, dependencia de canal tradicional."},
+    {id:"i28",label:"Riesgos tecnológicos o de adopción digital",prefill:false,note:"¿Existe resistencia al cambio en el equipo? ¿Nivel de alfabetización digital del personal?",required:true},
+    {id:"i29",label:"Impacto del FODA en la decisión de implementar un ERP",prefill:false,note:"Conectar cada área FODA con los módulos ERP que la atienden (producción, distribución, finanzas, calidad).",required:true},
+  ]},
+  {id:"s5",icon:"🎯",color:"#EEEDFE",title:"Visión y objetivos estratégicos",subtitle:"¿Hacia dónde vamos?",items:[
+    {id:"i30",label:"Visión corporativa formal y horizonte temporal",prefill:true,note:"«Para 2029: calidad certificada y distribución en todo el Estado de Sonora.» (sitio web)"},
+    {id:"i31",label:"Objetivos a corto plazo (0–12 meses)",prefill:false,note:"¿Qué metas concretas tienen para el próximo año? (ventas, rutas, clientes, producción)",required:true},
+    {id:"i32",label:"Objetivos a mediano plazo (1–3 años)",prefill:false,note:"¿Nuevas líneas de producto, nuevas zonas, inversión en planta?"},
+    {id:"i33",label:"Objetivos a largo plazo (3–5 años)",prefill:true,note:"Expansión a todo Sonora con calidad certificada (2029). ¿Planes de retail o exportación a futuro?"},
+    {id:"i34",label:"KPIs o indicadores clave que miden el éxito del negocio",prefill:false,note:"¿Qué métricas sigue hoy la gerencia? (% ocupación de rutas, rotación de inventario, cobranza, etc.)",required:true},
+    {id:"i35",label:"Presupuesto estimado disponible para el proyecto ERP",prefill:false,note:"Rango de inversión aprobado o en consideración para la implementación.",required:true},
+    {id:"i36",label:"Tiempo objetivo para la puesta en marcha del ERP",prefill:false,note:"¿Hay una fecha límite o un evento de negocio que marque el deadline?",required:true},
+    {id:"i37",label:"Áreas funcionales prioritarias a cubrir con el ERP",prefill:false,note:"¿Producción, distribución, finanzas, RRHH, calidad? ¿En qué orden de prioridad?",required:true},
+  ]}
+];
+
+const state={};
+sections.forEach(s=>s.items.forEach(it=>{state[it.id]=it.prefill||false}));
+
+function countStats(){
+  let total=0,pre=0,done=0;
+  sections.forEach(s=>s.items.forEach(it=>{total++;if(it.prefill)pre++;if(state[it.id])done++;}));
+  return{total,pre,done,pend:total-done};
+}
+
+function updateProgress(){
+  const{total,pre,done,pend}=countStats();
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-label').textContent=pct+'%';
+  document.getElementById('s-total').textContent=total;
+  document.getElementById('s-pre').textContent=pre;
+  document.getElementById('s-done').textContent=done;
+  document.getElementById('s-pend').textContent=pend;
+}
+
+function renderSections(){
+  const cont=document.getElementById('sections');
+  cont.innerHTML='';
+  sections.forEach((sec,si)=>{
+    const div=document.createElement('div');
+    div.className='section';
+
+    const hdr=document.createElement('div');
+    hdr.className='section-header';
+    const checked=sec.items.filter(it=>state[it.id]).length;
+    hdr.innerHTML=`
+      <div class="section-title">
+        <div class="section-icon" style="background:${sec.color}">${sec.icon}</div>
+        <div class="section-text">
+          <h3>${sec.title}</h3>
+          <p>${sec.subtitle}</p>
+        </div>
+      </div>
+      <div class="section-meta">
+        <span class="badge ${checked===sec.items.length?'badge-green':'badge-gray'}" id="badge-${si}">${checked}/${sec.items.length}</span>
+        <span class="chevron${si===0?' open':''}" id="chv-${si}">▼</span>
+      </div>`;
+    hdr.addEventListener('click',()=>{
+      const body=document.getElementById('body-'+si);
+      const chv=document.getElementById('chv-'+si);
+      const open=body.classList.toggle('open');
+      chv.classList.toggle('open',open);
+    });
+
+    const body=document.createElement('div');
+    body.className='section-body'+(si===0?' open':'');
+    body.id='body-'+si;
+
+    sec.items.forEach(it=>{
+      const row=document.createElement('div');
+      row.className='item';
+      row.innerHTML=`
+        <div class="item-check ${state[it.id]?(it.prefill?'prefilled':'checked'):''}" id="chk-${it.id}">
+          <span class="checkmark">✓</span>
+        </div>
+        <div class="item-content">
+          <div class="item-label${state[it.id]?' checked-label':''}" id="lbl-${it.id}">
+            ${it.label}
+            ${it.prefill?'<span class="tag tag-prefill">web</span>':''}
+            ${it.required?'<span class="tag tag-required">clave</span>':''}
+          </div>
+          ${it.note?`<div class="item-note${it.prefill?' prefill':''}">${it.note}</div>`:''}
+        </div>`;
+      row.addEventListener('click',()=>{
+        state[it.id]=!state[it.id];
+        const chk=document.getElementById('chk-'+it.id);
+        const lbl=document.getElementById('lbl-'+it.id);
+        if(state[it.id]){
+          chk.className='item-check '+(it.prefill?'prefilled':'checked');
+          lbl.classList.add('checked-label');
+        } else {
+          chk.className='item-check';
+          lbl.classList.remove('checked-label');
+        }
+        updateProgress();
+        const c=sec.items.filter(x=>state[x.id]).length;
+        const badge=document.getElementById('badge-'+si);
+        badge.textContent=c+'/'+sec.items.length;
+        badge.className='badge '+(c===sec.items.length?'badge-green':'badge-gray');
+      });
+      body.appendChild(row);
+    });
+
+    div.appendChild(hdr);
+    div.appendChild(body);
+    cont.appendChild(div);
+  });
+}
+
+renderSections();
+updateProgress();
+</script>
+</body>
+</html>
