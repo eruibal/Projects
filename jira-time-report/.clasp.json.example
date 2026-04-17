@@ -1,0 +1,13 @@
+{
+  "scriptId": "REPLACE_WITH_YOUR_APPS_SCRIPT_ID",
+  "rootDir": ".",
+  "scriptExtensions": [".js", ".gs"],
+  "filePushOrder": [
+    "appsscript.json",
+    "src/Config.gs",
+    "src/JiraClient.gs",
+    "src/CalendarClient.gs",
+    "src/Report.gs",
+    "src/Main.gs"
+  ]
+}
