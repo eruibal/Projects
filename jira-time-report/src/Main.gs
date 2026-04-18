@@ -12,17 +12,11 @@ function onOpen() {
     .addItem('Set credentials', 'menuSetCredentials')
     .addItem('Test Jira connection', 'menuTestConnection')
     .addSeparator()
-    .addItem('Initialise Config sheet', 'menuInitConfig')
     .addItem('Load Epics', 'menuLoadEpics')
     .addItem('Build report for selected Epic', 'menuBuildReportForSelected')
     .addSeparator()
     .addItem('Rebuild report (all Epics)', 'menuRebuildReport')
     .addToUi();
-}
-
-function menuInitConfig() {
-  ensureConfigSheet_();
-  SpreadsheetApp.getUi().alert('Config sheet is ready. Fill in PROJECT_KEYS and CALENDAR_IDS.');
 }
 
 function menuSetCredentials() {

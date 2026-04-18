@@ -13,7 +13,7 @@ A Google Apps Script project, bound to a Google Sheet, that:
 
 ```
 appsscript.json          # Manifest (Calendar Advanced Service + OAuth scopes)
-src/Config.gs            # Script Properties + Config sheet bootstrap
+src/Config.gs            # Script Properties for credentials + inline SETTINGS
 src/JiraClient.gs        # Jira Cloud REST v3 wrapper (basic auth, pagination)
 src/CalendarClient.gs    # Advanced Calendar Service search + regex filter
 src/Report.gs            # Epics / Stories / Events / Report tab writers
@@ -58,25 +58,31 @@ declares it, but the editor still requires you to enable the service once.)
 Visit <https://id.atlassian.com/manage-profile/security/api-tokens>, create a
 token, and copy it.
 
-### 4. First run in the Sheet
+### 4. Edit runtime settings
+
+Open [src/Config.gs](src/Config.gs) and edit the `SETTINGS` object, then
+`clasp push` to publish the change:
+
+- `PROJECT_KEYS` - array of project keys, e.g. `['ABC', 'XYZ']`. Used when
+  `EPIC_JQL_OVERRIDE` is empty.
+- `EPIC_JQL_OVERRIDE` - optional full JQL string for Epics; if set, overrides
+  `PROJECT_KEYS`.
+- `CALENDAR_IDS` - array of calendar IDs; `'primary'` = your default Google
+  Calendar. Team calendars look like
+  `'something@group.calendar.google.com'`.
+- `LOOKBACK_DAYS` - how far back (in days) to search events.
+- `ISSUE_KEY_REGEX` - regex used to confirm an event really references an
+  issue key (prevents fuzzy-match false positives).
+- `ALL_DAY_HOURS` - hours credited per all-day event (0 to ignore them).
+- `INCLUDE_SUBTASKS` - `true` / `false`.
+
+### 5. First run in the Sheet
 
 1. Reload the Sheet; a **Jira Time Report** menu appears.
-2. **Jira Time Report -> Initialise Config sheet** - creates the `Config` tab.
-3. **Jira Time Report -> Set credentials** - prompts for base URL, email and
+2. **Jira Time Report -> Set credentials** - prompts for base URL, email and
    API token; they are stored in Script Properties, never in the Sheet.
-4. **Jira Time Report -> Test Jira connection** - should show your Jira
+3. **Jira Time Report -> Test Jira connection** - should show your Jira
    display name.
-5. Fill in the `Config` tab:
-   - `PROJECT_KEYS` - comma-separated project keys, e.g. `ABC,XYZ`.
-   - `EPIC_JQL_OVERRIDE` - optional; if set, overrides `PROJECT_KEYS`.
-   - `CALENDAR_IDS` - comma-separated calendar IDs; `primary` = your default
-     Google Calendar. Team calendars look like
-     `something@group.calendar.google.com`.
-   - `LOOKBACK_DAYS` - how far back to search events.
-   - `ISSUE_KEY_REGEX` - regex used to confirm an event really references an
-     issue key (prevents fuzzy-match false positives).
-   - `ALL_DAY_HOURS` - hours credited per all-day event (0 to ignore them).
-   - `INCLUDE_SUBTASKS` - `true` / `false`.
 
 ## Daily use
 
@@ -104,8 +110,9 @@ events are expanded (`singleEvents: true`) so each instance counts once.
 
 If your Jira -> Google Calendar plugin formats event titles differently (e.g.
 as `[ABC-123] - Standup` or embeds the key in the description), the default
-regex `\b[A-Z][A-Z0-9]+-\d+\b` will still match. Tighten it via the `Config`
-tab if you have multiple key prefixes in use and want to restrict to one.
+regex `\b[A-Z][A-Z0-9]+-\d+\b` will still match. Tighten
+`SETTINGS.ISSUE_KEY_REGEX` in [src/Config.gs](src/Config.gs) if you have
+multiple key prefixes in use and want to restrict to one.
 
 ## Security notes
 
@@ -120,8 +127,8 @@ tab if you have multiple key prefixes in use and want to restrict to one.
 - `Calendar is not defined` -> enable the **Google Calendar API** advanced
   service (step 2 above).
 - `Jira API 401` -> wrong email/token; re-run **Set credentials**.
-- `Jira API 400 JQL` -> check `PROJECT_KEYS` or `EPIC_JQL_OVERRIDE` on the
-  `Config` tab.
+- `Jira API 400 JQL` -> check `PROJECT_KEYS` or `EPIC_JQL_OVERRIDE` in
+  `SETTINGS` (see [src/Config.gs](src/Config.gs)).
 - Script exceeds 6 minute runtime -> reduce `LOOKBACK_DAYS`, trim
   `CALENDAR_IDS`, or pick Epics with fewer children.
 
