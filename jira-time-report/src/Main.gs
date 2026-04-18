@@ -12,9 +12,7 @@ function onOpen() {
     .addItem('Set credentials', 'menuSetCredentials')
     .addItem('Test Jira connection', 'menuTestConnection')
     .addSeparator()
-    .addItem('Load Epics', 'menuLoadEpics')
-    .addItem('Build report for selected Epic', 'menuBuildReportForSelected')
-    .addSeparator()
+    .addItem('Build report...', 'menuOpenEpicPicker')
     .addItem('Rebuild report (all Epics)', 'menuRebuildReport')
     .addToUi();
 }
@@ -56,34 +54,11 @@ function menuTestConnection() {
   }
 }
 
-function menuLoadEpics() {
-  const ui = SpreadsheetApp.getUi();
-  try {
-    const cfg = readConfig();
-    const epics = getEpics(cfg.projectKeys, cfg.epicJqlOverride);
-    writeEpics(epics);
-    SpreadsheetApp.getActive().setActiveSheet(
-      SpreadsheetApp.getActive().getSheetByName(SHEETS.EPICS)
-    );
-    ui.alert('Loaded ' + epics.length + ' Epic(s). Select a row and run "Build report for selected Epic".');
-  } catch (e) {
-    ui.alert('Failed to load Epics:\n' + e.message);
-  }
-}
-
-function menuBuildReportForSelected() {
-  const ui = SpreadsheetApp.getUi();
-  const epicKey = getSelectedEpicKey();
-  if (!epicKey) {
-    ui.alert('Select a row in the "' + SHEETS.EPICS + '" sheet first (click a cell on that row).');
-    return;
-  }
-  try {
-    buildReportForEpic_(epicKey);
-    ui.alert('Report built for ' + epicKey + '. See the "' + SHEETS.REPORT + '" tab.');
-  } catch (e) {
-    ui.alert('Failed to build report for ' + epicKey + ':\n' + e.message);
-  }
+function menuOpenEpicPicker() {
+  const html = HtmlService.createHtmlOutputFromFile('EpicPicker')
+    .setWidth(460)
+    .setHeight(260);
+  SpreadsheetApp.getUi().showModalDialog(html, 'Build Jira time report');
 }
 
 function menuRebuildReport() {
@@ -92,8 +67,29 @@ function menuRebuildReport() {
 }
 
 /**
+ * Called from EpicPicker.html to populate the dropdown.
+ * @return {{key:string, summary:string, status:string, url:string}[]}
+ */
+function listEpicsForPicker() {
+  const cfg = readConfig();
+  return getEpics(cfg.projectKeys, cfg.epicJqlOverride);
+}
+
+/**
+ * Called from EpicPicker.html when the user clicks Build report.
+ * @param {string} epicKey
+ * @return {{ok:boolean, epicKey:string, storyCount:number}}
+ */
+function buildReportForEpicFromDialog(epicKey) {
+  if (!epicKey) throw new Error('No Epic selected.');
+  const storyCount = buildReportForEpic_(epicKey);
+  return { ok: true, epicKey: epicKey, storyCount: storyCount };
+}
+
+/**
  * Core pipeline: children -> calendar events -> sheets -> report.
  * @param {string} epicKey
+ * @return {number} number of child issues processed
  */
 function buildReportForEpic_(epicKey) {
   const cfg = readConfig();
@@ -106,7 +102,7 @@ function buildReportForEpic_(epicKey) {
       'Epic ' + epicKey + ' has ' + children.length + ' children. This may hit script time limits. Continue?',
       ui.ButtonSet.YES_NO
     );
-    if (resp !== ui.Button.YES) return;
+    if (resp !== ui.Button.YES) return 0;
   }
   writeStories(epicKey, children);
 
@@ -127,4 +123,5 @@ function buildReportForEpic_(epicKey) {
 
   writeEvents(epicKey, events);
   rebuildReport();
+  return children.length;
 }

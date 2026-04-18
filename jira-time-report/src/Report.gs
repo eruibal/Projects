@@ -1,19 +1,17 @@
 /**
  * Report.gs
  *
- * Writes the Epics, Stories, Events and Report tabs. Reporting roll-ups use
+ * Writes the Stories, Events and Report tabs. Reporting roll-ups use
  * SUMIF formulas against the Events tab so the user can tweak hours manually
  * and see totals update.
  */
 
 const SHEETS = {
-  EPICS: 'Epics',
   STORIES: 'Stories',
   EVENTS: 'Events',
   REPORT: 'Report',
 };
 
-const EPICS_HEADERS = ['Key', 'Summary', 'Status', 'URL'];
 const STORIES_HEADERS = ['Epic Key', 'Key', 'Summary', 'Type', 'Status', 'URL'];
 const EVENTS_HEADERS = [
   'Epic Key',
@@ -54,18 +52,6 @@ function clearSheetBody_(sheet) {
   if (last > 1) {
     sheet.getRange(2, 1, last - 1, sheet.getLastColumn()).clearContent();
   }
-}
-
-/**
- * @param {{key,summary,status,url}[]} epics
- */
-function writeEpics(epics) {
-  const sheet = ensureSheet_(SHEETS.EPICS, EPICS_HEADERS);
-  clearSheetBody_(sheet);
-  if (!epics.length) return;
-  const rows = epics.map(function (e) { return [e.key, e.summary, e.status, e.url]; });
-  sheet.getRange(2, 1, rows.length, EPICS_HEADERS.length).setValues(rows);
-  sheet.autoResizeColumns(1, EPICS_HEADERS.length);
 }
 
 /**
@@ -160,19 +146,4 @@ function rebuildReport() {
   reportSheet.getRange(totalRow, 7)
     .setFormula('=SUM(G2:G' + (totalRow - 1) + ')')
     .setFontWeight('bold');
-}
-
-/**
- * @return {string|null} the Epic key from the currently selected row on the Epics sheet
- */
-function getSelectedEpicKey() {
-  const ss = SpreadsheetApp.getActive();
-  const sheet = ss.getSheetByName(SHEETS.EPICS);
-  if (!sheet) return null;
-  const active = ss.getActiveSheet();
-  if (active.getName() !== SHEETS.EPICS) return null;
-  const row = active.getActiveRange().getRow();
-  if (row < 2) return null;
-  const key = active.getRange(row, 1).getValue();
-  return key ? String(key) : null;
 }

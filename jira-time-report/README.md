@@ -2,7 +2,7 @@
 
 A Google Apps Script project, bound to a Google Sheet, that:
 
-1. Pulls the list of **Epics** from Jira Cloud.
+1. Pops up a modal with a dropdown of **Epics** pulled live from Jira Cloud.
 2. Lets you pick an Epic and pulls its **child stories** (+ optional sub-tasks).
 3. Scans one or more **Google Calendars** for events whose title/description
    references those story keys (typical output of "Issue Events"-style plugins
@@ -16,8 +16,9 @@ appsscript.json          # Manifest (Calendar Advanced Service + OAuth scopes)
 src/Config.gs            # Script Properties for credentials + inline SETTINGS
 src/JiraClient.gs        # Jira Cloud REST v3 wrapper (basic auth, pagination)
 src/CalendarClient.gs    # Advanced Calendar Service search + regex filter
-src/Report.gs            # Epics / Stories / Events / Report tab writers
+src/Report.gs            # Stories / Events / Report tab writers
 src/Main.gs              # Custom menu + orchestration
+src/EpicPicker.html      # Modal dialog with the Epic dropdown
 .clasp.json.example      # Template for pushing via clasp
 ```
 
@@ -86,14 +87,13 @@ Open [src/Config.gs](src/Config.gs) and edit the `SETTINGS` object, then
 
 ## Daily use
 
-1. **Jira Time Report -> Load Epics** - populates the `Epics` tab.
-2. Click any cell in the row of the Epic you want to report on.
-3. **Jira Time Report -> Build report for selected Epic** - this fetches that
-   Epic's children, searches the configured calendars, fills the `Stories`
-   and `Events` tabs (data for the selected Epic replaces any stale rows for
-   that same Epic; other Epics' data is preserved), and rebuilds the `Report`
-   tab.
-4. **Jira Time Report -> Rebuild report (all Epics)** - regenerates the
+1. **Jira Time Report -> Build report...** - opens a modal dialog that queries
+   Jira for the list of Epics and shows them in a dropdown. Pick the Epic you
+   want to report on and click **Build report**. This fetches that Epic's
+   children, searches the configured calendars, fills the `Stories` and
+   `Events` tabs (data for the selected Epic replaces any stale rows for that
+   same Epic; other Epics' data is preserved), and rebuilds the `Report` tab.
+2. **Jira Time Report -> Rebuild report (all Epics)** - regenerates the
    `Report` tab from whatever is currently in `Stories` + `Events` (useful
    after manual edits to hours).
 
