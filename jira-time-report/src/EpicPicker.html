@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        margin: 12px;
+        color: #202124;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+      }
+      select {
+        width: 100%;
+        padding: 6px;
+        font-size: 13px;
+        box-sizing: border-box;
+      }
+      .status {
+        margin-top: 10px;
+        min-height: 18px;
+        color: #5f6368;
+      }
+      .status.error {
+        color: #c5221f;
+      }
+      .status.success {
+        color: #188038;
+      }
+      .actions {
+        margin-top: 16px;
+        text-align: right;
+      }
+      button {
+        padding: 6px 14px;
+        font-size: 13px;
+        margin-left: 6px;
+        cursor: pointer;
+      }
+      button[disabled] {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      .primary {
+        background: #1a73e8;
+        color: white;
+        border: 1px solid #1a73e8;
+        border-radius: 3px;
+      }
+      .secondary {
+        background: white;
+        color: #1a73e8;
+        border: 1px solid #dadce0;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="epic">Epic</label>
+    <select id="epic" disabled>
+      <option>Loading Epics...</option>
+    </select>
+    <div id="status" class="status">Loading Epics from Jira...</div>
+    <div class="actions">
+      <button type="button" class="secondary" onclick="google.script.host.close()">Cancel</button>
+      <button type="button" id="build" class="primary" disabled>Build report</button>
+    </div>
+
+    <script>
+      (function () {
+        var selectEl = document.getElementById('epic');
+        var statusEl = document.getElementById('status');
+        var buildBtn = document.getElementById('build');
+
+        function setStatus(msg, kind) {
+          statusEl.textContent = msg || '';
+          statusEl.className = 'status' + (kind ? ' ' + kind : '');
+        }
+
+        function populate(epics) {
+          selectEl.innerHTML = '';
+          if (!epics || !epics.length) {
+            var opt = document.createElement('option');
+            opt.textContent = 'No Epics found';
+            selectEl.appendChild(opt);
+            setStatus('No Epics returned. Check PROJECT_KEYS / EPIC_JQL_OVERRIDE in Config.gs.', 'error');
+            return;
+          }
+          for (var i = 0; i < epics.length; i++) {
+            var e = epics[i];
+            var opt = document.createElement('option');
+            opt.value = e.key;
+            var label = e.key + ' \u2014 ' + (e.summary || '');
+            if (e.status) label += ' (' + e.status + ')';
+            opt.textContent = label;
+            selectEl.appendChild(opt);
+          }
+          selectEl.disabled = false;
+          buildBtn.disabled = false;
+          setStatus('Loaded ' + epics.length + ' Epic(s).');
+        }
+
+        function loadFailed(err) {
+          setStatus('Failed to load Epics: ' + (err && err.message ? err.message : err), 'error');
+        }
+
+        function buildSucceeded(result) {
+          var key = (result && result.epicKey) || '';
+          var n = result && typeof result.storyCount === 'number' ? result.storyCount : null;
+          var msg = 'Report built for ' + key + '.';
+          if (n !== null) msg += ' ' + n + ' child issue(s) processed.';
+          setStatus(msg + ' Closing...', 'success');
+          setTimeout(function () { google.script.host.close(); }, 1200);
+        }
+
+        function buildFailed(err) {
+          buildBtn.disabled = false;
+          selectEl.disabled = false;
+          setStatus('Failed to build report: ' + (err && err.message ? err.message : err), 'error');
+        }
+
+        buildBtn.addEventListener('click', function () {
+          var key = selectEl.value;
+          if (!key) return;
+          buildBtn.disabled = true;
+          selectEl.disabled = true;
+          setStatus('Building report for ' + key + '... this may take a minute.');
+          google.script.run
+            .withSuccessHandler(buildSucceeded)
+            .withFailureHandler(buildFailed)
+            .buildReportForEpicFromDialog(key);
+        });
+
+        google.script.run
+          .withSuccessHandler(populate)
+          .withFailureHandler(loadFailed)
+          .listEpicsForPicker();
+      })();
+    </script>
+  </body>
+</html>
