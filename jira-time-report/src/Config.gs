@@ -13,7 +13,7 @@ const PROP_KEYS = {
 };
 
 const SETTINGS = {
-  PROJECT_KEYS: ['ABC', 'XYZ'],
+  PROJECT_KEYS: ['SKP'],
   EPIC_JQL_OVERRIDE: '',
   CALENDAR_IDS: ['primary'],
   LOOKBACK_DAYS: 180,
