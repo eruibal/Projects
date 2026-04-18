@@ -56,27 +56,35 @@ function jiraFetch_(path, params) {
 }
 
 /**
- * Paginate through /rest/api/3/search.
+ * Paginate through /rest/api/3/search/jql (the replacement for the
+ * deprecated /rest/api/3/search endpoint, removed May 2025).
+ * Uses token-based pagination: each response may include `nextPageToken`
+ * and `isLast`. No `total` is returned.
+ *
  * @param {string} jql
  * @param {string[]} fields
  * @return {Object[]} array of issue objects
  */
 function searchIssues(jql, fields) {
   const out = [];
-  let startAt = 0;
   const fieldsParam = (fields && fields.length ? fields.join(',') : 'summary,status,issuetype,parent');
+  let nextPageToken = null;
   while (true) {
-    const page = jiraFetch_('/rest/api/3/search', {
+    const params = {
       jql: jql,
-      startAt: String(startAt),
       maxResults: String(JIRA_PAGE_SIZE),
       fields: fieldsParam,
-    });
+    };
+    if (nextPageToken) {
+      params.nextPageToken = nextPageToken;
+    }
+    const page = jiraFetch_('/rest/api/3/search/jql', params);
     const issues = page.issues || [];
     for (let i = 0; i < issues.length; i++) out.push(issues[i]);
-    const total = Number(page.total || 0);
-    startAt += issues.length;
-    if (issues.length === 0 || startAt >= total) break;
+    if (page.isLast === true) break;
+    if (!page.nextPageToken) break;
+    if (issues.length === 0) break;
+    nextPageToken = page.nextPageToken;
   }
   return out;
 }
