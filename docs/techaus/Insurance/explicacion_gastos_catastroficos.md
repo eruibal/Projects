@@ -14,7 +14,7 @@ La esperanza de vida a los 65 años en México es de 20.2 años para mujeres y 1
 
 **Tres escenarios de sector**
 
-El selector de sector aplica un factor de costo real sobre precios privados: Mixto (~55% del costo, cuando el IMSS cubre hospitalizaciones pero el paciente paga medicamentos de innovación y extras) y Solo IMSS (~20%, principalmente gastos de bolsillo en medicamentos no disponibles y cuidadores).
+El selector de sector aplica un factor de costo real sobre precios privados: Mixto (55% del costo, cuando el IMSS cubre hospitalizaciones pero el paciente paga medicamentos de innovación y extras) y Solo IMSS (20%, principalmente gastos de bolsillo en medicamentos no disponibles y cuidadores).
 La calculadora muestra el VPN total de cada enfermedad con parámetros ajustables. Aquí los hallazgos más relevantes del modelo con los valores base (8% descuento, 10% inflación médica, 20 años):
 
 **Infarto:** ~$2.0–2.3M MXN en escenario base. El costo se concentra al inicio (evento agudo) y al final (falla cardíaca, hospitalizaciones frecuentes). Un bypass no planeado en el año 5 puede disparar el total a casi $4M en escenario pesimista.
