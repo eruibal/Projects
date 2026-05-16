@@ -6,6 +6,18 @@ Your automated Tel Cel data usage monitoring system has been successfully create
 
 ## What Was Created
 
+### Standalone Diagnostic Tool (root)
+
+0. **mitelcel-login.js** - Standalone Playwright Login Tool
+   - Zero-build, single-file Node.js script (no TypeScript compile required)
+   - Authenticates against https://www.mitelcel.com via Playwright/Chromium
+   - Resilient multi-frame credential filling (handles iframe-hosted login widgets)
+   - Multi-strategy submit: button click → JS dispatchEvent → Enter key → form.requestSubmit()
+   - Anti-bot / CAPTCHA detection with graceful headless fallback
+   - Optional `DEBUG_SNAPSHOT` mode to print all page frames and input fields
+   - Configurable via environment variables: `MITELCEL_USER`, `MITELCEL_PASS`, `HEADLESS`, `BROWSER_CHANNEL`, `DEBUG_SNAPSHOT`
+   - **Run from the project root:** `node mitelcel-login.js`
+
 ### Core Application Files (src/)
 
 1. **src/index.ts** - Cloud Functions Entry Point
@@ -87,6 +99,7 @@ Your automated Tel Cel data usage monitoring system has been successfully create
 1. **README.md** - Main Documentation
    - Quick start guide
    - Installation instructions
+   - **Standalone login tool usage** (`mitelcel-login.js`) with environment variable reference and headed-mode debugging instructions
    - Configuration details
    - Troubleshooting guide
    - Monitoring instructions

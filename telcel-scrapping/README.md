@@ -99,6 +99,49 @@ gcloud functions logs read checkTelcelUsage --limit=50 --follow
 curl -X POST $(gcloud functions describe checkTelcelUsage --gen2 --format='value(serviceConfig.uri)')
 ```
 
+## Standalone Login Diagnostic Tool
+
+`mitelcel-login.js` is a self-contained Playwright script that tests authentication against the Mi Telcel portal without requiring the full TypeScript project to be built. Use it to verify credentials and debug portal navigation issues before deploying the Cloud Function.
+
+### Usage
+
+Always run it from the **project root** or supply the full path:
+
+```bash
+# From the project root (recommended)
+cd /path/to/telcel-scrapping
+MITELCEL_USER="your-phone-or-email" MITELCEL_PASS="your-password" node mitelcel-login.js
+```
+
+```bash
+# Full absolute path (from any directory)
+MITELCEL_USER="your-phone-or-email" MITELCEL_PASS="your-password" \
+  node /path/to/telcel-scrapping/mitelcel-login.js
+```
+
+### Options
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MITELCEL_USER` | _(required)_ | Phone number or email for Mi Telcel portal |
+| `MITELCEL_PASS` | _(required)_ | Account password |
+| `MITELCEL_URL` | `https://www.mitelcel.com` | Override the target URL |
+| `HEADLESS` | `true` | Set to `false` to see the browser window |
+| `BROWSER_CHANNEL` | _(none)_ | Set to `chrome` to use installed Chrome instead of bundled Chromium |
+| `DEBUG_SNAPSHOT` | `false` | Set to `true` to print all page frames and inputs to console |
+
+### Headed mode (recommended when debugging)
+
+```bash
+HEADLESS=false BROWSER_CHANNEL=chrome \
+  MITELCEL_USER="6621234567" MITELCEL_PASS="yourpassword" \
+  node mitelcel-login.js
+```
+
+> **Note:** If an anti-bot challenge (Radware/CAPTCHA) is detected in headless mode, the script will throw. Re-run with `HEADLESS=false` to solve the challenge manually.
+
+---
+
 ## Local Testing (Without GCP)
 
 For local testing before deploying to GCP:
@@ -123,6 +166,7 @@ npm run dev
 │   ├── telcel-scraper.ts           # Playwright portal automation
 │   ├── gmail-sender.ts             # Email sending logic
 │   ├── data-parser.ts              # Data validation & formatting
+│   ├── run-scraper.ts              # Local scraper runner
 │   ├── utils/
 │   │   ├── logger.ts               # Logging utility
 │   │   ├── error-handler.ts        # Error handling
@@ -139,6 +183,7 @@ npm run dev
 │   ├── deploy.sh                   # Deployment script
 │   └── local-test.sh               # Local testing script
 ├── dist/                           # Compiled JavaScript (generated)
+├── mitelcel-login.js               # Standalone Playwright login diagnostic tool
 ├── package.json                    # Dependencies
 ├── tsconfig.json                   # TypeScript configuration
 └── .env.example                    # Environment variables template
