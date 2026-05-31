@@ -66,29 +66,24 @@ Retain only the relevant columns. Delete all others:
 }%%
 flowchart LR
     %% Phase 1: Data Extraction
-    direction LR
     A1["Log into SAT Portal<br/>(RFC + e.firma)"] --> A2["Navigate to<br/>'Facturas Recibidas'"]
     A2 --> A3["Filter Month & Year"]
     A3 --> A4["Copy & Paste into<br/>Google Sheets"]
 
     %% Phase 2: Cleaning & Transformation
-    direction LR
     B1["Column Filtering<br/>(Keep UUID, RFC, Total, etc.)"] --> B2["Record Filtering<br/>(Keep 'Ingreso' only)"]
 
     %% Phase 3: Categorization
-    direction LR
     C0{"Identify Category"}
     C0 -- "Payroll Terms" --> C1["Nómina Section"]
     C0 -- "Medical RFCs/Keywords" --> C2["Medical Section"]
     C0 -- "Remaining" --> C3["General Expenses"]
 
     %% Phase 4: Final Review
-    direction LR
     F1["Verify Status = Vigente"] --> F2["Remove Cancelled"]
 
     %% Phase 5: Record Expenses
-    direction LR
-    F2["Remove Cancelled"] --> G1["Record Expenses"]
+  F2 --> G1["Record Expenses"]
 
     %% Inter-phase Connections
     A4 --> B1
@@ -98,7 +93,7 @@ flowchart LR
     C3 --> F1
 
     %% Styling
-    style C0 fill:#fff4d,stroke:#d4a017
+  style C0 fill:#fff4d6,stroke:#d4a017
  ```
 
 ## Phase 2 — Record ledger with expenses
