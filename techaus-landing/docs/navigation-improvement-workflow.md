@@ -10,53 +10,48 @@ flowchart TD
     Start([Site review complete]) --> P1
 
     subgraph PHASE1["🔴 Phase 1 — Stop the bleeding (dead links)"]
-        direction TB
-        P1["Decide: build product pages<br/>OR deep-link to /cotizar?"]
-        P1 -->|Build pages| P1a["Create app/proteccion/*<br/>(4 product routes)"]
-        P1 -->|Deep-link only| P1b["Point dropdown items<br/>to /cotizar?service=X"]
-        P1a --> P1c["Fix Services.tsx card CTAs<br/>(remove href='#')"]
+        P1["Decide: build product pages\nOR deep-link to /cotizar?"]
+        P1 -->|Build pages| P1a["Create app/proteccion/*\n(4 product routes)"]
+        P1 -->|Deep-link only| P1b["Point dropdown items\nto /cotizar?service=X"]
+        P1a --> P1c["Fix Services.tsx card CTAs\n(remove href='#')"]
         P1b --> P1c
-        P1c --> P1d["Fix Footer 'Enlaces Rápidos'<br/>+ social + legal links"]
-        P1d --> P1e["Wire CTA.tsx buttons<br/>+ WhyChoose → /nosotros"]
+        P1c --> P1d["Fix Footer 'Enlaces Rápidos'\n+ social + legal links"]
+        P1d --> P1e["Wire CTA.tsx buttons\n+ WhyChoose → /nosotros"]
     end
 
     P1e --> P2
 
     subgraph PHASE2["🟠 Phase 2 — Smart quote funnel"]
-        direction TB
-        P2["Read service via useSearchParams<br/>in /cotizar"]
-        P2 --> P2a["Pre-select dropdown<br/>from ?service=X"]
-        P2a --> P2b["Connect form to real endpoint<br/>(currently demo-only)"]
+        P2["Read service via useSearchParams\nin /cotizar"]
+        P2 --> P2a["Pre-select dropdown\nfrom ?service=X"]
+        P2a --> P2b["Connect form to real endpoint\n(currently demo-only)"]
     end
 
     P2b --> P3
 
     subgraph PHASE3["🟡 Phase 3 — Conversion channels"]
-        direction TB
-        P3["Add floating WhatsApp button<br/>(wa.me/52...)"]
-        P3 --> P3a["Verify real phone + email<br/>(replace placeholders)"]
+        P3["Add floating WhatsApp button\n(wa.me/52...)"]
+        P3 --> P3a["Verify real phone + email\n(replace placeholders)"]
     end
 
     P3a --> P4
 
     subgraph PHASE4["🟢 Phase 4 — Visibility & SEO"]
-        direction TB
-        P4["Add per-page metadata<br/>(nosotros, cloud-services, cotizar)"]
+        P4["Add per-page metadata\n(nosotros, cloud-services, cotizar)"]
         P4 --> P4a["Add sitemap.ts + robots.ts"]
-        P4a --> P4b["Add LocalBusiness JSON-LD<br/>(Hermosillo broker)"]
+        P4a --> P4b["Add LocalBusiness JSON-LD\n(Hermosillo broker)"]
         P4b --> P4c["Add OG / Twitter card images"]
     end
 
     P4c --> P5
 
     subgraph PHASE5["🔵 Phase 5 — Polish"]
-        direction TB
-        P5["Active-page highlight in nav<br/>(usePathname)"]
-        P5 --> P5a["Replace external Unsplash img<br/>with local team_leadership.png"]
-        P5a --> P5b["Upgrade Partners logos<br/>(real brand SVGs)"]
+        P5["Active-page highlight in nav\n(usePathname)"]
+        P5 --> P5a["Replace external Unsplash img\nwith local team_leadership.png"]
+        P5a --> P5b["Upgrade Partners logos\n(real brand SVGs)"]
     end
 
-    P5b --> Done([Appealing click-through<br/>experience ✅])
+    P5b --> Done([Appealing click-through\nexperience])
 
     style PHASE1 fill:#fee2e2,stroke:#dc2626
     style PHASE2 fill:#ffedd5,stroke:#ea580c
