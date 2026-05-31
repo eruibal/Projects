@@ -1,20 +1,20 @@
 # Techaus Clickstream Audit & Action Plan
 
-**Document:** Clickstream v1.0 — Feb 2026  
-**Scope:** 4 primary flows · 12 unique screens · 3 conversion points  
+**Document:** Clickstream v1.0 — Feb 2026
+**Scope:** 4 primary flows · 12 unique screens · 3 conversion points
 **Prepared by:** UX / Growth Review
 
 ---
 
 ## Executive Summary
 
-| Metric | Current state |
-| --- | --- |
-| Minimum clicks to lead | 5+ |
-| Conversion entry points | 2 (nav CTA + bottom banner) |
-| Lead capture before quote form | None |
-| Dead-end screens | 2 (`/cotizar/gracias`, `/nosotros`) |
-| Critical friction issues | 3 |
+| Metric                         | Current state                           |
+| ------------------------------ | --------------------------------------- |
+| Minimum clicks to lead         | 5+                                      |
+| Conversion entry points        | 2 (nav CTA + bottom banner)             |
+| Lead capture before quote form | None                                    |
+| Dead-end screens               | 2 (`/cotizar/gracias`, `/nosotros`)     |
+| Critical friction issues       | 3                                       |
 
 The core problem is a **5-click minimum path to a lead** with zero partial capture along the way. A user who abandons the quote form mid-way is a complete loss — no email, no phone, nothing to follow up with. The three critical fixes below address the biggest conversion killers and can reduce the path to lead to **2 clicks**.
 
@@ -22,12 +22,12 @@ The core problem is a **5-click minimum path to a lead** with zero partial captu
 
 ## Flow Overview
 
-| Title | Description | Check |
-| --- | --- | --- |
-| **Flow 01 — Main Navigation** | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path. Users who browse the brand before buying have no nudge back to the quote flow. | Checked the navigation flow and it is working well, at this point I think clicking on the logo header on the upper left corner and take it back to the landing page should be enough |
-| **Flow 02 — Hero Section CTAs** | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires. | |
-| **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity. | |
-| **Flow 04 — Bottom CTA Banner** | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users." | |
+| Title                                       | Description                                                                                                                                                                                | Check                                                                                                                          |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Flow 01 — Main Navigation**        | Navigation is logically structured but /servicios and /nosotros are dead ends with no conversion path.<br />Users who browse the brand before buying have no nudge back to the quote flow. | ~~Check navigation flow~~<br />~~clicking on the logo header on the upper left corner and take it back to the landing page~~ |
+| **Flow 02 — Hero Section CTAs**      | The primary hero CTA routes to a catalog page rather than initiating a quote. This adds a full extra click and page load before any conversion event fires.                                |                                                                                                                                |
+| **Flow 03 — Product Cards → Quote** | The product-to-quote journey works structurally but loses product context at the form stage. The thank-you page is a missed re-engagement opportunity.                                     |                                                                                                                                |
+| **Flow 04 — Bottom CTA Banner**      | "Two CTAs with equal visual weight lead to very different destinations, creating choice ambiguity for high-intent users."                                                                  |                                                                                                                                |
 
 ---
 
@@ -36,21 +36,18 @@ The core problem is a **5-click minimum path to a lead** with zero partial captu
 ### Critical
 
 1. Quote form has no product pre-selection
-Flow 03 sends users to `techaus.mx/cotizar?tipo=X` from product cards, but the quote form still shows a generic "Datos del seguro" field with no context. Users must re-select the product they already chose, adding unnecessary friction right before the highest-intent moment in the funnel.
-
+   Flow 03 sends users to `techaus.mx/cotizar?tipo=X` from product cards, but the quote form still shows a generic "Datos del seguro" field with no context. Users must re-select the product they already chose, adding unnecessary friction right before the highest-intent moment in the funnel.
 2. Thank-you page is a dead end with no re-engagement
-After form submission at `/cotizar/gracias`, the only option shown is "Volver al inicio." There is no upsell to a second product, no WhatsApp CTA, no social proof, and no referral prompt. Users who just converted are the warmest audience on the site and are being shown the exit door.
-
+   After form submission at `/cotizar/gracias`, the only option shown is "Volver al inicio." There is no upsell to a second product, no WhatsApp CTA, no social proof, and no referral prompt. Users who just converted are the warmest audience on the site and are being shown the exit door.
 3. Hero CTA "Ver Soluciones" routes to catalog, not quote
-Clicking "Ver Soluciones" takes users to `/proteccion` (the catalog) rather than starting a quote. High-intent users who engage with the primary hero CTA should be able to begin quoting immediately, not browse a product listing first.
+   Clicking "Ver Soluciones" takes users to `/proteccion` (the catalog) rather than starting a quote. High-intent users who engage with the primary hero CTA should be able to begin quoting immediately, not browse a product listing first.
 
 ### Warnings
 
 1. Dual CTAs in the bottom banner have identical visual hierarchy
-Flow 04's bottom banner presents "Hablar con un asesor" and "Cotizar en línea" at the same visual weight, creating ambiguity. Users with high intent who want a price may accidentally route themselves to the contact page instead.
-
+   Flow 04's bottom banner presents "Hablar con un asesor" and "Cotizar en línea" at the same visual weight, creating ambiguity. Users with high intent who want a price may accidentally route themselves to the contact page instead.
 2. No lead capture before the full quote form
-There is zero email or phone capture earlier in the funnel. If a user abandons the multi-field `/cotizar` form halfway through, the lead is lost entirely. A single-field micro-capture on product pages would allow recovery via email automation.
+   There is zero email or phone capture earlier in the funnel. If a user abandons the multi-field `/cotizar` form halfway through, the lead is lost entirely. A single-field micro-capture on product pages would allow recovery via email automation.
 
 ### Optimisations
 
@@ -133,15 +130,15 @@ Add event tracking (GA4 or equivalent) at each step of the `/cotizar` form: step
 
 ## Prioritised Summary
 
-| # | Action | Impact | Effort | Flow |
-| --- | --- | --- | --- | --- |
-| 1 | Auto-fill product on quote form from URL param | High | 1 day | 03 |
-| 2 | Inline product selector on hero CTA | High | 2–3 days | 01, 02 |
-| 3 | Redesign thank-you page with re-engagement CTAs | High | 1–2 days | 03 |
-| 4 | Sticky quote CTA on `/servicios` and `/nosotros` | Medium | 0.5 days | 01 |
-| 5 | Differentiate primary/secondary CTAs in bottom banner | Medium | 0.5 days | 04 |
-| 6 | Email micro-capture on product pages | Medium | 2 days | 03 |
-| 7 | Step-level funnel tracking in GA4 | Foundational | 1 day | All |
+| # | Action                                                | Impact       | Effort    | Flow   |
+| - | ----------------------------------------------------- | ------------ | --------- | ------ |
+| 1 | Auto-fill product on quote form from URL param        | High         | 1 day     | 03     |
+| 2 | Inline product selector on hero CTA                   | High         | 2–3 days | 01, 02 |
+| 3 | Redesign thank-you page with re-engagement CTAs       | High         | 1–2 days | 03     |
+| 4 | Sticky quote CTA on `/servicios` and `/nosotros`  | Medium       | 0.5 days  | 01     |
+| 5 | Differentiate primary/secondary CTAs in bottom banner | Medium       | 0.5 days  | 04     |
+| 6 | Email micro-capture on product pages                  | Medium       | 2 days    | 03     |
+| 7 | Step-level funnel tracking in GA4                     | Foundational | 1 day     | All    |
 
 ---
 
