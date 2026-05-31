@@ -1,8 +1,8 @@
 # DataVigía by TECHAUS
 
-**Prepared by:** Digital Marketing Analysis  
-**Parent brand:** TECHAUS  
-**Date:** February 2026  
+**Prepared by:** Digital Marketing Analysis
+**Parent brand:** TECHAUS
+**Date:** February 2026
 **Version:** 1.0
 
 ## Stragegic opportunity
@@ -19,13 +19,13 @@ El mercado móvil total es de unas 158 millones de líneas activas (datos aproxi
 - El promedio de líneas por contratante postpago ronda entre 1.3 y 1.6, esto significa:Número estimado de contratantes únicos: aproximadamente 10 a 12.2 millones.
 - Porcentaje de líneas que pertenecen a contratantes con más de 1 línea: entre el 20 % y el 35 % del total (es decir, entre 3.2 y 5.6 millones de líneas son “adicionales” bajo contratos multi-línea).
 
-| Escenario estimado            | Líneas promedio por contratante | Contratantes únicos estimados | % de líneas en contratos multi-línea |
-| :---------------------------: | :-----------------------------: | :---------------------------: | :----------------------------------: |
-| Conservador (más residencial) | 1.3                             | \~12.2 millones               | \~23 %                               |
-| Promedio realista             | 1.45                            | \~11 millones                 | \~31 %                               |
-| Alto (más empresarial)        | 1.6                             | \~10 millones                 | \~37 %                               |
+|       Escenario estimado       | Líneas promedio por contratante | Contratantes únicos estimados | % de líneas en contratos multi-línea |
+| :----------------------------: | :------------------------------: | :----------------------------: | :------------------------------------: |
+| Conservador (más residencial) |               1.3               |        \~12.2 millones        |                 \~23 %                 |
+|       Promedio realista       |               1.45               |         \~11 millones         |                 \~31 %                 |
+|    Alto (más empresarial)    |               1.6               |         \~10 millones         |                 \~37 %                 |
 
-1. I have been  struggling with this  problem with post payment mobile phone subscriptions for my family plans.
+1. I have been struggling with this problem with post payment mobile phone subscriptions for my family plans.
 2. Our communications company Telcel actually does very little to protect excessive consumption of data packages, and I believe a strong motivation for them is to charge more on every phone bill.
 3. Their alert management app for excess data consumption is very limited and I can almost think they encourage you to unwillingly go pass beyond your data consumption limit every month as they turn the other way every time this happens
 4. My motivation is to create a very simple working process that would be so easy to set up and be able to provide valuable feedback on a frequent basis so that the responsible party has relevant information as to allow him not to go.
@@ -58,10 +58,10 @@ This pain point is:
 
 ### Service Tiers
 
-| Tier | Price | Features |
-| ------ | ------- | ---------- |
-| Básico | $49 MXN/month | Weekly summary + overage alert |
-| Plus | $79 MXN/month | Daily summary + threshold alerts (75%, 90%) |
+| Tier    | Price         | Features                                                |
+| ------- | ------------- | ------------------------------------------------------- |
+| Básico | $49 MXN/month | Weekly summary + overage alert                          |
+| Plus    | $79 MXN/month | Daily summary + threshold alerts (75%, 90%)             |
 | Premium | $99 MXN/month | All alerts + priority WhatsApp support + monthly report |
 
 ---
@@ -77,7 +77,7 @@ The fastest path to market does not require carrier API agreements. Mexican carr
 
 This approach requires no carrier partnership, no API negotiations, and can be prototyped in days using the WhatsApp Business API and a simple NLP parsing layer.
 
-**Estimated MVP build time:** 2–4 weeks  
+**Estimated MVP build time:** 2–4 weeks
 **Estimated MVP cost:** $15,000–40,000 MXN (development) + WhatsApp API setup
 
 ---
@@ -94,39 +94,39 @@ DataVigía is designed to solve this by inverting the typical acquisition sequen
 
 ### The Trust-to-Conversion Funnel
 
-**Step 1 — Awareness**  
+**Step 1 — Awareness**
 User discovers DataVigía through WhatsApp group shares, Google Search ("cómo evitar cobros extra de datos Telcel"), or Meta ads targeting postpaid subscribers frustrated with data overages.
 
-**Step 2 — Activation**  
+**Step 2 — Activation**
 User subscribes for $49–99 MXN/month. Low price, immediate perceived value. No long-term commitment required.
 
-**Step 3 — Daily Brand Exposure**  
+**Step 3 — Daily Brand Exposure**
 Every WhatsApp alert carries the TECHAUS brand. Over 60–90 days, TECHAUS becomes associated in the subscriber's mind with saving money and looking out for them. Monthly messages can introduce insurance concepts naturally and conversationally — not as sales pitches, but as tips ("¿Sabías que tus gastos médicos pueden costarte mucho más que tu plan de datos si no tienes cobertura?").
 
-**Step 4 — Intent Trigger**  
+**Step 4 — Intent Trigger**
 At the 60-day mark, or triggered by a life event signal in conversation (mention of a family member, a new vehicle, starting a business), DataVigía sends a soft, personalized insurance introduction: *"Como usuario DataVigía, puedes cotizar tu seguro con TECHAUS sin costo y sin compromiso."*
 
-**Step 5 — Conversion**  
+**Step 5 — Conversion**
 A subscriber who has trusted TECHAUS with their financial wellbeing for two to three months is a fundamentally different insurance prospect than a cold Google Ads visitor. Expected conversion rate: 3–5× higher than cold traffic.
 
 ### Six Strategic Reasons This Works
 
-**1. Solves the trust gap directly**  
+**1. Solves the trust gap directly**
 DataVigía gives TECHAUS a daily reason to be in the subscriber's life before asking for a high-consideration purchase. Trust is earned through repeated small wins, not declared in an ad.
 
-**2. Shared WhatsApp infrastructure**  
+**2. Shared WhatsApp infrastructure**
 The WhatsApp Business API setup, automated conversation flows, contact management, and message templating built for DataVigía is exactly the same infrastructure TECHAUS needs for insurance lead nurturing, renewal reminders, and claims follow-up. You build it once and it serves both products.
 
-**3. Recurring revenue bridge**  
+**3. Recurring revenue bridge**
 Insurance commissions are lumpy and dependent on a long sales cycle. DataVigía generates predictable monthly recurring revenue from day one. At 500 subscribers, MRR ranges from $24,500–49,500 MXN/month before a single insurance policy is sold. This provides financial runway while the insurance pipeline matures.
 
-**4. Identical customer profile**  
+**4. Identical customer profile**
 Postpaid mobile phone subscribers in Mexico are urban, between 25 and 55 years old, financially active, and already paying for recurring services. This is precisely the demographic for TECHAUS's insurance products — particularly gastos médicos and seguro de auto.
 
-**5. Brand coherence**  
+**5. Brand coherence**
 TECHAUS's positioning — *"Tecnología y calidez humana en un solo lugar"* — maps onto both products without any contradiction. DataVigía is the technology proof point. Insurance is the care layer. The brand promise is identical; the entry point is different.
 
-**6. First-party data and lead scoring**  
+**6. First-party data and lead scoring**
 DataVigía subscribers voluntarily disclose their carrier and plan tier. A subscriber on a $500+ MXN/month postpaid plan signals a household income bracket that correlates strongly with gastos médicos intent. This data allows TECHAUS to prioritize and personalize the insurance offer with a level of precision that paid advertising cannot match.
 
 ---
@@ -135,11 +135,11 @@ DataVigía subscribers voluntarily disclose their carrier and plan tier. A subsc
 
 ### DataVigía Standalone
 
-| Subscribers | Avg. Revenue/User | Monthly Revenue | API Cost (est.) | Net MRR |
-| ------------- | ------------------- | ----------------- | ----------------- | --------- |
-| 100 | $69 MXN | $6,900 MXN | ~$800 MXN | ~$6,100 MXN |
-| 500 | $69 MXN | $34,500 MXN | ~$3,500 MXN | ~$31,000 MXN |
-| 2,000 | $69 MXN | $138,000 MXN | ~$12,000 MXN | ~$126,000 MXN |
+| Subscribers | Avg. Revenue/User      | Monthly Revenue              | API Cost (est.) | Net MRR |
+| ----------- | ---------------------- | ---------------------------- | --------------- | ------- |
+| 100         | $69 MXN | $6,900 MXN   | ~$800 MXN | ~$6,100 MXN      |                 |         |
+| 500         | $69 MXN | $34,500 MXN  | ~$3,500 MXN | ~$31,000 MXN   |                 |         |
+| 2,000       | $69 MXN | $138,000 MXN | ~$12,000 MXN | ~$126,000 MXN |                 |         |
 
 *WhatsApp Business API estimated at $0.04–0.07 USD per conversation window.*
 
@@ -148,10 +148,10 @@ DataVigía subscribers voluntarily disclose their carrier and plan tier. A subsc
 Assuming 5% of active DataVigía subscribers convert to an insurance policy within 12 months, and an average first-year commission of $1,800 MXN per policy:
 
 | Subscribers | 5% Conversion | Policies | Commission Revenue |
-| ------------- | --------------- | ---------- | -------------------- |
-| 500 | 25 policies | 25 | $45,000 MXN |
-| 2,000 | 100 policies | 100 | $180,000 MXN |
-| 5,000 | 250 policies | 250 | $450,000 MXN |
+| ----------- | ------------- | -------- | ------------------ |
+| 500         | 25 policies   | 25       | $45,000 MXN        |
+| 2,000       | 100 policies  | 100      | $180,000 MXN       |
+| 5,000       | 250 policies  | 250      | $450,000 MXN       |
 
 At scale, the insurance conversion revenue significantly exceeds the DataVigía subscription revenue, making every subscriber acquired for DataVigía a long-term insurance asset.
 
@@ -185,12 +185,12 @@ Recommended sections:
 
 ## Key Risks and Mitigations
 
-| Risk | Mitigation |
-| ------ | ------------ |
-| Carrier API access is unavailable | Use SMS-forwarding MVP — no carrier agreement needed |
-| WhatsApp API costs erode margins | Model per-message cost before launch; batch non-urgent alerts; set pricing accordingly |
-| User churn if onboarding is confusing | Invest in a frictionless 3-message onboarding flow; include a short video walkthrough |
-| LFPDPPP data privacy compliance | Draft explicit consent flow at signup; data policy visible before WhatsApp activation |
+| Risk                                                     | Mitigation                                                                                      |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Carrier API access is unavailable                        | Use SMS-forwarding MVP — no carrier agreement needed                                           |
+| WhatsApp API costs erode margins                         | Model per-message cost before launch; batch non-urgent alerts; set pricing accordingly          |
+| User churn if onboarding is confusing                    | Invest in a frictionless 3-message onboarding flow; include a short video walkthrough           |
+| LFPDPPP data privacy compliance                          | Draft explicit consent flow at signup; data policy visible before WhatsApp activation           |
 | Brand confusion between DataVigía and TECHAUS insurance | Clear "by TECHAUS" sub-branding; separate landing pages; connected but distinct visual identity |
 
 ---
@@ -214,5 +214,5 @@ DataVigía is a tactically smart interim product and a strategically essential l
 
 ---
 
-*DataVigía by TECHAUS — Product & Strategy Brief v1.0 — February 2026*  
+*DataVigía by TECHAUS — Product & Strategy Brief v1.0 — February 2026*
 *For questions or to discuss implementation, contact the growth team.*

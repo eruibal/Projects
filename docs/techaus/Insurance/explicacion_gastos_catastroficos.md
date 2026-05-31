@@ -1,4 +1,4 @@
-Aquí está la calculadora interactiva de VPN. Puedes ajustar libremente los supuestos clave. Algunos puntos importantes sobre la metodología:
+# Aquí está la calculadora interactiva de VPN. Puedes ajustar libremente los supuestos clave. Algunos puntos importantes sobre la metodología:
 
 **Por qué el VPN es más alto que el costo nominal**
 
