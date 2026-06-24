@@ -1,5 +1,4 @@
 
-
 # Adempiere Set Up
 
 [Run Postgres in a Docker Container (Easiest PostgreSQL Setup)](https://www.youtube.com/watch?v=Hs9Fh1fr5s8)
@@ -8,7 +7,7 @@
 
 ## Accessar  a PostgresSQL
 
-```
+```bash
 sudo -u postgres -i
 pwd
 cd data
@@ -18,7 +17,7 @@ pwd
 
 ## Ejecutar Adempiere
 
-```
+```text
 C:\Users\EnriqueRuibal>@Set CLASSPATH=%ADEMPIERE_HOME%\lib\Adempiere.jar;%ADEMPIERE_HOME%\lib\AdempiereCLib.jar;%ADEMPIERE_HOME%\lib\CompiereJasperReqs.jar;%CLASSPATH%
 
 C:\Users\EnriqueRuibal>JAVA -Xms512m -Xmx1024m -DADEMPIERE_HOME=%ADEMPIERE_HOME% -classpath "%CLASSPATH%" org.adempiere.Adempiere
@@ -30,7 +29,7 @@ WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impac
 -----------> CConnection.isAppsServerOK: :0
 ```
 
-```
+```text
 eruibal@VXGH744F2P ~ % sudo -u postgres -i
 Password:
 
