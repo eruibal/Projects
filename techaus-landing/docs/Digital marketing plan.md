@@ -25,7 +25,7 @@
 ### Critical Gaps
 
 | Gap | Impact | Priority |
-|-----|--------|----------|
+| ----- | -------- | ---------- |
 | No WhatsApp button | Very high — 98% of Mexican users are on WhatsApp | Immediate |
 | No live chat or chatbot | High — insurance buyers want instant answers | Week 1 |
 | No tracking installed (GA4, GTM) | High — flying blind on conversions | Week 1 |
@@ -238,7 +238,7 @@ Target: 4.8+ star rating with 50+ reviews within 6 months of launch.
 The following changes should be A/B tested. Implement the easiest ones first.
 
 | Change | Expected Lift | Effort |
-| -------- | --------------- |-------- |
+| -------- | --------------- | -------- |
 | Change "Cotizar Ahora" to "Cotiza gratis en 2 minutos" | +10–20% CTR | Low |
 | Sticky navigation bar with CTA always visible | +8–15% conversion | Low |
 | Hero headline A/B test (feature vs benefit-led copy) | +5–25% conversion | Low |
