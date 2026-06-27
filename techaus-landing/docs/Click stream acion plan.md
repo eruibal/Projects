@@ -130,15 +130,15 @@ Add event tracking (GA4 or equivalent) at each step of the `/cotizar` form: step
 
 ## Prioritised Summary
 
-| # | Action                                                | Impact       | Effort    | Flow   |
+| # | Action | Impact | Effort | Flow |
 | - | ----------------------------------------------------- | ------------ | --------- | ------ |
-| 1 | Auto-fill product on quote form from URL param        | High         | 1 day     | 03     |
-| 2 | Inline product selector on hero CTA                   | High         | 2–3 days | 01, 02 |
-| 3 | Redesign thank-you page with re-engagement CTAs       | High         | 1–2 days | 03     |
-| 4 | Sticky quote CTA on `/servicios` and `/nosotros`  | Medium       | 0.5 days  | 01     |
-| 5 | Differentiate primary/secondary CTAs in bottom banner | Medium       | 0.5 days  | 04     |
-| 6 | Email micro-capture on product pages                  | Medium       | 2 days    | 03     |
-| 7 | Step-level funnel tracking in GA4                     | Foundational | 1 day     | All    |
+| 1 | Auto-fill product on quote form from URL param | High | 1 day | 03 |
+| 2 | Inline product selector on hero CTA | High | 2–3 days | 01, 02 |
+| 3 | Redesign thank-you page with re-engagement CTAs | High | 1–2 days | 03 |
+| 4 | Sticky quote CTA on `/servicios` and `/nosotros` | Medium | 0.5 days | 01 |
+| 5 | Differentiate primary/secondary CTAs in bottom banner | Medium | 0.5 days | 04 |
+| 6 | Email micro-capture on product pages | Medium | 2 days | 03 |
+| 7 | Step-level funnel tracking in GA4 | Foundational | 1 day | All |
 
 ---
 
