@@ -55,6 +55,7 @@ Add a floating WhatsApp button to the landing page. In Mexico, WhatsApp achieves
 Install Google Tag Manager and configure Google Analytics 4 events before spending any money on ads. Without tracking, it is impossible to measure what is and is not working.
 
 Essential events to track from day one:
+
 - CTA button clicks ("Cotizar Ahora", "Ver Soluciones", "Contáctanos")
 - Scroll depth (25%, 50%, 75%, 100%)
 - Product card clicks (individual tracking per product)
@@ -68,7 +69,7 @@ Launch campaigns targeting high-intent transactional queries. These users are ac
 **Recommended campaign structure:**
 
 | Campaign | Target Keywords | Est. CPC |
-|----------|----------------|----------|
+| ---------- | ---------------- | ---------- |
 | Branded | "TECHAUS seguros", "TECHAUS cotizar" | $3–6 MXN |
 | Gastos Médicos | "seguro médico familiar", "cotizar seguro de salud" | $10–18 MXN |
 | Seguro de Auto | "seguro de auto económico", "cotizar seguro auto México" | $8–15 MXN |
@@ -132,7 +133,7 @@ Build automated email sequences triggered by lead actions.
 **Post-quote-request sequence (3 emails):**
 
 | Email | Timing | Content |
-|-------|--------|---------|
+| ------- | -------- | --------- |
 | Email 1 | Immediately | Quote recap + what to expect next |
 | Email 2 | Day 3 | Key benefit highlight for the product they quoted |
 | Email 3 | Day 7 | Client testimonial + urgency offer ("Tu cotización vence en 48h") |
@@ -237,7 +238,7 @@ Target: 4.8+ star rating with 50+ reviews within 6 months of launch.
 The following changes should be A/B tested. Implement the easiest ones first.
 
 | Change | Expected Lift | Effort |
-|--------|---------------|--------|
+| -------- | --------------- |-------- |
 | Change "Cotizar Ahora" to "Cotiza gratis en 2 minutos" | +10–20% CTR | Low |
 | Sticky navigation bar with CTA always visible | +8–15% conversion | Low |
 | Hero headline A/B test (feature vs benefit-led copy) | +5–25% conversion | Low |
@@ -251,7 +252,7 @@ The following changes should be A/B tested. Implement the easiest ones first.
 ## Channel Strategy Summary
 
 | Channel | Priority | Timeline | Est. Monthly Budget |
-|---------|----------|----------|---------------------|
+| --------- | ---------- | ---------- | --------------------- |
 | WhatsApp Business | Immediate | Week 1 | $500–1,500 MXN (API) |
 | Google Search Ads | High | Month 1 | $15,000–25,000 MXN |
 | Google Business Profile | Immediate | Day 1 | Free |
@@ -266,7 +267,7 @@ The following changes should be A/B tested. Implement the easiest ones first.
 ## 12-Month KPI Targets
 
 | Metric | Current (Estimated) | Month 6 Target | Month 12 Target |
-|--------|---------------------|----------------|-----------------|
+| -------- | --------------------- | ---------------- | ----------------- |
 | Monthly leads | ~20 | 80–100 | 200+ |
 | Cost per lead | Unknown | <$500 MXN | <$300 MXN |
 | Quote-to-close rate | ~10% | 15–18% | 20–25% |
@@ -295,4 +296,3 @@ The following changes should be A/B tested. Implement the easiest ones first.
 
 *TECHAUS Digital Marketing Plan — v1.0 — February 2026*  
 *For questions or to discuss implementation, contact the growth team.*
-
