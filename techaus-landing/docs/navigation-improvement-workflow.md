@@ -65,7 +65,7 @@ flowchart TD
 ## Step Summary
 
 | # | Phase | Action | Files |
-|---|-------|--------|-------|
+| --- | ------- | -------- | ------- |
 | 1 | 🔴 Dead links | Repoint/build the Protección dropdown (no 404s) | `components/Navigation.tsx`, `app/proteccion/*` |
 | 2 | 🔴 Dead links | Wire service card CTAs | `components/Services.tsx` |
 | 3 | 🔴 Dead links | Fix footer quick-links, social, legal | `components/Footer.tsx` |
