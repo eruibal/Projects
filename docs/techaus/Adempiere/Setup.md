@@ -2,8 +2,8 @@
 # Adempiere Set Up
 
 [Run Postgres in a Docker Container (Easiest PostgreSQL Setup)](https://www.youtube.com/watch?v=Hs9Fh1fr5s8)
-
 [Descripción del proceso para respaldar la laptop](https://photos.google.com/share/AF1QipNdGDO-fYvfsahJkmghD6AaY-3mP8Qza-BZvOqgu0XHyf5dAdTxXar93gdHpJoHzA/photo/AF1QipOeSJTCM4xpbEiydHf3OrLm2n3sszchqhwUMBTz?key=R19oVEZOa0dsOUZMWDRvTEdpbWZtNVBGNzZjWkZn)
+[Configuración de Adempiere](https://photos.google.com/share/AF1QipNwptJ2OFjbft5id--nmX1ONGoEGILclbaFf6SiF-Ak6UMM_KPt1nNp--MgIueytA/photo/AF1QipPeT3JkmfaBQxNIz-IGCtJacv0gRLCPcEzXf0kz?key=YUhZcXdwVzJxUUhqWjlYOFhZNnNGMkE5Mnc0TDRB)
 
 ## Accessar  a PostgresSQL
 
@@ -115,5 +115,31 @@ VXGH744F2P:~ postgres$ history
    76  exit
    77  history 
 VXGH744F2P:~ postgres$ 
+```
 
+```mermaid
+flowchart TD
+    A[Start] --> B[Install Homebrew]
+    B --> D[Install PostgreSQL<br/>brew install postgresql@18]
+    A --> C[Direct Download from <br/>Oracle Java JDK 17]
+    C --> E[Set JAVA_HOME<br/>source ~/.zshrc<br/>echo $JAVA_HOME]
+    D --> F[Start PostgreSQL<br/>brew services start postgresql@15]
+
+    F --> G[Create DB user & database<br/>createuser -s adempiere<br/>createdb -O adempiere adempiere]
+
+    E --> H[Download ADempiere<br/>latest release from GitHub/SourceForge]
+    H --> I[Extract to install dir<br/>e.g. ~/Adempiere]
+
+    G --> J[Import seed database<br/>RUN_ImportAdempiere.sh]
+    J --> L
+
+    I --> K[Run setup<br/>RUN_setup.sh]
+    K --> L{Configure}
+    L --> M[Java home & app server ports]
+    M --> N[DB: type=postgresql<br/>host, port 5432, user, password]
+
+    N --> S[Launch client<br/>RUN_Adempiere.sh<br/>or web UI at localhost:8080/webui]
+
+    S --> T[Login<br/>System / System<br/>or GardenAdmin / GardenAdmin]
+    T --> U[Done ✔]
 ```
