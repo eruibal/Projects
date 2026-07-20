@@ -37,7 +37,7 @@ export default function Navigation() {
                 </div>
               </div>
             </div>
-            <Link href="/cloud-services" className="text-slate-700 hover:text-techaus-accent font-semibold text-sm uppercase tracking-wide transition-colors">
+            <Link href="/soluciones-ia" className="text-slate-700 hover:text-techaus-accent font-semibold text-sm uppercase tracking-wide transition-colors">
               Soluciones IA
             </Link>
             <Link href="/nosotros" className="text-slate-700 hover:text-techaus-accent font-semibold text-sm uppercase tracking-wide transition-colors">
@@ -88,7 +88,7 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-            <Link href="/cloud-services" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-techaus-accent hover:bg-slate-50 rounded-md">
+            <Link href="/soluciones-ia" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-techaus-accent hover:bg-slate-50 rounded-md">
               Soluciones IA
             </Link>
             <Link href="/nosotros" onClick={() => setMobileMenuOpen(false)} className="block px-3 py-2 text-base font-medium text-slate-700 hover:text-techaus-accent hover:bg-slate-50 rounded-md">
