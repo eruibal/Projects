@@ -1,20 +1,7 @@
 import type { Metadata } from 'next'
-import { Montserrat, Open_Sans } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  weight: ['300', '400', '600', '700'],
-})
-
-const openSans = Open_Sans({
-  subsets: ['latin'],
-  variable: '--font-open-sans',
-  weight: ['400', '600'],
-})
 
 export const metadata: Metadata = {
   title: 'Techaus - Protección Integral y Cloud Services',
@@ -27,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${montserrat.variable} ${openSans.variable}`}>
+    <html lang="es">
       <body className="font-sans text-slate-600 antialiased bg-slate-50 flex flex-col min-h-screen">
         <Navigation />
         <main className="flex-grow">
