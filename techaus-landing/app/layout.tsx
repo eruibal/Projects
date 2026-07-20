@@ -17,7 +17,7 @@ const nunitoSans = Nunito_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Techaus - Protección Integral y Cloud Services',
+  title: 'Techaus - Protección Integral y Soluciones IA',
   description: 'Seguros personales, de auto, vida y hogar con el respaldo de profesionales en México.',
 }
 
