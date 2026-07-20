@@ -2,7 +2,9 @@
 # Adempiere Set Up
 
 [Run Postgres in a Docker Container (Easiest PostgreSQL Setup)](https://www.youtube.com/watch?v=Hs9Fh1fr5s8)
+
 [Descripción del proceso para respaldar la laptop](https://photos.google.com/share/AF1QipNdGDO-fYvfsahJkmghD6AaY-3mP8Qza-BZvOqgu0XHyf5dAdTxXar93gdHpJoHzA/photo/AF1QipOeSJTCM4xpbEiydHf3OrLm2n3sszchqhwUMBTz?key=R19oVEZOa0dsOUZMWDRvTEdpbWZtNVBGNzZjWkZn)
+
 [Configuración de Adempiere](https://photos.google.com/share/AF1QipNwptJ2OFjbft5id--nmX1ONGoEGILclbaFf6SiF-Ak6UMM_KPt1nNp--MgIueytA/photo/AF1QipPeT3JkmfaBQxNIz-IGCtJacv0gRLCPcEzXf0kz?key=YUhZcXdwVzJxUUhqWjlYOFhZNnNGMkE5Mnc0TDRB)
 
 ## Accessar  a PostgresSQL
@@ -18,8 +20,7 @@ pwd
 ## Ejecutar Adempiere
 
 ```text
-C:\Users\EnriqueRuibal>@Set CLASSPATH=%ADEMPIERE_HOME%\lib\Adempiere.jar;%ADEMPIERE_HOME%\lib\AdempiereCLib.jar;%ADEMPIERE_HOME%\lib\CompiereJasperReqs.jar;%CLASSPATH%
-
+C:\Users\EnriqueRuibal>@Set CLASSPATH=%ADEMPIERE_HOME%\lib\Adempiere.jar;%ADEMPIERE_HOME%\lib\AdempiereCLib.jar;ADEMPIERE_HOME%\lib\CompiereJasperReqs.jar;%CLASSPATH%
 C:\Users\EnriqueRuibal>JAVA -Xms512m -Xmx1024m -DADEMPIERE_HOME=%ADEMPIERE_HOME% -classpath "%CLASSPATH%" org.adempiere.Adempiere
 WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance.
 *** 2025-02-04 01:41:08.335 Adempiere Log (CLogConsole) ***
@@ -120,11 +121,10 @@ VXGH744F2P:~ postgres$
 ```mermaid
 flowchart TD
     A[Start] --> B[Install Homebrew]
-    B --> D[Install PostgreSQL<br/>brew install postgresql@18]
+    B --> D[brew install postgresql@18<br/>Start PostgreSQL<br/>brew services start postgresql@18]
     A --> C[Direct Download from <br/>Oracle Java JDK 17]
-    C --> E[Set JAVA_HOME<br/>source ~/.zshrc<br/>echo $JAVA_HOME]
-    D --> F[Start PostgreSQL<br/>brew services start postgresql@15]
-
+    C --> E[export JAVA_HOME=/usr/lib<br/>export PATH=JAVA_HOME/..<br/>source ~/.zshrc<br/>echo $JAVA_HOME]
+    D --> F[export PATH=/opt/..<br/>source ~/.zshrc<br/>psql --version<br/>psql postgres<br/>\password<br/>ALTER USER your_mac_username WITH PASSWORD 'yourpassword';<br/>createuser -s postgres<br/>psql postgres<br/>ALTER USER postgres WITH PASSWORD 'yourpassword';]
     F --> G[Create DB user & database<br/>createuser -s adempiere<br/>createdb -O adempiere adempiere]
 
     E --> H[Download ADempiere<br/>latest release from GitHub/SourceForge]
