@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${poppins.variable} ${nunitoSans.variable}`}>
+    <html lang="es" className={`${poppins.variable} ${nunitoSans.variable}`} suppressHydrationWarning>
       <body className="font-sans text-slate-600 antialiased bg-slate-50 flex flex-col min-h-screen">
         <Navigation />
         <main className="flex-grow">
