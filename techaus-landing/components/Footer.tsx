@@ -79,8 +79,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-techaus-accent flex-shrink-0" />
-                <a href="mailto:contacto@techaus.mx" className="hover:text-white">
-                  contacto@techaus.mx
+                <a href="mailto:hola@techaus.mx" className="hover:text-white">
+                  hola@techaus.mx
                 </a>
               </li>
               <li className="flex items-center gap-3">
