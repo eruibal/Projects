@@ -127,7 +127,7 @@ export default function Cotizar() {
                     <option value="Seguro de Auto">Seguro de Auto</option>
                     <option value="Seguro de Vida">Seguro de Vida</option>
                     <option value="Hogar y Empresa">Hogar y Empresa</option>
-                    <option value="Cloud Services">Cloud Services</option>
+                    <option value="Soluciones IA">Soluciones IA</option>
                     <option value="Otro">Otro</option>
                   </select>
                 </div>

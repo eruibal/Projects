@@ -7,7 +7,7 @@ export default function CloudServices() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-4">
-            Cloud Services
+            Soluciones IA
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Soluciones de infraestructura en la nube para escalar y asegurar el futuro de tu negocio.
@@ -18,7 +18,7 @@ export default function CloudServices() {
           <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="/images/cloud_services_hero.png"
-              alt="Cloud Services by TechAus"
+              alt="Soluciones IA by TechAus"
               fill
               className="object-cover transition-transform duration-500 hover:scale-105"
             />

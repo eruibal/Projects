@@ -57,7 +57,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-techaus-accent transition-colors">
-                  Cloud Services
+                  Soluciones IA
                 </a>
               </li>
             </ul>
