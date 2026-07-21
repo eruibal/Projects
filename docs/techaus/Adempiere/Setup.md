@@ -118,6 +118,8 @@ VXGH744F2P:~ postgres$ history
 VXGH744F2P:~ postgres$ 
 ```
 
+## ADempiere MacOs
+
 ```mermaid
 flowchart TD
     A[Start] --> B[Install Homebrew]
@@ -143,3 +145,29 @@ flowchart TD
     S --> T[Login<br/>System / System<br/>or GardenAdmin / GardenAdmin]
     T --> U[Done ✔]
 ```
+
+## ADempiere Docker
+
+```mermaid
+flowchart TD
+    A[Start Docker Desktop<br/>open -a Docker] --> B[Bring stack up<br/>cd ~/adempiere-docker && docker compose up -d]
+    B --> C[Postgres 16 starts<br/>adempiere-db becomes healthy]
+    C --> D{First run?}
+    D -->|Yes| E[Import seed<br/>RUN_ImportAdempiere.sh via bash]
+    D -->|No| F[Skip import<br/>.seed_imported marker present]
+    E --> G[Wire config<br/>APPS_TYPE, PostgreSQL type, JNDI datasources]
+    F --> G
+    G --> H[Tomcat deploys webui<br/>Server startup in NNNN ms]
+    H --> I[Verify optional<br/>count adempiere.ad_client = 2]
+    I --> J([Login at localhost:8080/webui<br/>SuperUser / System])
+```
+
+### Docker Commands
+
+- docker compose stop
+- docker compose start
+- docker compose logs -f app
+- [localhost]( http://localhost:8080/webui
+
+- docker compose down (no -v) — remove containers, keep the data.
+- Avoid docker compose down -v — that wipes the database and forces a full re-seed.
