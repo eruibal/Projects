@@ -167,7 +167,7 @@ flowchart TD
 - docker compose stop
 - docker compose start
 - docker compose logs -f app
-- [localhost]( http://localhost:8080/webui
+- [localhost](http://localhost:8080/webui)
 
 - docker compose down (no -v) — remove containers, keep the data.
 - Avoid docker compose down -v — that wipes the database and forces a full re-seed.
