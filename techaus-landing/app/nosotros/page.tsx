@@ -26,7 +26,7 @@ export default function Nosotros() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-4">
-            Sobre Nosotros
+            Acerca de Nosotros
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Conoce al equipo que lidera la innovación y la protección en TechAus.

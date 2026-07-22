@@ -70,7 +70,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-techaus-accent mt-0.5 flex-shrink-0" />
                 <span>
-                  Paseo Vista del Lago 27
+                  Paseo Vista del Lago 17
                   <br />
                   Fracc. Vista del Lago
                   <br />
@@ -117,7 +117,7 @@ export default function Footer() {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-slate-500 text-sm text-center md:text-left mb-4 md:mb-0">
-            &copy; 2025 Techaus. Todos los derechos reservados.
+            &copy; 2026 Techaus. Todos los derechos reservados.
           </p>
           <div className="flex space-x-6 text-sm text-slate-500">
             <a href="#" className="hover:text-white">

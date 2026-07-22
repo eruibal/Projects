@@ -1,5 +1,4 @@
-# Techaus Landing — Navigation & Visibility Improvement Workflow
-
+# Techaus Navigation & Visibility Improvement Workflow
 Recommended remediation sequence to fix the click-through experience.
 Author: Enrique Ruibal · Date: 2026-05-31
 
