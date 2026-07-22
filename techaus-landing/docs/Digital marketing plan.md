@@ -1,4 +1,5 @@
 # Techaus Digital Marketing Growth Plan
+
 **Prepared by:** Digital Marketing Analysis  
 **Based on:** Landing page review — techaus.mx  
 **Date:** February 2026  

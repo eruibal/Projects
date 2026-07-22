@@ -1,7 +1,7 @@
 # Techaus Clickstream Audit & Action Plan
 
-**Document:** Clickstream v1.0 — Feb 2026
-**Scope:** 4 primary flows · 12 unique screens · 3 conversion points
+**Document:** Clickstream v1.0 — Feb 2026  
+**Scope:** 4 primary flows · 12 unique screens · 3 conversion points  
 **Prepared by:** UX / Growth Review
 
 ---

@@ -1,7 +1,8 @@
 # Techaus Navigation & Visibility Improvement Workflow
 
-Recommended remediation sequence to fix the click-through experience.
-Author: Enrique Ruibal · Date: 2026-05-31
+Recommended remediation sequence to fix the click-through experience.  
+Author: Enrique Ruibal  
+Date: 2026-05-31
 
 ## Priority Workflow Map
 
