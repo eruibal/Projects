@@ -2,6 +2,20 @@
 
 This process outlines the steps to extract, clean, and categorize expense invoices from the SAT portal for monthly reporting.
 
+## Period Tracker — Ingresos y Gastos
+
+This is a **repetitive process**: the full workflow below (Phases 1–4) must be run **once per reporting period**. Periods are processed **in chronological order** — each month is closed before starting the next one.
+
+### Per-period quick checklist (Phase 1 summary)
+
+1. **Consultar Facturas Recibidas** — select the report period.
+2. Copy and paste the results into a blank Google Sheet.
+3. Trim the sheet and keep only the relevant columns.
+4. Filter and keep only `Efecto` = **Ingreso**; remove all other types.
+   - Records you separate out (e.g., **Nómina**, **Medical** invoices) can be moved to their own tabs.
+5. Make sure `Estado del Comprobante` = **Vigente**.
+6. Record the expenses in the **Journal** Google Sheet.
+
 ## Phase 1 — Egress Data Extraction
 
 ### 1. Set Up
