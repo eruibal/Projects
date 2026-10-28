@@ -404,6 +404,7 @@ var JPD = {
   HEADER_ROW: 1,
   IDEA_LEVEL: 2,             // outline depth of an Idea row, when levels exist
   ONLY_IDEA_LEVEL: true,     // ignored on a flat tab
+  ALSO_PUSH_TOP_LEVEL: true, // level-0 rows push too, unless deeper rows sit under them
   INDENT_WIDTH: 4,
 
   ROADMAP_FIELD_NAME: 'Roadmap',   // JPD select field to offer in the dialog
@@ -644,11 +645,27 @@ function jpdSkipReason_(sheet, row, cols, hier) {
 
   if (JPD.ONLY_IDEA_LEVEL && hier) {
     var level = jpdRowLevel_(sheet, row, text);
-    if (level !== JPD.IDEA_LEVEL) {
+    if (level === 0 && JPD.ALSO_PUSH_TOP_LEVEL) {
+      if (jpdHasChildren_(sheet, row, cols)) {
+        return 'it is a level 0 heading with rows under it, not an idea';
+      }
+    } else if (level !== JPD.IDEA_LEVEL) {
       return 'it sits at level ' + level + ', not Idea level (' + JPD.IDEA_LEVEL + ')';
     }
   }
   return '';
+}
+
+/** True when the next non-empty Item row sits deeper than this one. */
+function jpdHasChildren_(sheet, row, cols) {
+  var text = String(sheet.getRange(row, cols.item).getValue() || '');
+  var level = jpdRowLevel_(sheet, row, text);
+  for (var r = row + 1; r <= sheet.getLastRow(); r++) {
+    var t = String(sheet.getRange(r, cols.item).getValue() || '');
+    if (!t.trim()) continue;
+    return jpdRowLevel_(sheet, r, t) > level;
+  }
+  return false;
 }
 
 /**
@@ -882,7 +899,9 @@ function jpdIdeaDescription_(sheet, row, cols, hier) {
 
   var lines = [];
 
-  if (hier) {
+  // a top-level idea has no Portfolio > Theme above it
+  var rowText = at(cols.item) ? String(sheet.getRange(row, cols.item).getValue()) : '';
+  if (hier && jpdRowLevel_(sheet, row, rowText) > 0) {
     var portfolio = jpdAncestorText_(sheet, row, 0, cols);
     var theme     = jpdAncestorText_(sheet, row, 1, cols);
     if (portfolio || theme) lines.push([portfolio, theme].filter(String).join('  >  '));
