@@ -10,28 +10,46 @@ import '../widgets/receipt_detail_bottom_sheet.dart';
 /// Below this width receipts show as cards instead of the 10-column table.
 const _compactBreakpoint = 760.0;
 
-const _navy = Color(0xFF1B365D);
+// The app's dark slate palette, shared with the registration form and the PO mockup.
+const _slateBackground = Color(0xFF0F172A);
+const _slateSurface = Color(0xFF1E293B);
+const _slateBorder = Color(0xFF334155);
+const _indigo = Color(0xFF4F46E5);
 
-/// The light, navy look the component was designed with. Applied to this
-/// screen only, so the rest of the app keeps its dark theme.
+/// Matches the rest of the app: slate surfaces, indigo accent, light text and
+/// the same muted gray the form uses for labels.
 ThemeData policyReviewTheme() => ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: _navy,
-        primary: _navy,
-        secondary: const Color(0xFF0D6EFD),
-        surface: const Color(0xFFF8FAFC),
-      ),
-      scaffoldBackgroundColor: const Color(0xFFF1F5F9),
-      cardTheme: CardThemeData(
-        elevation: 0,
-        color: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFFE2E8F0)),
-        ),
-      ),
-    );
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: const ColorScheme.dark(
+    primary: _indigo,
+    onPrimary: Colors.white,
+    primaryContainer: Color(0xFF312E81),
+    onPrimaryContainer: Color(0xFFC7D2FE),
+    secondaryContainer: _slateBorder,
+    onSecondaryContainer: Color(0xFFCBD5E1),
+    surface: _slateSurface,
+    onSurface: Color(0xFFF1F5F9),
+    onSurfaceVariant: Color(0xFF94A3B8),
+    outline: _slateBorder,
+    outlineVariant: _slateBorder,
+  ),
+  scaffoldBackgroundColor: _slateBackground,
+  dividerTheme: const DividerThemeData(color: _slateBorder, space: 1),
+  cardTheme: CardThemeData(
+    elevation: 0,
+    color: _slateSurface,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
+    ),
+  ),
+  bottomSheetTheme: const BottomSheetThemeData(backgroundColor: _slateSurface),
+  snackBarTheme: const SnackBarThemeData(
+    backgroundColor: _slateBorder,
+    contentTextStyle: TextStyle(color: Colors.white),
+  ),
+);
 
 class PolicyReviewScreen extends StatefulWidget {
   const PolicyReviewScreen({super.key, this.initialPolicy, this.today});
@@ -67,7 +85,9 @@ class _PolicyReviewScreenState extends State<PolicyReviewScreen> {
     setState(() => _policy = _policy.withReceipt(paid));
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text('Recibo ${receipt.reciboNumber} registrado como pagado el ${paid.fechaPagoText}')));
+      ..showSnackBar(
+        SnackBar(content: Text('Recibo ${receipt.reciboNumber} registrado como pagado el ${paid.fechaPagoText}')),
+      );
   }
 
   Future<void> _copySummary() async {
@@ -102,41 +122,41 @@ class _PolicyReviewScreenState extends State<PolicyReviewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Revisión de Póliza'),
-        backgroundColor: _navy,
+        backgroundColor: _slateSurface,
         foregroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.copy_all_outlined),
-            tooltip: 'Copiar resumen',
-            onPressed: _copySummary,
-          ),
+          IconButton(icon: const Icon(Icons.copy_all_outlined), tooltip: 'Copiar resumen', onPressed: _copySummary),
         ],
       ),
-      body: LayoutBuilder(builder: (context, box) {
-        final compact = box.maxWidth < _compactBreakpoint;
-        return Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1240),
-            child: ListView(
-              padding: EdgeInsets.all(compact ? 16 : 24),
-              children: [
-                PolicySummaryCard(policy: _policy),
-                const SizedBox(height: 16),
-                if (compact)
-                  for (final r in _policy.recibos)
-                    ReceiptMobileCard(
-                      receipt: r,
-                      status: _policy.statusOf(r),
-                      totalReceipts: _policy.recibos.length,
-                      onTap: () => _openReceipt(context, r),
-                    )
-                else
-                  ReceiptTableWidget(policy: _policy, onReceiptTap: (r) => _openReceipt(context, r)),
-              ],
+      body: LayoutBuilder(
+        builder: (context, box) {
+          final compact = box.maxWidth < _compactBreakpoint;
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1240),
+              child: ListView(
+                padding: EdgeInsets.all(compact ? 16 : 24),
+                children: [
+                  PolicySummaryCard(policy: _policy),
+                  const SizedBox(height: 16),
+                  if (compact)
+                    for (final r in _policy.recibos)
+                      ReceiptMobileCard(
+                        receipt: r,
+                        status: _policy.statusOf(r),
+                        totalReceipts: _policy.recibos.length,
+                        onTap: () => _openReceipt(context, r),
+                      )
+                  else
+                    ReceiptTableWidget(policy: _policy, onReceiptTap: (r) => _openReceipt(context, r)),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
