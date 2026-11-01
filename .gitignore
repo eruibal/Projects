@@ -282,6 +282,10 @@ env/
 
 # --- IDEs and Editors ---
 .vscode/
+!flutter_form_app/.vscode/
+flutter_form_app/.vscode/*
+!flutter_form_app/.vscode/settings.json
+!flutter_form_app/.vscode/markdown-preview.css
 .idea/
 *.swp
 *.sublime-project
