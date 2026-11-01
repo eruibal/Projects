@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'po_mockup.dart';
 import 'poliza/policy_screen.dart';
+import 'screens/policy_review_screen.dart';
 
 void main() {
   runApp(const CloudDataFormApp());
@@ -332,6 +333,19 @@ class _FormPageState extends State<FormPage> {
                           icon: const Icon(Icons.table_rows_outlined, color: Color(0xFF94A3B8)),
                           label: const Text(
                             'View Policy Payments (Adaptive Table)',
+                            style: TextStyle(color: Color(0xFF94A3B8)),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PolicyReviewScreen()),
+                            );
+                          },
+                          icon: const Icon(Icons.fact_check_outlined, color: Color(0xFF94A3B8)),
+                          label: const Text(
+                            'View Policy Review (Cards + Detail Sheet)',
                             style: TextStyle(color: Color(0xFF94A3B8)),
                           ),
                         ),
