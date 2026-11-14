@@ -1,9 +1,18 @@
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics2D;
+import java.awt.MenuItem;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.PopupMenu;
+import java.awt.RenderingHints;
 import java.awt.Robot;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +28,10 @@ import javax.swing.UIManager;
  * returns it, every INTERVAL_SECONDS. The pointer ends up exactly where
  * it started, so it does not fight you if you are using the machine.
  *
+ * The window never stays on top of other apps. Pressing Start moves it out
+ * of the way: into the menu bar / system tray when the OS supports one
+ * (Start, Stop, Show window and Quit live there), otherwise it is minimized.
+ *
  * Optional argument: interval in seconds (default 30).
  *   java -jar KeepAlive.jar 45
  */
@@ -29,6 +42,9 @@ public class KeepAlive {
     private final Robot robot;
     private final Timer timer;
     private final JButton button = new JButton("Start");
+    private final MenuItem trayToggle = new MenuItem("Start");
+    private JFrame frame;
+    private TrayIcon trayIcon;
     private boolean running = false;
 
     private KeepAlive(int intervalSeconds) throws AWTException {
@@ -48,13 +64,69 @@ public class KeepAlive {
 
     private void toggle() {
         running = !running;
+        String label = running ? "Stop" : "Start";
+        button.setText(label);
+        trayToggle.setLabel(label);
+        if (trayIcon != null) {
+            trayIcon.setToolTip("Keep Alive - " + (running ? "running" : "stopped"));
+        }
         if (running) {
             timer.start();
-            button.setText("Stop");
+            hideWindow();
         } else {
             timer.stop();
-            button.setText("Start");
         }
+    }
+
+    /** Get the window out of the user's way without stopping the timer. */
+    private void hideWindow() {
+        if (trayIcon != null) {
+            frame.setVisible(false);          // still reachable from the tray icon
+        } else {
+            frame.setState(Frame.ICONIFIED);  // no tray: minimize to the Dock/taskbar
+        }
+    }
+
+    private void showWindow() {
+        frame.setVisible(true);
+        frame.setState(Frame.NORMAL);
+        frame.toFront();
+    }
+
+    /** Menu bar (macOS) / system tray (Windows, most Linux) icon. */
+    private void installTrayIcon() {
+        if (!SystemTray.isSupported()) {
+            return;
+        }
+        PopupMenu menu = new PopupMenu();
+        trayToggle.addActionListener(e -> SwingUtilities.invokeLater(this::toggle));
+        MenuItem show = new MenuItem("Show window");
+        show.addActionListener(e -> SwingUtilities.invokeLater(this::showWindow));
+        MenuItem quit = new MenuItem("Quit");
+        quit.addActionListener(e -> System.exit(0));
+        menu.add(trayToggle);
+        menu.add(show);
+        menu.addSeparator();
+        menu.add(quit);
+
+        TrayIcon icon = new TrayIcon(createIconImage(), "Keep Alive - stopped", menu);
+        icon.setImageAutoSize(true);
+        try {
+            SystemTray.getSystemTray().add(icon);
+            trayIcon = icon;
+        } catch (AWTException ex) {
+            // tray refused the icon; fall back to minimizing
+        }
+    }
+
+    private static BufferedImage createIconImage() {
+        BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(new Color(0x2E7D32));
+        g.fillOval(4, 4, 24, 24);
+        g.dispose();
+        return img;
     }
 
     private void show(int intervalSeconds) {
@@ -62,13 +134,13 @@ public class KeepAlive {
         panel.add(button, BorderLayout.CENTER);
         panel.setPreferredSize(new Dimension(220, 90));
 
-        JFrame frame = new JFrame("Keep Alive");
+        frame = new JFrame("Keep Alive");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(panel);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
         frame.setResizable(false);
+        installTrayIcon();
         frame.setVisible(true);
     }
 
