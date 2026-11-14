@@ -2,7 +2,6 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.MenuItem;
 import java.awt.MouseInfo;
@@ -28,9 +27,10 @@ import javax.swing.UIManager;
  * returns it, every INTERVAL_SECONDS. The pointer ends up exactly where
  * it started, so it does not fight you if you are using the machine.
  *
- * The window never stays on top of other apps. Pressing Start moves it out
- * of the way: into the menu bar / system tray when the OS supports one
- * (Start, Stop, Show window and Quit live there), otherwise it is minimized.
+ * The window is an ordinary window: it stays visible where you put it but
+ * never forces itself in front of the app you are using, and it never steals
+ * focus. Bring it forward yourself (click it, Cmd+Tab, or "Show window" in
+ * the menu bar / tray icon) whenever you want to press Stop.
  *
  * Optional argument: interval in seconds (default 30).
  *   java -jar KeepAlive.jar 45
@@ -72,24 +72,14 @@ public class KeepAlive {
         }
         if (running) {
             timer.start();
-            hideWindow();
         } else {
             timer.stop();
         }
     }
 
-    /** Get the window out of the user's way without stopping the timer. */
-    private void hideWindow() {
-        if (trayIcon != null) {
-            frame.setVisible(false);          // still reachable from the tray icon
-        } else {
-            frame.setState(Frame.ICONIFIED);  // no tray: minimize to the Dock/taskbar
-        }
-    }
-
     private void showWindow() {
         frame.setVisible(true);
-        frame.setState(Frame.NORMAL);
+        frame.setState(JFrame.NORMAL);
         frame.toFront();
     }
 
